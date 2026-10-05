@@ -92,22 +92,29 @@ function FlowBackground({ classic, canvas }: { classic: boolean; canvas: VisualT
   return <Background variant={BackgroundVariant.Dots} gap={canvas.gridSize * stride} size={canvas.gridDotSize / zoom} offset={canvas.gridDotSize / (2 * zoom)} color={canvas.gridColor} />;
 }
 
-                                                                                   
-                                                                             
-function legendExtent(root: HTMLElement): { right: number; bottom: number } | null {
-  const legend = root.querySelector<HTMLElement>(".ft-actor-legend");
-  if (!legend) return null;
-  let left = 0, top = 0;
-  for (let el: HTMLElement | null = legend; el && el !== root; el = el.offsetParent as HTMLElement | null) {
-    left += el.offsetLeft;
-    top += el.offsetTop;
-  }
-  return { right: left + legend.offsetWidth, bottom: top + legend.offsetHeight };
+                                                                                  
+                                                         
+const FIT_AVOID = "ft-fit-avoid";
+
+type Box = { left: number; top: number; right: number; bottom: number };
+
+                                                                                 
+                                                                 
+function overlayBoxes(root: HTMLElement): Box[] {
+  return [...root.querySelectorAll<HTMLElement>(`.${FIT_AVOID}`)].flatMap(panel => {
+    if (!panel.offsetWidth || !panel.offsetHeight) return [];
+    let left = 0, top = 0;
+    for (let el: HTMLElement | null = panel; el && el !== root; el = el.offsetParent as HTMLElement | null) {
+      left += el.offsetLeft;
+      top += el.offsetTop;
+    }
+    return [{ left, top, right: left + panel.offsetWidth, bottom: top + panel.offsetHeight }];
+  });
 }
 
                                                                                 
-                                                                                   
-                                                                
+                                                                                    
+                                                                               
 function useFitScene() {
   const { getNodes, setViewport } = useReactFlow();
   const domNode = useStore(state => state.domNode);
@@ -116,19 +123,24 @@ function useFitScene() {
   return useCallback((duration = 0) => {
     if (!width || !height) return;
     const bounds = getNodesBounds(getNodes());
-    const frame = (left: number, top: number) => {
-      const viewport = getViewportForBounds(bounds, width - left, height - top, 0.2, 1, 0.18);
-      return { ...viewport, x: viewport.x + left, y: viewport.y + top };
-    };
-    const legend = domNode ? legendExtent(domNode) : null;
-    let viewport = frame(0, 0);
-    if (legend) {
-      const gap = 12;
-      const beside = frame(legend.right + gap, 0);
-      const below = frame(0, legend.bottom + gap);
-      viewport = beside.zoom >= below.zoom ? beside : below;
+    const overlays = domNode ? overlayBoxes(domNode) : [];
+    const gap = 12;
+    let best: ReturnType<typeof getViewportForBounds> | null = null;
+    for (let mask = 0; mask < 2 ** overlays.length; mask++) {
+      const inset = { left: 0, top: 0, right: 0, bottom: 0 };
+      overlays.forEach((box, i) => {
+        if (mask & (1 << i)) {
+          if (box.left + box.right < width) inset.left = Math.max(inset.left, box.right + gap);
+          else inset.right = Math.max(inset.right, width - box.left + gap);
+        } else if (box.top + box.bottom < height) inset.top = Math.max(inset.top, box.bottom + gap);
+        else inset.bottom = Math.max(inset.bottom, height - box.top + gap);
+      });
+      const freeWidth = width - inset.left - inset.right, freeHeight = height - inset.top - inset.bottom;
+      if (freeWidth <= 0 || freeHeight <= 0) continue;
+      const viewport = getViewportForBounds(bounds, freeWidth, freeHeight, 0.2, 1, 0.18);
+      if (!best || viewport.zoom > best.zoom) best = { ...viewport, x: viewport.x + inset.left, y: viewport.y + inset.top };
     }
-    void setViewport(viewport, { duration });
+    void setViewport(best ?? getViewportForBounds(bounds, width, height, 0.2, 1, 0.18), { duration });
   }, [domNode, width, height, getNodes, setViewport]);
 }
 
@@ -169,7 +181,7 @@ function Legend({
   if (actors.length === 0) return null;
   return (
     <div
-      className="ft-actor-legend"
+      className={`ft-actor-legend ${FIT_AVOID}`}
       style={{
         background: modern ? "#ffffff" : "#FFFDF8",
         border: `1px solid ${tokens.color.border}`,
@@ -286,6 +298,7 @@ function ZoomControls({ panelsCollapsed, onTogglePanels }: {
   };
   return (
     <div
+      className={FIT_AVOID}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -791,13 +804,13 @@ export default function App() {
   }, [kind, activeId]);
                                                                               
                                                                                    
-  const ovDocRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (doc && activeId !== ovDocRef.current) {
-      ovDocRef.current = activeId;
-      if (!panelsHidden) setOverviewOpen(!!doc.overview);
-    }
-  }, [doc, activeId, panelsHidden]);
+                                                                                  
+                                                                                    
+  const [overviewDoc, setOverviewDoc] = useState<string | null>(null);
+  if (doc && activeId !== overviewDoc) {
+    setOverviewDoc(activeId);
+    if (!panelsHidden) setOverviewOpen(!!doc.overview);
+  }
                                                                                   
   const startOverviewResize = useCallback(
     (e: ReactPointerEvent) => {
@@ -1307,6 +1320,7 @@ export default function App() {
                           <InitialFlowFit fontsReady={fontRevision > 0} />
                           <FlowBackground classic={visualMode === "classic"} canvas={preset.canvas} />
                           <MiniMap
+                            className={FIT_AVOID}
                             pannable
                             zoomable
                             nodeColor={(n) =>

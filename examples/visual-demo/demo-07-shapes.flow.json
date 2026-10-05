@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-07-shapes",
-  "title": "07 · Форми: Операции и въвеждане",
+  "title": "07 · Shapes: Operations and input",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,100 +43,100 @@
     {
       "id": "st-rect",
       "type": "step",
-      "label": "Няколко процеса",
+      "label": "Multiple processes",
       "shape": "st-rect",
       "owner": "customer",
       "description": [
         "Multiple processes",
-        "Точна стойност: shape: \"st-rect\"."
+        "Exact value: shape: \"st-rect\"."
       ]
     },
     {
       "id": "lin-rect",
       "type": "step",
-      "label": "Процес с поле",
+      "label": "Lined process",
       "shape": "lin-rect",
       "owner": "shop",
       "description": [
         "Lined process",
-        "Точна стойност: shape: \"lin-rect\"."
+        "Exact value: shape: \"lin-rect\"."
       ]
     },
     {
       "id": "div-rect",
       "type": "step",
-      "label": "Разделен процес",
+      "label": "Divided process",
       "shape": "div-rect",
       "owner": "payment",
       "description": [
         "Divided process",
-        "Точна стойност: shape: \"div-rect\"."
+        "Exact value: shape: \"div-rect\"."
       ]
     },
     {
       "id": "tag-rect",
       "type": "step",
-      "label": "Маркиран процес",
+      "label": "Tagged process",
       "shape": "tag-rect",
       "owner": "data",
       "description": [
         "Tagged process",
-        "Точна стойност: shape: \"tag-rect\"."
+        "Exact value: shape: \"tag-rect\"."
       ]
     },
     {
       "id": "win-pane",
       "type": "step",
-      "label": "Вътрешна памет",
+      "label": "Internal storage",
       "shape": "win-pane",
       "owner": "warehouse",
       "description": [
         "Internal storage",
-        "Точна стойност: shape: \"win-pane\"."
+        "Exact value: shape: \"win-pane\"."
       ]
     },
     {
       "id": "sl-rect",
       "type": "step",
-      "label": "Ръчно въвеждане",
+      "label": "Manual input",
       "shape": "sl-rect",
       "owner": "delivery",
       "description": [
         "Manual input",
-        "Точна стойност: shape: \"sl-rect\"."
+        "Exact value: shape: \"sl-rect\"."
       ]
     },
     {
       "id": "trap-t",
       "type": "step",
-      "label": "Ръчна операция",
+      "label": "Manual operation",
       "shape": "trap-t",
       "owner": "customer",
       "description": [
         "Manual operation",
-        "Точна стойност: shape: \"trap-t\"."
+        "Exact value: shape: \"trap-t\"."
       ]
     },
     {
       "id": "trap-b",
       "type": "step",
-      "label": "Приоритет",
+      "label": "Priority",
       "shape": "trap-b",
       "owner": "shop",
       "description": [
         "Priority action",
-        "Точна стойност: shape: \"trap-b\"."
+        "Exact value: shape: \"trap-b\"."
       ]
     },
     {
       "id": "notch-pent",
       "type": "step",
-      "label": "Граница на цикъл",
+      "label": "Loop limit",
       "shape": "notch-pent",
       "owner": "payment",
       "description": [
         "Loop limit",
-        "Точна стойност: shape: \"notch-pent\"."
+        "Exact value: shape: \"notch-pent\"."
       ]
     }
   ],
@@ -150,7 +150,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -162,7 +162,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -174,7 +174,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -186,7 +186,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -198,7 +198,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -210,7 +210,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

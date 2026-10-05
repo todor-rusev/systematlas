@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-10-shapes",
-  "title": "10 · Форми: Коментари и контекст",
+  "title": "10 · Shapes: Comments and context",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,67 +43,67 @@
     {
       "id": "brace",
       "type": "step",
-      "label": "Коментар отляво",
+      "label": "Comment on the left",
       "shape": "brace",
       "owner": "customer",
       "description": [
         "Comment on left",
-        "Точна стойност: shape: \"brace\"."
+        "Exact value: shape: \"brace\"."
       ]
     },
     {
       "id": "brace-r",
       "type": "step",
-      "label": "Коментар отдясно",
+      "label": "Comment on the right",
       "shape": "brace-r",
       "owner": "shop",
       "description": [
         "Comment on right",
-        "Точна стойност: shape: \"brace-r\"."
+        "Exact value: shape: \"brace-r\"."
       ]
     },
     {
       "id": "braces",
       "type": "step",
-      "label": "Коментар",
+      "label": "Comment",
       "shape": "braces",
       "owner": "payment",
       "description": [
         "Comment on both sides",
-        "Точна стойност: shape: \"braces\"."
+        "Exact value: shape: \"braces\"."
       ]
     },
     {
       "id": "text",
       "type": "step",
-      "label": "Свободен текст",
+      "label": "Free text",
       "shape": "text",
       "owner": "data",
       "description": [
         "Text block",
-        "Точна стойност: shape: \"text\"."
+        "Exact value: shape: \"text\"."
       ]
     },
     {
       "id": "cloud",
       "type": "step",
-      "label": "Облак",
+      "label": "Cloud",
       "shape": "cloud",
       "owner": "warehouse",
       "description": [
         "Cloud",
-        "Точна стойност: shape: \"cloud\"."
+        "Exact value: shape: \"cloud\"."
       ]
     },
     {
       "id": "curv-trap",
       "type": "step",
-      "label": "Екран",
+      "label": "Display",
       "shape": "curv-trap",
       "owner": "delivery",
       "description": [
         "Display",
-        "Точна стойност: shape: \"curv-trap\"."
+        "Exact value: shape: \"curv-trap\"."
       ]
     }
   ],
@@ -117,7 +117,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -129,7 +129,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -141,7 +141,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

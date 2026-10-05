@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-11-shapes",
-  "title": "11 · Форми: Интерфейси и картинки",
+  "title": "11 · Shapes: Interfaces and pictures",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,12 +43,12 @@
     {
       "id": "browser",
       "type": "step",
-      "label": "Браузър",
+      "label": "Browser",
       "shape": "browser",
       "owner": "customer",
       "description": [
         "Browser window",
-        "Точна стойност: shape: \"browser\"."
+        "Exact value: shape: \"browser\"."
       ]
     },
     {
@@ -59,35 +59,35 @@
       "owner": "shop",
       "description": [
         "Console window",
-        "Точна стойност: shape: \"console\"."
+        "Exact value: shape: \"console\"."
       ]
     },
     {
       "id": "bucket",
       "type": "step",
-      "label": "Обектно хранилище",
+      "label": "Object storage",
       "shape": "bucket",
       "owner": "payment",
       "description": [
         "Object storage",
-        "Точна стойност: shape: \"bucket\"."
+        "Exact value: shape: \"bucket\"."
       ]
     },
     {
       "id": "person",
       "type": "step",
-      "label": "Човек",
+      "label": "Person",
       "shape": "person",
       "owner": "data",
       "description": [
         "Person",
-        "Точна стойност: shape: \"person\"."
+        "Exact value: shape: \"person\"."
       ]
     },
     {
       "id": "icon",
       "type": "step",
-      "label": "Иконка",
+      "label": "Icon",
       "shape": "icon",
       "owner": "warehouse",
       "icon": {
@@ -96,13 +96,13 @@
       },
       "description": [
         "Icon with caption",
-        "Точна стойност: shape: \"icon\"."
+        "Exact value: shape: \"icon\"."
       ]
     },
     {
       "id": "image",
       "type": "step",
-      "label": "Картинка",
+      "label": "Picture",
       "shape": "image",
       "owner": "delivery",
       "icon": {
@@ -141,7 +141,7 @@
       },
       "description": [
         "Custom vector with caption",
-        "Точна стойност: shape: \"image\"."
+        "Exact value: shape: \"image\"."
       ]
     }
   ],
@@ -155,7 +155,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -167,7 +167,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -179,7 +179,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

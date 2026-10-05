@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-09-shapes",
-  "title": "09 · Форми: Кръгове и символи",
+  "title": "09 · Shapes: Circles and symbols",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,100 +43,100 @@
     {
       "id": "circle",
       "type": "step",
-      "label": "Начало",
+      "label": "Start",
       "shape": "circle",
       "owner": "customer",
       "description": [
         "Start / connector",
-        "Точна стойност: shape: \"circle\"."
+        "Exact value: shape: \"circle\"."
       ]
     },
     {
       "id": "dbl-circ",
       "type": "step",
-      "label": "Край",
+      "label": "End",
       "shape": "dbl-circ",
       "owner": "shop",
       "description": [
         "Stop / double circle",
-        "Точна стойност: shape: \"dbl-circ\"."
+        "Exact value: shape: \"dbl-circ\"."
       ]
     },
     {
       "id": "fr-circ",
       "type": "step",
-      "label": "Стоп",
+      "label": "Stop",
       "shape": "fr-circ",
       "owner": "payment",
       "description": [
         "Stop / framed circle",
-        "Точна стойност: shape: \"fr-circ\"."
+        "Exact value: shape: \"fr-circ\"."
       ]
     },
     {
       "id": "cross-circ",
       "type": "step",
-      "label": "Обобщение",
+      "label": "Summary",
       "shape": "cross-circ",
       "owner": "data",
       "description": [
         "Summary",
-        "Точна стойност: shape: \"cross-circ\"."
+        "Exact value: shape: \"cross-circ\"."
       ]
     },
     {
       "id": "sm-circ",
       "type": "step",
-      "label": "Старт",
+      "label": "Small start",
       "shape": "sm-circ",
       "owner": "warehouse",
       "description": [
         "Small start",
-        "Точна стойност: shape: \"sm-circ\"."
+        "Exact value: shape: \"sm-circ\"."
       ]
     },
     {
       "id": "f-circ",
       "type": "step",
-      "label": "Възел",
+      "label": "Junction",
       "shape": "f-circ",
       "owner": "delivery",
       "description": [
         "Junction",
-        "Точна стойност: shape: \"f-circ\"."
+        "Exact value: shape: \"f-circ\"."
       ]
     },
     {
       "id": "fork",
       "type": "step",
-      "label": "Разклоняване",
+      "label": "Fork",
       "shape": "fork",
       "owner": "customer",
       "description": [
         "Fork or join",
-        "Точна стойност: shape: \"fork\"."
+        "Exact value: shape: \"fork\"."
       ]
     },
     {
       "id": "bolt",
       "type": "step",
-      "label": "Комуникация",
+      "label": "Communication",
       "shape": "bolt",
       "owner": "shop",
       "description": [
         "Communication link",
-        "Точна стойност: shape: \"bolt\"."
+        "Exact value: shape: \"bolt\"."
       ]
     },
     {
       "id": "bang",
       "type": "step",
-      "label": "Внимание",
+      "label": "Attention",
       "shape": "bang",
       "owner": "payment",
       "description": [
         "Attention",
-        "Точна стойност: shape: \"bang\"."
+        "Exact value: shape: \"bang\"."
       ]
     }
   ],
@@ -150,7 +150,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -162,7 +162,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -174,7 +174,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -186,7 +186,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -198,7 +198,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -210,7 +210,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

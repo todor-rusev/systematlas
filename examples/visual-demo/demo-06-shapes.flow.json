@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-06-shapes",
-  "title": "06 · Форми: Документи и папки",
+  "title": "06 · Shapes: Documents and folders",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,78 +43,78 @@
     {
       "id": "doc",
       "type": "step",
-      "label": "Документ",
+      "label": "Document",
       "shape": "doc",
       "owner": "customer",
       "description": [
         "Document",
-        "Точна стойност: shape: \"doc\"."
+        "Exact value: shape: \"doc\"."
       ]
     },
     {
       "id": "docs",
       "type": "step",
-      "label": "Документи",
+      "label": "Documents",
       "shape": "docs",
       "owner": "shop",
       "description": [
         "Multiple documents",
-        "Точна стойност: shape: \"docs\"."
+        "Exact value: shape: \"docs\"."
       ]
     },
     {
       "id": "lin-doc",
       "type": "step",
-      "label": "Документ с поле",
+      "label": "Lined document",
       "shape": "lin-doc",
       "owner": "payment",
       "description": [
         "Lined document",
-        "Точна стойност: shape: \"lin-doc\"."
+        "Exact value: shape: \"lin-doc\"."
       ]
     },
     {
       "id": "tag-doc",
       "type": "step",
-      "label": "Маркиран документ",
+      "label": "Tagged document",
       "shape": "tag-doc",
       "owner": "data",
       "description": [
         "Tagged document",
-        "Точна стойност: shape: \"tag-doc\"."
+        "Exact value: shape: \"tag-doc\"."
       ]
     },
     {
       "id": "notch-rect",
       "type": "step",
-      "label": "Карта",
+      "label": "Card",
       "shape": "notch-rect",
       "owner": "warehouse",
       "description": [
         "Card",
-        "Точна стойност: shape: \"notch-rect\"."
+        "Exact value: shape: \"notch-rect\"."
       ]
     },
     {
       "id": "folder",
       "type": "step",
-      "label": "Папка",
+      "label": "Folder",
       "shape": "folder",
       "owner": "delivery",
       "description": [
         "Folder",
-        "Точна стойност: shape: \"folder\"."
+        "Exact value: shape: \"folder\"."
       ]
     },
     {
       "id": "flag",
       "type": "step",
-      "label": "Хартиена лента",
+      "label": "Paper tape",
       "shape": "flag",
       "owner": "customer",
       "description": [
         "Paper tape",
-        "Точна стойност: shape: \"flag\"."
+        "Exact value: shape: \"flag\"."
       ]
     }
   ],
@@ -128,7 +128,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -140,7 +140,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -152,7 +152,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -164,7 +164,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

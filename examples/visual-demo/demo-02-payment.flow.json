@@ -2,25 +2,25 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-02-payment",
-  "title": "02 · Плащане",
+  "title": "02 · Payment",
   "layout": "TB",
   "overview": [
-    "Под-процесът на плащането: кеш, правила, външен API с повторен опит, база и опашка."
+    "The payment sub-process: a cache, rules, an external API with retry, a database and a queue."
   ],
   "actors": [
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     }
   ],
@@ -28,10 +28,10 @@
     {
       "id": "start",
       "type": "terminal",
-      "label": "Сума за плащане",
+      "label": "Amount to pay",
       "owner": "shop",
       "description": [
-        "Сумата и валутата идват от количката."
+        "The amount and currency come from the cart."
       ],
       "icon": {
         "kind": "builtin",
@@ -41,10 +41,10 @@
     {
       "id": "token",
       "type": "step",
-      "label": "Токен на картата",
+      "label": "Card token",
       "owner": "payment",
       "description": [
-        "Запазен токен — картата не се въвежда повторно."
+        "A saved token, so the card is not entered again."
       ],
       "shape": "cache",
       "icon": {
@@ -55,10 +55,10 @@
     {
       "id": "fraud",
       "type": "step",
-      "label": "Проверка за измама",
+      "label": "Fraud check",
       "owner": "payment",
       "description": [
-        "Правила и лимити преди изпращане към банката."
+        "Rules and limits before the request goes to the bank."
       ],
       "shape": "hex",
       "icon": {
@@ -69,10 +69,10 @@
     {
       "id": "gateway",
       "type": "step",
-      "label": "Банков API",
+      "label": "Bank API",
       "owner": "payment",
       "description": [
-        "Заявка към платежния доставчик; Open показва точните извиквания."
+        "Request to the payment provider; Open shows the exact calls."
       ],
       "shape": "api",
       "icon": {
@@ -84,19 +84,19 @@
     {
       "id": "ok",
       "type": "decision",
-      "label": "Успех?",
+      "label": "Success?",
       "owner": "payment",
       "description": [
-        "Отговорът на банката."
+        "The bank’s response."
       ]
     },
     {
       "id": "ledger",
       "type": "step",
-      "label": "Счетоводен запис",
+      "label": "Ledger entry",
       "owner": "data",
       "description": [
-        "Плащането се записва в счетоводната база."
+        "The payment is recorded in the accounting database."
       ],
       "shape": "cyl",
       "icon": {
@@ -107,10 +107,10 @@
     {
       "id": "events",
       "type": "step",
-      "label": "Опашка за събития",
+      "label": "Event queue",
       "owner": "data",
       "description": [
-        "Събитието „платено“ отива към склада и счетоводството."
+        "The “paid” event goes to the warehouse and accounting."
       ],
       "shape": "queue",
       "icon": {
@@ -121,10 +121,10 @@
     {
       "id": "end",
       "type": "terminal",
-      "label": "Платено",
+      "label": "Paid",
       "owner": "shop",
       "description": [
-        "Връща се към основния процес."
+        "Returns to the main process."
       ],
       "icon": {
         "kind": "builtin",
@@ -157,13 +157,13 @@
       "from": "ok",
       "to": "ledger",
       "type": "branch",
-      "label": "да"
+      "label": "yes"
     },
     {
       "from": "ok",
       "to": "gateway",
       "type": "return",
-      "label": "повтори"
+      "label": "retry"
     },
     {
       "from": "ledger",

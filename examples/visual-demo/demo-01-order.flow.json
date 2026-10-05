@@ -2,30 +2,30 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-01-order",
-  "title": "01 · Поръчка в онлайн магазин",
+  "title": "01 · Online shop order",
   "layout": "TB",
   "overview": [
-    "Завършен процес в шест стъпки: решение, отказ, асинхронно известие и два drill-down към под-процеси (Плащане води и до Sequence; базата и опашката са там)."
+    "A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there)."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     }
   ],
@@ -33,10 +33,10 @@
     {
       "id": "order",
       "type": "terminal",
-      "label": "Клиентът поръчва",
+      "label": "Customer orders",
       "owner": "customer",
       "description": [
-        "Клиентът избира продукти и натиска „Поръчай“."
+        "The customer picks products and presses “Order”."
       ],
       "icon": {
         "kind": "builtin",
@@ -46,10 +46,10 @@
     {
       "id": "checkout",
       "type": "step",
-      "label": "Количка и адрес",
+      "label": "Cart and address",
       "owner": "shop",
       "description": [
-        "Магазинът събира количката, адреса и начина на доставка."
+        "The shop collects the cart, the address and the delivery method."
       ],
       "icon": {
         "kind": "builtin",
@@ -59,10 +59,10 @@
     {
       "id": "pay",
       "type": "subflow",
-      "label": "Плащане",
+      "label": "Payment",
       "owner": "payment",
       "description": [
-        "Плащането е отделен процес: Open показва стъпките му."
+        "Payment is a separate process: Open shows its steps."
       ],
       "subflow": "demo-02-payment",
       "icon": {
@@ -73,19 +73,19 @@
     {
       "id": "approved",
       "type": "decision",
-      "label": "Одобрено?",
+      "label": "Approved?",
       "owner": "payment",
       "description": [
-        "Резултатът от плащането решава пътя."
+        "The payment result decides the path."
       ]
     },
     {
       "id": "declined",
       "type": "terminal",
-      "label": "Отказано",
+      "label": "Declined",
       "owner": "customer",
       "description": [
-        "Клиентът вижда причината и може да опита пак."
+        "The customer sees the reason and can try again."
       ],
       "icon": {
         "kind": "builtin",
@@ -95,10 +95,10 @@
     {
       "id": "fulfil",
       "type": "subflow",
-      "label": "Склад и доставка",
+      "label": "Warehouse and delivery",
       "owner": "warehouse",
       "description": [
-        "Опаковане и доставка: Open показва картинките на процеса."
+        "Packing and delivery: Open shows the pictures of the process."
       ],
       "subflow": "demo-03-fulfilment",
       "icon": {
@@ -109,10 +109,10 @@
     {
       "id": "mail",
       "type": "step",
-      "label": "Имейл: пратката е тръгнала",
+      "label": "Email: order shipped",
       "owner": "shop",
       "description": [
-        "Изпраща се асинхронно; не спира процеса."
+        "Sent asynchronously; it does not hold up the process."
       ],
       "icon": {
         "kind": "builtin",
@@ -122,10 +122,10 @@
     {
       "id": "done",
       "type": "terminal",
-      "label": "Доставено",
+      "label": "Delivered",
       "owner": "customer",
       "description": [
-        "Клиентът получава пратката."
+        "The customer receives the parcel."
       ],
       "icon": {
         "kind": "builtin",
@@ -153,13 +153,13 @@
       "from": "approved",
       "to": "fulfil",
       "type": "branch",
-      "label": "да"
+      "label": "yes"
     },
     {
       "from": "approved",
       "to": "declined",
       "type": "branch",
-      "label": "не"
+      "label": "no"
     },
     {
       "from": "fulfil",

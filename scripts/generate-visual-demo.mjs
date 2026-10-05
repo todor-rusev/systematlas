@@ -8,12 +8,12 @@ import { ICON_PATHS } from '../src/core/icon-paths.ts';
 import { validateDoc } from '../src/core/validate-doc.ts';
 
 const actors = [
-  { id: 'customer', label: 'Клиент', kind: 'human' },
-  { id: 'shop', label: 'Онлайн магазин', kind: 'service' },
-  { id: 'payment', label: 'Плащания', kind: 'service' },
-  { id: 'data', label: 'Данни', kind: 'infra' },
-  { id: 'warehouse', label: 'Склад', kind: 'system' },
-  { id: 'delivery', label: 'Куриер', kind: 'service' },
+  { id: 'customer', label: 'Customer', kind: 'human' },
+  { id: 'shop', label: 'Online shop', kind: 'service' },
+  { id: 'payment', label: 'Payments', kind: 'service' },
+  { id: 'data', label: 'Data', kind: 'infra' },
+  { id: 'warehouse', label: 'Warehouse', kind: 'system' },
+  { id: 'delivery', label: 'Courier', kind: 'service' },
 ];
 const docs = [];
 function flow(id, title, nodes, edges, overview, layout = 'TB') {
@@ -38,93 +38,93 @@ const picture = (icon) => ({ kind: 'svg', viewBox: [-6, -6, 36, 36], paths: [
 ] });
 
                                                                                             
-flow('demo-01-order', '01 · Поръчка в онлайн магазин', [
-  { ...node('order', 'Клиентът поръчва', 'customer', { icon: builtin('user') }, 'Клиентът избира продукти и натиска „Поръчай“.'), type: 'terminal' },
-  node('checkout', 'Количка и адрес', 'shop', { icon: builtin('browser') }, 'Магазинът събира количката, адреса и начина на доставка.'),
-  node('pay', 'Плащане', 'payment', { type: 'subflow', subflow: 'demo-02-payment', icon: builtin('lock') }, 'Плащането е отделен процес: Open показва стъпките му.'),
-  { ...node('approved', 'Одобрено?', 'payment', {}, 'Резултатът от плащането решава пътя.'), type: 'decision' },
-  { ...node('declined', 'Отказано', 'customer', { icon: builtin('error') }, 'Клиентът вижда причината и може да опита пак.'), type: 'terminal' },
-  node('fulfil', 'Склад и доставка', 'warehouse', { type: 'subflow', subflow: 'demo-03-fulfilment', icon: builtin('package') }, 'Опаковане и доставка: Open показва картинките на процеса.'),
-  node('mail', 'Имейл: пратката е тръгнала', 'shop', { icon: builtin('mail') }, 'Изпраща се асинхронно; не спира процеса.'),
-  { ...node('done', 'Доставено', 'customer', { icon: builtin('check') }, 'Клиентът получава пратката.'), type: 'terminal' },
+flow('demo-01-order', '01 · Online shop order', [
+  { ...node('order', 'Customer orders', 'customer', { icon: builtin('user') }, 'The customer picks products and presses “Order”.'), type: 'terminal' },
+  node('checkout', 'Cart and address', 'shop', { icon: builtin('browser') }, 'The shop collects the cart, the address and the delivery method.'),
+  node('pay', 'Payment', 'payment', { type: 'subflow', subflow: 'demo-02-payment', icon: builtin('lock') }, 'Payment is a separate process: Open shows its steps.'),
+  { ...node('approved', 'Approved?', 'payment', {}, 'The payment result decides the path.'), type: 'decision' },
+  { ...node('declined', 'Declined', 'customer', { icon: builtin('error') }, 'The customer sees the reason and can try again.'), type: 'terminal' },
+  node('fulfil', 'Warehouse and delivery', 'warehouse', { type: 'subflow', subflow: 'demo-03-fulfilment', icon: builtin('package') }, 'Packing and delivery: Open shows the pictures of the process.'),
+  node('mail', 'Email: order shipped', 'shop', { icon: builtin('mail') }, 'Sent asynchronously; it does not hold up the process.'),
+  { ...node('done', 'Delivered', 'customer', { icon: builtin('check') }, 'The customer receives the parcel.'), type: 'terminal' },
 ], [
   edge('order', 'checkout'),
   edge('checkout', 'pay'),
   edge('pay', 'approved'),
-  { from: 'approved', to: 'fulfil', type: 'branch', label: 'да' },
-  { from: 'approved', to: 'declined', type: 'branch', label: 'не' },
+  { from: 'approved', to: 'fulfil', type: 'branch', label: 'yes' },
+  { from: 'approved', to: 'declined', type: 'branch', label: 'no' },
   edge('fulfil', 'done'),
   edge('fulfil', 'mail', { label: 'async', style: { line: 'dotted' } }),
-], 'Завършен процес в шест стъпки: решение, отказ, асинхронно известие и два drill-down към под-процеси (Плащане води и до Sequence; базата и опашката са там).');
+], 'A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there).');
 
                                                                                                 
-flow('demo-02-payment', '02 · Плащане', [
-  { ...node('start', 'Сума за плащане', 'shop', { icon: builtin('play') }, 'Сумата и валутата идват от количката.'), type: 'terminal' },
-  node('token', 'Токен на картата', 'payment', { shape: 'cache', icon: builtin('cache') }, 'Запазен токен — картата не се въвежда повторно.'),
-  node('fraud', 'Проверка за измама', 'payment', { shape: 'hex', icon: builtin('shield') }, 'Правила и лимити преди изпращане към банката.'),
-  node('gateway', 'Банков API', 'payment', { shape: 'api', icon: builtin('api'), sequence: 'demo-18-execution' }, 'Заявка към платежния доставчик; Open показва точните извиквания.'),
-  { ...node('ok', 'Успех?', 'payment', {}, 'Отговорът на банката.'), type: 'decision' },
-  node('ledger', 'Счетоводен запис', 'data', { shape: 'cyl', icon: builtin('database') }, 'Плащането се записва в счетоводната база.'),
-  node('events', 'Опашка за събития', 'data', { shape: 'queue', icon: builtin('queue') }, 'Събитието „платено“ отива към склада и счетоводството.'),
-  { ...node('end', 'Платено', 'shop', { icon: builtin('check') }, 'Връща се към основния процес.'), type: 'terminal' },
+flow('demo-02-payment', '02 · Payment', [
+  { ...node('start', 'Amount to pay', 'shop', { icon: builtin('play') }, 'The amount and currency come from the cart.'), type: 'terminal' },
+  node('token', 'Card token', 'payment', { shape: 'cache', icon: builtin('cache') }, 'A saved token, so the card is not entered again.'),
+  node('fraud', 'Fraud check', 'payment', { shape: 'hex', icon: builtin('shield') }, 'Rules and limits before the request goes to the bank.'),
+  node('gateway', 'Bank API', 'payment', { shape: 'api', icon: builtin('api'), sequence: 'demo-18-execution' }, 'Request to the payment provider; Open shows the exact calls.'),
+  { ...node('ok', 'Success?', 'payment', {}, 'The bank’s response.'), type: 'decision' },
+  node('ledger', 'Ledger entry', 'data', { shape: 'cyl', icon: builtin('database') }, 'The payment is recorded in the accounting database.'),
+  node('events', 'Event queue', 'data', { shape: 'queue', icon: builtin('queue') }, 'The “paid” event goes to the warehouse and accounting.'),
+  { ...node('end', 'Paid', 'shop', { icon: builtin('check') }, 'Returns to the main process.'), type: 'terminal' },
 ], [
   edge('start', 'token'), edge('token', 'fraud'), edge('fraud', 'gateway'), edge('gateway', 'ok'),
-  { from: 'ok', to: 'ledger', type: 'branch', label: 'да' },
-  { from: 'ok', to: 'gateway', type: 'return', label: 'повтори' },
+  { from: 'ok', to: 'ledger', type: 'branch', label: 'yes' },
+  { from: 'ok', to: 'gateway', type: 'return', label: 'retry' },
   edge('ledger', 'events', { label: 'async', style: { line: 'dotted' } }),
   edge('ledger', 'end'),
-], 'Под-процесът на плащането: кеш, правила, външен API с повторен опит, база и опашка.');
+], 'The payment sub-process: a cache, rules, an external API with retry, a database and a queue.');
 
                                                                                               
-flow('demo-03-fulfilment', '03 · Склад и доставка', [
-  node('pick', 'Събиране от рафта', 'warehouse', { shape: 'image', icon: picture('archive') }, 'Складът събира продуктите по списъка.'),
-  node('pack', 'Опаковане', 'warehouse', { shape: 'image', icon: picture('package') }, 'Продуктите се опаковат и пратката се етикетира.'),
-  node('label', 'Товарителница', 'delivery', { shape: 'doc', icon: builtin('file') }, 'Куриерът генерира товарителница.'),
-  node('courier', 'Куриерът тръгва', 'delivery', { shape: 'image', icon: picture('send') }, 'Пратката е на път.'),
-  node('track', 'Проследяване', 'customer', { shape: 'image', icon: picture('eye') }, 'Клиентът следи пратката.'),
-  node('handover', 'Предаване', 'customer', { shape: 'icon', icon: { kind: 'emoji', text: '🎉' } }, 'Пратката е при клиента.'),
+flow('demo-03-fulfilment', '03 · Warehouse and delivery', [
+  node('pick', 'Pick from shelf', 'warehouse', { shape: 'image', icon: picture('archive') }, 'The warehouse picks the products on the list.'),
+  node('pack', 'Packing', 'warehouse', { shape: 'image', icon: picture('package') }, 'The products are packed and the parcel is labelled.'),
+  node('label', 'Shipping label', 'delivery', { shape: 'doc', icon: builtin('file') }, 'The courier generates the shipping label.'),
+  node('courier', 'Courier departs', 'delivery', { shape: 'image', icon: picture('send') }, 'The parcel is on its way.'),
+  node('track', 'Tracking', 'customer', { shape: 'image', icon: picture('eye') }, 'The customer tracks the parcel.'),
+  node('handover', 'Handover', 'customer', { shape: 'icon', icon: { kind: 'emoji', text: '🎉' } }, 'The parcel reaches the customer.'),
 ], [
   edge('pick', 'pack'), edge('pack', 'label'), edge('label', 'courier'),
-  edge('courier', 'track', { label: 'известие', style: { line: 'dotted' } }), edge('courier', 'handover'),
-], 'Картинки: duotone илюстрации в същата геометрия като иконките, emoji и документ.', 'LR');
+  edge('courier', 'track', { label: 'notification', style: { line: 'dotted' } }), edge('courier', 'handover'),
+], 'Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document.', 'LR');
 
                                                                                             
 const sample = (id, label, shape, icon, index) => ({ id, type: 'step', label, shape, owner: actors[index % actors.length].id,
-  ...(icon ? { icon } : {}), description: [`Демонстрационен елемент: ${label.replaceAll('\n', ' / ')}.`] });
+  ...(icon ? { icon } : {}), description: [`Demo element: ${label.replaceAll('\n', ' / ')}.`] });
 const grid = (nodes, columns = 3) => nodes.slice(columns).map((n, i) => ({ from: nodes[i].id, to: n.id, type: 'flow',
-  style: { line: 'invisible', end: 'none' }, description: ['Само за подреждане на галерията; не описва реален процес.'] }));
+  style: { line: 'invisible', end: 'none' }, description: ['Only arranges the gallery; it does not describe a real process.'] }));
 const number = () => String(docs.length + 1).padStart(2, '0');
 
 const groups = [
-  ['Процеси и решения', ['rect', 'rounded', 'stadium', 'diam', 'fr-rect', 'hex', 'odd']],
-  ['Данни и съхранение', ['lean-r', 'lean-l', 'cyl', 'h-cyl', 'lin-cyl', 'bow-rect', 'datastore', 'cache']],
-  ['Документи и папки', ['doc', 'docs', 'lin-doc', 'tag-doc', 'notch-rect', 'folder', 'flag']],
-  ['Операции и въвеждане', ['st-rect', 'lin-rect', 'div-rect', 'tag-rect', 'win-pane', 'sl-rect', 'trap-t', 'trap-b', 'notch-pent']],
-  ['Събития и интеграции', ['delay', 'tri', 'flip-tri', 'hourglass', 'queue', 'timer', 'api']],
-  ['Кръгове и символи', ['circle', 'dbl-circ', 'fr-circ', 'cross-circ', 'sm-circ', 'f-circ', 'fork', 'bolt', 'bang']],
-  ['Коментари и контекст', ['brace', 'brace-r', 'braces', 'text', 'cloud', 'curv-trap']],
-  ['Интерфейси и картинки', ['browser', 'console', 'bucket', 'person', 'icon', 'image']],
+  ['Processes and decisions', ['rect', 'rounded', 'stadium', 'diam', 'fr-rect', 'hex', 'odd']],
+  ['Data and storage', ['lean-r', 'lean-l', 'cyl', 'h-cyl', 'lin-cyl', 'bow-rect', 'datastore', 'cache']],
+  ['Documents and folders', ['doc', 'docs', 'lin-doc', 'tag-doc', 'notch-rect', 'folder', 'flag']],
+  ['Operations and input', ['st-rect', 'lin-rect', 'div-rect', 'tag-rect', 'win-pane', 'sl-rect', 'trap-t', 'trap-b', 'notch-pent']],
+  ['Events and integrations', ['delay', 'tri', 'flip-tri', 'hourglass', 'queue', 'timer', 'api']],
+  ['Circles and symbols', ['circle', 'dbl-circ', 'fr-circ', 'cross-circ', 'sm-circ', 'f-circ', 'fork', 'bolt', 'bang']],
+  ['Comments and context', ['brace', 'brace-r', 'braces', 'text', 'cloud', 'curv-trap']],
+  ['Interfaces and pictures', ['browser', 'console', 'bucket', 'person', 'icon', 'image']],
 ];
                                                                              
                                                                       
 const shapeCaptions = {
-  rect: 'Процес', rounded: 'Събитие', stadium: 'Начало / край', diam: 'Решение',
-  'fr-rect': 'Подпроцес', hex: 'Подготовка', odd: 'Асиметричен процес',
-  'lean-r': 'Вход / изход', 'lean-l': 'Изход / вход', cyl: 'База данни',
-  'h-cyl': 'Пряк достъп', 'lin-cyl': 'Дисково съхранение', 'bow-rect': 'Запазени данни',
-  datastore: 'Хранилище', cache: 'Кеш', doc: 'Документ', docs: 'Документи',
-  'lin-doc': 'Документ с поле', 'tag-doc': 'Маркиран документ', 'notch-rect': 'Карта',
-  folder: 'Папка', flag: 'Хартиена лента', 'st-rect': 'Няколко процеса',
-  'lin-rect': 'Процес с поле', 'div-rect': 'Разделен процес', 'tag-rect': 'Маркиран процес',
-  'win-pane': 'Вътрешна памет', 'sl-rect': 'Ръчно въвеждане', 'trap-t': 'Ръчна операция',
-  'trap-b': 'Приоритет', 'notch-pent': 'Граница на цикъл', delay: 'Изчакване',
-  tri: 'Извличане', 'flip-tri': 'Ръчен архив', hourglass: 'Съпоставяне', queue: 'Опашка',
-  timer: 'Таймер', api: 'API', circle: 'Начало', 'dbl-circ': 'Край', 'fr-circ': 'Стоп',
-  'cross-circ': 'Обобщение', 'sm-circ': 'Старт', 'f-circ': 'Възел', fork: 'Разклоняване',
-  bolt: 'Комуникация', bang: 'Внимание', brace: 'Коментар отляво',
-  'brace-r': 'Коментар отдясно', braces: 'Коментар', text: 'Свободен текст',
-  cloud: 'Облак', 'curv-trap': 'Екран', browser: 'Браузър', console: 'Console',
-  bucket: 'Обектно хранилище', person: 'Човек', icon: 'Иконка', image: 'Картинка',
+  rect: 'Process', rounded: 'Event', stadium: 'Start / end', diam: 'Decision',
+  'fr-rect': 'Subprocess', hex: 'Preparation', odd: 'Asymmetric process',
+  'lean-r': 'Input / output', 'lean-l': 'Output / input', cyl: 'Database',
+  'h-cyl': 'Direct access', 'lin-cyl': 'Disk storage', 'bow-rect': 'Stored data',
+  datastore: 'Data store', cache: 'Cache', doc: 'Document', docs: 'Documents',
+  'lin-doc': 'Lined document', 'tag-doc': 'Tagged document', 'notch-rect': 'Card',
+  folder: 'Folder', flag: 'Paper tape', 'st-rect': 'Multiple processes',
+  'lin-rect': 'Lined process', 'div-rect': 'Divided process', 'tag-rect': 'Tagged process',
+  'win-pane': 'Internal storage', 'sl-rect': 'Manual input', 'trap-t': 'Manual operation',
+  'trap-b': 'Priority', 'notch-pent': 'Loop limit', delay: 'Delay',
+  tri: 'Extract', 'flip-tri': 'Manual file', hourglass: 'Collate', queue: 'Queue',
+  timer: 'Timer', api: 'API', circle: 'Start', 'dbl-circ': 'End', 'fr-circ': 'Stop',
+  'cross-circ': 'Summary', 'sm-circ': 'Small start', 'f-circ': 'Junction', fork: 'Fork',
+  bolt: 'Communication', bang: 'Attention', brace: 'Comment on the left',
+  'brace-r': 'Comment on the right', braces: 'Comment', text: 'Free text',
+  cloud: 'Cloud', 'curv-trap': 'Display', browser: 'Browser', console: 'Console',
+  bucket: 'Object storage', person: 'Person', icon: 'Icon', image: 'Picture',
 };
 if (Object.keys(shapeCaptions).sort().join() !== Object.keys(SHAPES).sort().join())
   throw new Error('Every vocabulary shape needs a human demo caption.');
@@ -133,22 +133,22 @@ for (const [title, shapes] of groups) {
   const nodes = shapes.map((shape, i) => ({
     ...sample(shape, shapeCaptions[shape], shape,
       shape === 'image' ? picture('globe') : shape === 'icon' ? { kind: 'emoji', text: '🎨' } : undefined, i),
-    description: [SHAPES[shape], `Точна стойност: shape: "${shape}".`],
+    description: [SHAPES[shape], `Exact value: shape: "${shape}".`],
   }));
-  flow(`demo-${n}-shapes`, `${n} · Форми: ${title}`, nodes, grid(nodes),
-    'Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията.');
+  flow(`demo-${n}-shapes`, `${n} · Shapes: ${title}`, nodes, grid(nodes),
+    'Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery.');
 }
 
 {
   const n = number();
   const lineNodes = LINE_STYLES.flatMap((line, i) => [
     sample(`${line}-from`, line, 'rounded', builtin('send'), i),
-    sample(`${line}-to`, line === 'invisible' ? 'Само подреждане' : 'Приемник', 'rounded', builtin('check'), i),
+    sample(`${line}-to`, line === 'invisible' ? 'Layout only' : 'Receiver', 'rounded', builtin('check'), i),
   ]);
-  flow(`demo-${n}-lines`, `${n} · Линии, дебелини и краища`, lineNodes, LINE_STYLES.map((line, i) => ({
+  flow(`demo-${n}-lines`, `${n} · Lines, widths and ends`, lineNodes, LINE_STYLES.map((line, i) => ({
     from: `${line}-from`, to: `${line}-to`, type: i === 3 ? 'return' : i === 2 ? 'branch' : 'flow',
     label: line, style: { line, width: i % 2 ? 'thick' : 'normal', start: END_MARKERS[i % 4], end: END_MARKERS[(i + 1) % 4] },
-  })), 'Всичките шест стила, normal/thick и arrow/none/circle/cross. Invisible подрежда елементите, без видима линия.', 'LR');
+  })), 'All six styles, normal/thick and arrow/none/circle/cross. Invisible arranges elements without a visible line.', 'LR');
 }
 
 for (let page = 0; page < 5; page++) {
@@ -157,22 +157,22 @@ for (let page = 0; page < 5; page++) {
     ...sample(name, name, 'rounded', builtin(name), i),
     description: [ICONS[name].description, `icon: {kind: "builtin", name: "${name}"}`],
   }));
-  flow(`demo-${n}-icons`, `${n} · Иконки ${page * 10 + 1}–${page * 10 + nodes.length}`, nodes, grid(nodes),
-    'Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details.');
+  flow(`demo-${n}-icons`, `${n} · Icons ${page * 10 + 1}–${page * 10 + nodes.length}`, nodes, grid(nodes),
+    'A gallery of the built-in icons (Lucide). The caption is the exact icon.name; its meaning is in Details.');
 }
 
 docs.push({
   $schema: '../../schema/sequence.schema.json', version: '1', kind: 'sequence',
-  id: 'demo-18-execution', title: '18 · Sequence: заявка към банковия API', actors: actors.slice(1, 4),
-  overview: ['Drill от „Банков API“. Nested calls, self-call, async известие, request/response, две фази.'],
-  phases: [{ id: 'authorize', label: 'Оторизация' }, { id: 'record', label: 'Запис' }],
+  id: 'demo-18-execution', title: '18 · Sequence: bank API request', actors: actors.slice(1, 4),
+  overview: ['Drill-down from “Bank API”. Nested calls, a self-call, an async notification, request/response and two phases.'],
+  phases: [{ id: 'authorize', label: 'Authorization' }, { id: 'record', label: 'Recording' }],
   calls: [{ id: 'charge', from: 'shop', to: 'payment', method: 'charge', phase: 'authorize',
-    description: ['Магазинът иска плащане.'], request: '{ amount: 4990, currency: "BGN" }', response: '{ status: "approved" }',
+    description: ['The shop requests a payment.'], request: '{ amount: 4990, currency: "EUR" }', response: '{ status: "approved" }',
     returnType: 'Charge', children: [
-      { id: 'validate', from: 'payment', to: 'payment', method: 'validateToken', phase: 'authorize', description: ['Self-call: проверка на токена.'] },
-      { id: 'limits', from: 'payment', to: 'data', method: 'readLimits', phase: 'authorize', description: ['Лимити на клиента.'], returnType: 'Limits' },
-      { id: 'persist', from: 'payment', to: 'data', method: 'saveCharge', phase: 'record', description: ['Запис на плащането.'], returnType: 'ChargeId' },
-      { id: 'notify', from: 'payment', to: 'shop', method: 'chargeSucceeded', phase: 'record', async: true, description: ['Асинхронно събитие към магазина.'] },
+      { id: 'validate', from: 'payment', to: 'payment', method: 'validateToken', phase: 'authorize', description: ['Self-call: token validation.'] },
+      { id: 'limits', from: 'payment', to: 'data', method: 'readLimits', phase: 'authorize', description: ['The customer’s limits.'], returnType: 'Limits' },
+      { id: 'persist', from: 'payment', to: 'data', method: 'saveCharge', phase: 'record', description: ['Records the payment.'], returnType: 'ChargeId' },
+      { id: 'notify', from: 'payment', to: 'shop', method: 'chargeSucceeded', phase: 'record', async: true, description: ['Asynchronous event to the shop.'] },
     ],
   }],
 });

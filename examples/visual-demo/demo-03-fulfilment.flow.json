@@ -2,25 +2,25 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-03-fulfilment",
-  "title": "03 · Склад и доставка",
+  "title": "03 · Warehouse and delivery",
   "layout": "LR",
   "overview": [
-    "Картинки: duotone илюстрации в същата геометрия като иконките, emoji и документ."
+    "Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -28,10 +28,10 @@
     {
       "id": "pick",
       "type": "step",
-      "label": "Събиране от рафта",
+      "label": "Pick from shelf",
       "owner": "warehouse",
       "description": [
-        "Складът събира продуктите по списъка."
+        "The warehouse picks the products on the list."
       ],
       "shape": "image",
       "icon": {
@@ -72,10 +72,10 @@
     {
       "id": "pack",
       "type": "step",
-      "label": "Опаковане",
+      "label": "Packing",
       "owner": "warehouse",
       "description": [
-        "Продуктите се опаковат и пратката се етикетира."
+        "The products are packed and the parcel is labelled."
       ],
       "shape": "image",
       "icon": {
@@ -122,10 +122,10 @@
     {
       "id": "label",
       "type": "step",
-      "label": "Товарителница",
+      "label": "Shipping label",
       "owner": "delivery",
       "description": [
-        "Куриерът генерира товарителница."
+        "The courier generates the shipping label."
       ],
       "shape": "doc",
       "icon": {
@@ -136,10 +136,10 @@
     {
       "id": "courier",
       "type": "step",
-      "label": "Куриерът тръгва",
+      "label": "Courier departs",
       "owner": "delivery",
       "description": [
-        "Пратката е на път."
+        "The parcel is on its way."
       ],
       "shape": "image",
       "icon": {
@@ -174,10 +174,10 @@
     {
       "id": "track",
       "type": "step",
-      "label": "Проследяване",
+      "label": "Tracking",
       "owner": "customer",
       "description": [
-        "Клиентът следи пратката."
+        "The customer tracks the parcel."
       ],
       "shape": "image",
       "icon": {
@@ -212,10 +212,10 @@
     {
       "id": "handover",
       "type": "step",
-      "label": "Предаване",
+      "label": "Handover",
       "owner": "customer",
       "description": [
-        "Пратката е при клиента."
+        "The parcel reaches the customer."
       ],
       "shape": "icon",
       "icon": {
@@ -244,7 +244,7 @@
       "from": "courier",
       "to": "track",
       "type": "flow",
-      "label": "известие",
+      "label": "notification",
       "style": {
         "line": "dotted"
       }

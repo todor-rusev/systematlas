@@ -3,35 +3,35 @@
   "version": "1",
   "kind": "sequence",
   "id": "demo-18-execution",
-  "title": "18 · Sequence: заявка към банковия API",
+  "title": "18 · Sequence: bank API request",
   "actors": [
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     }
   ],
   "overview": [
-    "Drill от „Банков API“. Nested calls, self-call, async известие, request/response, две фази."
+    "Drill-down from “Bank API”. Nested calls, a self-call, an async notification, request/response and two phases."
   ],
   "phases": [
     {
       "id": "authorize",
-      "label": "Оторизация"
+      "label": "Authorization"
     },
     {
       "id": "record",
-      "label": "Запис"
+      "label": "Recording"
     }
   ],
   "calls": [
@@ -42,9 +42,9 @@
       "method": "charge",
       "phase": "authorize",
       "description": [
-        "Магазинът иска плащане."
+        "The shop requests a payment."
       ],
-      "request": "{ amount: 4990, currency: \"BGN\" }",
+      "request": "{ amount: 4990, currency: \"EUR\" }",
       "response": "{ status: \"approved\" }",
       "returnType": "Charge",
       "children": [
@@ -55,7 +55,7 @@
           "method": "validateToken",
           "phase": "authorize",
           "description": [
-            "Self-call: проверка на токена."
+            "Self-call: token validation."
           ]
         },
         {
@@ -65,7 +65,7 @@
           "method": "readLimits",
           "phase": "authorize",
           "description": [
-            "Лимити на клиента."
+            "The customer’s limits."
           ],
           "returnType": "Limits"
         },
@@ -76,7 +76,7 @@
           "method": "saveCharge",
           "phase": "record",
           "description": [
-            "Запис на плащането."
+            "Records the payment."
           ],
           "returnType": "ChargeId"
         },
@@ -88,7 +88,7 @@
           "phase": "record",
           "async": true,
           "description": [
-            "Асинхронно събитие към магазина."
+            "Asynchronous event to the shop."
           ]
         }
       ]

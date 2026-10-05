@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-05-shapes",
-  "title": "05 · Форми: Данни и съхранение",
+  "title": "05 · Shapes: Data and storage",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,89 +43,89 @@
     {
       "id": "lean-r",
       "type": "step",
-      "label": "Вход / изход",
+      "label": "Input / output",
       "shape": "lean-r",
       "owner": "customer",
       "description": [
         "Data input/output",
-        "Точна стойност: shape: \"lean-r\"."
+        "Exact value: shape: \"lean-r\"."
       ]
     },
     {
       "id": "lean-l",
       "type": "step",
-      "label": "Изход / вход",
+      "label": "Output / input",
       "shape": "lean-l",
       "owner": "shop",
       "description": [
         "Data output/input",
-        "Точна стойност: shape: \"lean-l\"."
+        "Exact value: shape: \"lean-l\"."
       ]
     },
     {
       "id": "cyl",
       "type": "step",
-      "label": "База данни",
+      "label": "Database",
       "shape": "cyl",
       "owner": "payment",
       "description": [
         "Database",
-        "Точна стойност: shape: \"cyl\"."
+        "Exact value: shape: \"cyl\"."
       ]
     },
     {
       "id": "h-cyl",
       "type": "step",
-      "label": "Пряк достъп",
+      "label": "Direct access",
       "shape": "h-cyl",
       "owner": "data",
       "description": [
         "Direct-access storage",
-        "Точна стойност: shape: \"h-cyl\"."
+        "Exact value: shape: \"h-cyl\"."
       ]
     },
     {
       "id": "lin-cyl",
       "type": "step",
-      "label": "Дисково съхранение",
+      "label": "Disk storage",
       "shape": "lin-cyl",
       "owner": "warehouse",
       "description": [
         "Disk storage",
-        "Точна стойност: shape: \"lin-cyl\"."
+        "Exact value: shape: \"lin-cyl\"."
       ]
     },
     {
       "id": "bow-rect",
       "type": "step",
-      "label": "Запазени данни",
+      "label": "Stored data",
       "shape": "bow-rect",
       "owner": "delivery",
       "description": [
         "Stored data",
-        "Точна стойност: shape: \"bow-rect\"."
+        "Exact value: shape: \"bow-rect\"."
       ]
     },
     {
       "id": "datastore",
       "type": "step",
-      "label": "Хранилище",
+      "label": "Data store",
       "shape": "datastore",
       "owner": "customer",
       "description": [
         "Data store",
-        "Точна стойност: shape: \"datastore\"."
+        "Exact value: shape: \"datastore\"."
       ]
     },
     {
       "id": "cache",
       "type": "step",
-      "label": "Кеш",
+      "label": "Cache",
       "shape": "cache",
       "owner": "shop",
       "description": [
         "Cache",
-        "Точна стойност: shape: \"cache\"."
+        "Exact value: shape: \"cache\"."
       ]
     }
   ],
@@ -139,7 +139,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -151,7 +151,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -163,7 +163,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -175,7 +175,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -187,7 +187,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]

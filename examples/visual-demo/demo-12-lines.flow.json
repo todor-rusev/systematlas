@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-12-lines",
-  "title": "12 · Линии, дебелини и краища",
+  "title": "12 · Lines, widths and ends",
   "layout": "LR",
   "overview": [
-    "Всичките шест стила, normal/thick и arrow/none/circle/cross. Invisible подрежда елементите, без видима линия."
+    "All six styles, normal/thick and arrow/none/circle/cross. Invisible arranges elements without a visible line."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -51,13 +51,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: solid."
+        "Demo element: solid."
       ]
     },
     {
       "id": "solid-to",
       "type": "step",
-      "label": "Приемник",
+      "label": "Receiver",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
@@ -65,7 +65,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Приемник."
+        "Demo element: Receiver."
       ]
     },
     {
@@ -79,13 +79,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: dashed."
+        "Demo element: dashed."
       ]
     },
     {
       "id": "dashed-to",
       "type": "step",
-      "label": "Приемник",
+      "label": "Receiver",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
@@ -93,7 +93,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Приемник."
+        "Demo element: Receiver."
       ]
     },
     {
@@ -107,13 +107,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: dotted."
+        "Demo element: dotted."
       ]
     },
     {
       "id": "dotted-to",
       "type": "step",
-      "label": "Приемник",
+      "label": "Receiver",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
@@ -121,7 +121,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Приемник."
+        "Demo element: Receiver."
       ]
     },
     {
@@ -135,13 +135,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: dash-dot."
+        "Demo element: dash-dot."
       ]
     },
     {
       "id": "dash-dot-to",
       "type": "step",
-      "label": "Приемник",
+      "label": "Receiver",
       "shape": "rounded",
       "owner": "data",
       "icon": {
@@ -149,7 +149,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Приемник."
+        "Demo element: Receiver."
       ]
     },
     {
@@ -163,13 +163,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: double."
+        "Demo element: double."
       ]
     },
     {
       "id": "double-to",
       "type": "step",
-      "label": "Приемник",
+      "label": "Receiver",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
@@ -177,7 +177,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Приемник."
+        "Demo element: Receiver."
       ]
     },
     {
@@ -191,13 +191,13 @@
         "name": "send"
       },
       "description": [
-        "Демонстрационен елемент: invisible."
+        "Demo element: invisible."
       ]
     },
     {
       "id": "invisible-to",
       "type": "step",
-      "label": "Само подреждане",
+      "label": "Layout only",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
@@ -205,7 +205,7 @@
         "name": "check"
       },
       "description": [
-        "Демонстрационен елемент: Само подреждане."
+        "Demo element: Layout only."
       ]
     }
   ],

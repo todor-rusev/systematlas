@@ -2,40 +2,40 @@
   "$schema": "../../schema/flow.schema.json",
   "version": "1",
   "id": "demo-04-shapes",
-  "title": "04 · Форми: Процеси и решения",
+  "title": "04 · Shapes: Processes and decisions",
   "layout": "TB",
   "overview": [
-    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+    "Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery."
   ],
   "actors": [
     {
       "id": "customer",
-      "label": "Клиент",
+      "label": "Customer",
       "kind": "human"
     },
     {
       "id": "shop",
-      "label": "Онлайн магазин",
+      "label": "Online shop",
       "kind": "service"
     },
     {
       "id": "payment",
-      "label": "Плащания",
+      "label": "Payments",
       "kind": "service"
     },
     {
       "id": "data",
-      "label": "Данни",
+      "label": "Data",
       "kind": "infra"
     },
     {
       "id": "warehouse",
-      "label": "Склад",
+      "label": "Warehouse",
       "kind": "system"
     },
     {
       "id": "delivery",
-      "label": "Куриер",
+      "label": "Courier",
       "kind": "service"
     }
   ],
@@ -43,78 +43,78 @@
     {
       "id": "rect",
       "type": "step",
-      "label": "Процес",
+      "label": "Process",
       "shape": "rect",
       "owner": "customer",
       "description": [
         "Process / action",
-        "Точна стойност: shape: \"rect\"."
+        "Exact value: shape: \"rect\"."
       ]
     },
     {
       "id": "rounded",
       "type": "step",
-      "label": "Събитие",
+      "label": "Event",
       "shape": "rounded",
       "owner": "shop",
       "description": [
         "Event / rounded process",
-        "Точна стойност: shape: \"rounded\"."
+        "Exact value: shape: \"rounded\"."
       ]
     },
     {
       "id": "stadium",
       "type": "step",
-      "label": "Начало / край",
+      "label": "Start / end",
       "shape": "stadium",
       "owner": "payment",
       "description": [
         "Start or end",
-        "Точна стойност: shape: \"stadium\"."
+        "Exact value: shape: \"stadium\"."
       ]
     },
     {
       "id": "diam",
       "type": "step",
-      "label": "Решение",
+      "label": "Decision",
       "shape": "diam",
       "owner": "data",
       "description": [
         "Decision",
-        "Точна стойност: shape: \"diam\"."
+        "Exact value: shape: \"diam\"."
       ]
     },
     {
       "id": "fr-rect",
       "type": "step",
-      "label": "Подпроцес",
+      "label": "Subprocess",
       "shape": "fr-rect",
       "owner": "warehouse",
       "description": [
         "Subprocess",
-        "Точна стойност: shape: \"fr-rect\"."
+        "Exact value: shape: \"fr-rect\"."
       ]
     },
     {
       "id": "hex",
       "type": "step",
-      "label": "Подготовка",
+      "label": "Preparation",
       "shape": "hex",
       "owner": "delivery",
       "description": [
         "Preparation",
-        "Точна стойност: shape: \"hex\"."
+        "Exact value: shape: \"hex\"."
       ]
     },
     {
       "id": "odd",
       "type": "step",
-      "label": "Асиметричен процес",
+      "label": "Asymmetric process",
       "shape": "odd",
       "owner": "customer",
       "description": [
         "Asymmetric process",
-        "Точна стойност: shape: \"odd\"."
+        "Exact value: shape: \"odd\"."
       ]
     }
   ],
@@ -128,7 +128,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -140,7 +140,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -152,7 +152,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     },
     {
@@ -164,7 +164,7 @@
         "end": "none"
       },
       "description": [
-        "Само за подреждане на галерията; не описва реален процес."
+        "Only arranges the gallery; it does not describe a real process."
       ]
     }
   ]
