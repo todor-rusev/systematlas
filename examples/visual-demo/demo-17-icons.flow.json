@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-17-icons",
+  "title": "17 · Иконки 41–50",
+  "layout": "TB",
+  "overview": [
+    "Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "trash",
+      "type": "step",
+      "label": "trash",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "trash"
+      },
+      "description": [
+        "Delete / discard",
+        "icon: {kind: \"builtin\", name: \"trash\"}"
+      ]
+    },
+    {
+      "id": "edit",
+      "type": "step",
+      "label": "edit",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "edit"
+      },
+      "description": [
+        "Edit / update",
+        "icon: {kind: \"builtin\", name: \"edit\"}"
+      ]
+    },
+    {
+      "id": "play",
+      "type": "step",
+      "label": "play",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "play"
+      },
+      "description": [
+        "Start / execute",
+        "icon: {kind: \"builtin\", name: \"play\"}"
+      ]
+    },
+    {
+      "id": "pause",
+      "type": "step",
+      "label": "pause",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "pause"
+      },
+      "description": [
+        "Pause / wait",
+        "icon: {kind: \"builtin\", name: \"pause\"}"
+      ]
+    },
+    {
+      "id": "stop",
+      "type": "step",
+      "label": "stop",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "stop"
+      },
+      "description": [
+        "Stop / finish",
+        "icon: {kind: \"builtin\", name: \"stop\"}"
+      ]
+    },
+    {
+      "id": "eye",
+      "type": "step",
+      "label": "eye",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "eye"
+      },
+      "description": [
+        "Observe / inspect",
+        "icon: {kind: \"builtin\", name: \"eye\"}"
+      ]
+    },
+    {
+      "id": "chart",
+      "type": "step",
+      "label": "chart",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "chart"
+      },
+      "description": [
+        "Metrics / analysis",
+        "icon: {kind: \"builtin\", name: \"chart\"}"
+      ]
+    },
+    {
+      "id": "package",
+      "type": "step",
+      "label": "package",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "package"
+      },
+      "description": [
+        "Package / artifact",
+        "icon: {kind: \"builtin\", name: \"package\"}"
+      ]
+    },
+    {
+      "id": "bolt",
+      "type": "step",
+      "label": "bolt",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "bolt"
+      },
+      "description": [
+        "Signal / trigger / energy",
+        "icon: {kind: \"builtin\", name: \"bolt\"}"
+      ]
+    },
+    {
+      "id": "heart",
+      "type": "step",
+      "label": "heart",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "heart"
+      },
+      "description": [
+        "Health / heartbeat",
+        "icon: {kind: \"builtin\", name: \"heart\"}"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "trash",
+      "to": "pause",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "edit",
+      "to": "stop",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "play",
+      "to": "eye",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "pause",
+      "to": "chart",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "stop",
+      "to": "package",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "eye",
+      "to": "bolt",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "chart",
+      "to": "heart",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

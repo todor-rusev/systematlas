@@ -1,0 +1,179 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-01-order",
+  "title": "01 · Поръчка в онлайн магазин",
+  "layout": "TB",
+  "overview": [
+    "Завършен процес в шест стъпки: решение, отказ, асинхронно известие и два drill-down към под-процеси (Плащане води и до Sequence; базата и опашката са там)."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "order",
+      "type": "terminal",
+      "label": "Клиентът поръчва",
+      "owner": "customer",
+      "description": [
+        "Клиентът избира продукти и натиска „Поръчай“."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "user"
+      }
+    },
+    {
+      "id": "checkout",
+      "type": "step",
+      "label": "Количка и адрес",
+      "owner": "shop",
+      "description": [
+        "Магазинът събира количката, адреса и начина на доставка."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "browser"
+      }
+    },
+    {
+      "id": "pay",
+      "type": "subflow",
+      "label": "Плащане",
+      "owner": "payment",
+      "description": [
+        "Плащането е отделен процес: Open показва стъпките му."
+      ],
+      "subflow": "demo-02-payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "lock"
+      }
+    },
+    {
+      "id": "approved",
+      "type": "decision",
+      "label": "Одобрено?",
+      "owner": "payment",
+      "description": [
+        "Резултатът от плащането решава пътя."
+      ]
+    },
+    {
+      "id": "declined",
+      "type": "terminal",
+      "label": "Отказано",
+      "owner": "customer",
+      "description": [
+        "Клиентът вижда причината и може да опита пак."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "error"
+      }
+    },
+    {
+      "id": "fulfil",
+      "type": "subflow",
+      "label": "Склад и доставка",
+      "owner": "warehouse",
+      "description": [
+        "Опаковане и доставка: Open показва картинките на процеса."
+      ],
+      "subflow": "demo-03-fulfilment",
+      "icon": {
+        "kind": "builtin",
+        "name": "package"
+      }
+    },
+    {
+      "id": "mail",
+      "type": "step",
+      "label": "Имейл: пратката е тръгнала",
+      "owner": "shop",
+      "description": [
+        "Изпраща се асинхронно; не спира процеса."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "mail"
+      }
+    },
+    {
+      "id": "done",
+      "type": "terminal",
+      "label": "Доставено",
+      "owner": "customer",
+      "description": [
+        "Клиентът получава пратката."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "order",
+      "to": "checkout",
+      "type": "flow"
+    },
+    {
+      "from": "checkout",
+      "to": "pay",
+      "type": "flow"
+    },
+    {
+      "from": "pay",
+      "to": "approved",
+      "type": "flow"
+    },
+    {
+      "from": "approved",
+      "to": "fulfil",
+      "type": "branch",
+      "label": "да"
+    },
+    {
+      "from": "approved",
+      "to": "declined",
+      "type": "branch",
+      "label": "не"
+    },
+    {
+      "from": "fulfil",
+      "to": "done",
+      "type": "flow"
+    },
+    {
+      "from": "fulfil",
+      "to": "mail",
+      "type": "flow",
+      "label": "async",
+      "style": {
+        "line": "dotted"
+      }
+    }
+  ]
+}

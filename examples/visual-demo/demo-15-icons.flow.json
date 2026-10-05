@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-15-icons",
+  "title": "15 · Иконки 21–30",
+  "layout": "TB",
+  "overview": [
+    "Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "download",
+      "type": "step",
+      "label": "download",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "download"
+      },
+      "description": [
+        "Receive / download",
+        "icon: {kind: \"builtin\", name: \"download\"}"
+      ]
+    },
+    {
+      "id": "upload",
+      "type": "step",
+      "label": "upload",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "upload"
+      },
+      "description": [
+        "Publish / upload",
+        "icon: {kind: \"builtin\", name: \"upload\"}"
+      ]
+    },
+    {
+      "id": "search",
+      "type": "step",
+      "label": "search",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "search"
+      },
+      "description": [
+        "Search / lookup",
+        "icon: {kind: \"builtin\", name: \"search\"}"
+      ]
+    },
+    {
+      "id": "filter",
+      "type": "step",
+      "label": "filter",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "filter"
+      },
+      "description": [
+        "Filter / selection",
+        "icon: {kind: \"builtin\", name: \"filter\"}"
+      ]
+    },
+    {
+      "id": "check",
+      "type": "step",
+      "label": "check",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Validation / completion",
+        "icon: {kind: \"builtin\", name: \"check\"}"
+      ]
+    },
+    {
+      "id": "error",
+      "type": "step",
+      "label": "error",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "error"
+      },
+      "description": [
+        "Failure / rejection",
+        "icon: {kind: \"builtin\", name: \"error\"}"
+      ]
+    },
+    {
+      "id": "warning",
+      "type": "step",
+      "label": "warning",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "warning"
+      },
+      "description": [
+        "Warning / attention",
+        "icon: {kind: \"builtin\", name: \"warning\"}"
+      ]
+    },
+    {
+      "id": "info",
+      "type": "step",
+      "label": "info",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "info"
+      },
+      "description": [
+        "Information / explanation",
+        "icon: {kind: \"builtin\", name: \"info\"}"
+      ]
+    },
+    {
+      "id": "lock",
+      "type": "step",
+      "label": "lock",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "lock"
+      },
+      "description": [
+        "Lock / access control",
+        "icon: {kind: \"builtin\", name: \"lock\"}"
+      ]
+    },
+    {
+      "id": "shield",
+      "type": "step",
+      "label": "shield",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "shield"
+      },
+      "description": [
+        "Security / policy",
+        "icon: {kind: \"builtin\", name: \"shield\"}"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "download",
+      "to": "filter",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "upload",
+      "to": "check",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "search",
+      "to": "error",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "filter",
+      "to": "warning",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "check",
+      "to": "info",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "error",
+      "to": "lock",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "warning",
+      "to": "shield",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

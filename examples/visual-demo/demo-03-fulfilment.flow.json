@@ -1,0 +1,258 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-03-fulfilment",
+  "title": "03 · Склад и доставка",
+  "layout": "LR",
+  "overview": [
+    "Картинки: duotone илюстрации в същата геометрия като иконките, emoji и документ."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pick",
+      "type": "step",
+      "label": "Събиране от рафта",
+      "owner": "warehouse",
+      "description": [
+        "Складът събира продуктите по списъка."
+      ],
+      "shape": "image",
+      "icon": {
+        "kind": "svg",
+        "viewBox": [
+          -6,
+          -6,
+          36,
+          36
+        ],
+        "paths": [
+          {
+            "d": "M-6 12a18 18 0 1 0 36 0a18 18 0 1 0 -36 0",
+            "fill": "#FFFFFF",
+            "stroke": "none"
+          },
+          {
+            "d": "M3 3h18a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-18a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1Z",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M10 12h4",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "pack",
+      "type": "step",
+      "label": "Опаковане",
+      "owner": "warehouse",
+      "description": [
+        "Продуктите се опаковат и пратката се етикетира."
+      ],
+      "shape": "image",
+      "icon": {
+        "kind": "svg",
+        "viewBox": [
+          -6,
+          -6,
+          36,
+          36
+        ],
+        "paths": [
+          {
+            "d": "M-6 12a18 18 0 1 0 36 0a18 18 0 1 0 -36 0",
+            "fill": "#FFFFFF",
+            "stroke": "none"
+          },
+          {
+            "d": "M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M12 22V12",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M3.29 7L12 12L20.71 7",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "m7.5 4.27 9 5.15",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "label",
+      "type": "step",
+      "label": "Товарителница",
+      "owner": "delivery",
+      "description": [
+        "Куриерът генерира товарителница."
+      ],
+      "shape": "doc",
+      "icon": {
+        "kind": "builtin",
+        "name": "file"
+      }
+    },
+    {
+      "id": "courier",
+      "type": "step",
+      "label": "Куриерът тръгва",
+      "owner": "delivery",
+      "description": [
+        "Пратката е на път."
+      ],
+      "shape": "image",
+      "icon": {
+        "kind": "svg",
+        "viewBox": [
+          -6,
+          -6,
+          36,
+          36
+        ],
+        "paths": [
+          {
+            "d": "M-6 12a18 18 0 1 0 36 0a18 18 0 1 0 -36 0",
+            "fill": "#FFFFFF",
+            "stroke": "none"
+          },
+          {
+            "d": "M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "m21.854 2.147-10.94 10.939",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "track",
+      "type": "step",
+      "label": "Проследяване",
+      "owner": "customer",
+      "description": [
+        "Клиентът следи пратката."
+      ],
+      "shape": "image",
+      "icon": {
+        "kind": "svg",
+        "viewBox": [
+          -6,
+          -6,
+          36,
+          36
+        ],
+        "paths": [
+          {
+            "d": "M-6 12a18 18 0 1 0 36 0a18 18 0 1 0 -36 0",
+            "fill": "#FFFFFF",
+            "stroke": "none"
+          },
+          {
+            "d": "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "handover",
+      "type": "step",
+      "label": "Предаване",
+      "owner": "customer",
+      "description": [
+        "Пратката е при клиента."
+      ],
+      "shape": "icon",
+      "icon": {
+        "kind": "emoji",
+        "text": "🎉"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "pick",
+      "to": "pack",
+      "type": "flow"
+    },
+    {
+      "from": "pack",
+      "to": "label",
+      "type": "flow"
+    },
+    {
+      "from": "label",
+      "to": "courier",
+      "type": "flow"
+    },
+    {
+      "from": "courier",
+      "to": "track",
+      "type": "flow",
+      "label": "известие",
+      "style": {
+        "line": "dotted"
+      }
+    },
+    {
+      "from": "courier",
+      "to": "handover",
+      "type": "flow"
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-05-shapes",
+  "title": "05 · Форми: Данни и съхранение",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "lean-r",
+      "type": "step",
+      "label": "Вход / изход",
+      "shape": "lean-r",
+      "owner": "customer",
+      "description": [
+        "Data input/output",
+        "Точна стойност: shape: \"lean-r\"."
+      ]
+    },
+    {
+      "id": "lean-l",
+      "type": "step",
+      "label": "Изход / вход",
+      "shape": "lean-l",
+      "owner": "shop",
+      "description": [
+        "Data output/input",
+        "Точна стойност: shape: \"lean-l\"."
+      ]
+    },
+    {
+      "id": "cyl",
+      "type": "step",
+      "label": "База данни",
+      "shape": "cyl",
+      "owner": "payment",
+      "description": [
+        "Database",
+        "Точна стойност: shape: \"cyl\"."
+      ]
+    },
+    {
+      "id": "h-cyl",
+      "type": "step",
+      "label": "Пряк достъп",
+      "shape": "h-cyl",
+      "owner": "data",
+      "description": [
+        "Direct-access storage",
+        "Точна стойност: shape: \"h-cyl\"."
+      ]
+    },
+    {
+      "id": "lin-cyl",
+      "type": "step",
+      "label": "Дисково съхранение",
+      "shape": "lin-cyl",
+      "owner": "warehouse",
+      "description": [
+        "Disk storage",
+        "Точна стойност: shape: \"lin-cyl\"."
+      ]
+    },
+    {
+      "id": "bow-rect",
+      "type": "step",
+      "label": "Запазени данни",
+      "shape": "bow-rect",
+      "owner": "delivery",
+      "description": [
+        "Stored data",
+        "Точна стойност: shape: \"bow-rect\"."
+      ]
+    },
+    {
+      "id": "datastore",
+      "type": "step",
+      "label": "Хранилище",
+      "shape": "datastore",
+      "owner": "customer",
+      "description": [
+        "Data store",
+        "Точна стойност: shape: \"datastore\"."
+      ]
+    },
+    {
+      "id": "cache",
+      "type": "step",
+      "label": "Кеш",
+      "shape": "cache",
+      "owner": "shop",
+      "description": [
+        "Cache",
+        "Точна стойност: shape: \"cache\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "lean-r",
+      "to": "h-cyl",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "lean-l",
+      "to": "lin-cyl",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "cyl",
+      "to": "bow-rect",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "h-cyl",
+      "to": "datastore",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "lin-cyl",
+      "to": "cache",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

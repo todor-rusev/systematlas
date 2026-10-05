@@ -1,0 +1,186 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-11-shapes",
+  "title": "11 · Форми: Интерфейси и картинки",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "browser",
+      "type": "step",
+      "label": "Браузър",
+      "shape": "browser",
+      "owner": "customer",
+      "description": [
+        "Browser window",
+        "Точна стойност: shape: \"browser\"."
+      ]
+    },
+    {
+      "id": "console",
+      "type": "step",
+      "label": "Console",
+      "shape": "console",
+      "owner": "shop",
+      "description": [
+        "Console window",
+        "Точна стойност: shape: \"console\"."
+      ]
+    },
+    {
+      "id": "bucket",
+      "type": "step",
+      "label": "Обектно хранилище",
+      "shape": "bucket",
+      "owner": "payment",
+      "description": [
+        "Object storage",
+        "Точна стойност: shape: \"bucket\"."
+      ]
+    },
+    {
+      "id": "person",
+      "type": "step",
+      "label": "Човек",
+      "shape": "person",
+      "owner": "data",
+      "description": [
+        "Person",
+        "Точна стойност: shape: \"person\"."
+      ]
+    },
+    {
+      "id": "icon",
+      "type": "step",
+      "label": "Иконка",
+      "shape": "icon",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "emoji",
+        "text": "🎨"
+      },
+      "description": [
+        "Icon with caption",
+        "Точна стойност: shape: \"icon\"."
+      ]
+    },
+    {
+      "id": "image",
+      "type": "step",
+      "label": "Картинка",
+      "shape": "image",
+      "owner": "delivery",
+      "icon": {
+        "kind": "svg",
+        "viewBox": [
+          -6,
+          -6,
+          36,
+          36
+        ],
+        "paths": [
+          {
+            "d": "M-6 12a18 18 0 1 0 36 0a18 18 0 1 0 -36 0",
+            "fill": "#FFFFFF",
+            "stroke": "none"
+          },
+          {
+            "d": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          },
+          {
+            "d": "M2 12h20",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 1.5
+          }
+        ]
+      },
+      "description": [
+        "Custom vector with caption",
+        "Точна стойност: shape: \"image\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "browser",
+      "to": "person",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "console",
+      "to": "icon",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "bucket",
+      "to": "image",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

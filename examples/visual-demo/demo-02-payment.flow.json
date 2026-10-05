@@ -1,0 +1,183 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-02-payment",
+  "title": "02 · Плащане",
+  "layout": "TB",
+  "overview": [
+    "Под-процесът на плащането: кеш, правила, външен API с повторен опит, база и опашка."
+  ],
+  "actors": [
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "type": "terminal",
+      "label": "Сума за плащане",
+      "owner": "shop",
+      "description": [
+        "Сумата и валутата идват от количката."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "play"
+      }
+    },
+    {
+      "id": "token",
+      "type": "step",
+      "label": "Токен на картата",
+      "owner": "payment",
+      "description": [
+        "Запазен токен — картата не се въвежда повторно."
+      ],
+      "shape": "cache",
+      "icon": {
+        "kind": "builtin",
+        "name": "cache"
+      }
+    },
+    {
+      "id": "fraud",
+      "type": "step",
+      "label": "Проверка за измама",
+      "owner": "payment",
+      "description": [
+        "Правила и лимити преди изпращане към банката."
+      ],
+      "shape": "hex",
+      "icon": {
+        "kind": "builtin",
+        "name": "shield"
+      }
+    },
+    {
+      "id": "gateway",
+      "type": "step",
+      "label": "Банков API",
+      "owner": "payment",
+      "description": [
+        "Заявка към платежния доставчик; Open показва точните извиквания."
+      ],
+      "shape": "api",
+      "icon": {
+        "kind": "builtin",
+        "name": "api"
+      },
+      "sequence": "demo-18-execution"
+    },
+    {
+      "id": "ok",
+      "type": "decision",
+      "label": "Успех?",
+      "owner": "payment",
+      "description": [
+        "Отговорът на банката."
+      ]
+    },
+    {
+      "id": "ledger",
+      "type": "step",
+      "label": "Счетоводен запис",
+      "owner": "data",
+      "description": [
+        "Плащането се записва в счетоводната база."
+      ],
+      "shape": "cyl",
+      "icon": {
+        "kind": "builtin",
+        "name": "database"
+      }
+    },
+    {
+      "id": "events",
+      "type": "step",
+      "label": "Опашка за събития",
+      "owner": "data",
+      "description": [
+        "Събитието „платено“ отива към склада и счетоводството."
+      ],
+      "shape": "queue",
+      "icon": {
+        "kind": "builtin",
+        "name": "queue"
+      }
+    },
+    {
+      "id": "end",
+      "type": "terminal",
+      "label": "Платено",
+      "owner": "shop",
+      "description": [
+        "Връща се към основния процес."
+      ],
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "token",
+      "type": "flow"
+    },
+    {
+      "from": "token",
+      "to": "fraud",
+      "type": "flow"
+    },
+    {
+      "from": "fraud",
+      "to": "gateway",
+      "type": "flow"
+    },
+    {
+      "from": "gateway",
+      "to": "ok",
+      "type": "flow"
+    },
+    {
+      "from": "ok",
+      "to": "ledger",
+      "type": "branch",
+      "label": "да"
+    },
+    {
+      "from": "ok",
+      "to": "gateway",
+      "type": "return",
+      "label": "повтори"
+    },
+    {
+      "from": "ledger",
+      "to": "events",
+      "type": "flow",
+      "label": "async",
+      "style": {
+        "line": "dotted"
+      }
+    },
+    {
+      "from": "ledger",
+      "to": "end",
+      "type": "flow"
+    }
+  ]
+}

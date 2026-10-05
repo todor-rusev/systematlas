@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/flow.schema.json",
+  "version": "1",
+  "id": "multilingual",
+  "title": "Multilingual labels",
+  "layout": "TB",
+  "actors": [
+    { "id": "latin", "label": "Latin / Cyrillic", "kind": "service" },
+    { "id": "cjk", "label": "Chinese / Japanese", "kind": "service" },
+    { "id": "rtl", "label": "Arabic / Hebrew", "kind": "service" },
+    { "id": "indic", "label": "Devanagari / Thai", "kind": "service" }
+  ],
+  "nodes": [
+    { "id": "latin", "type": "step", "owner": "latin", "label": "Save the result\nЗапази резултата", "description": ["Latin and Cyrillic labels use the same font settings as Canvas measurement."] },
+    { "id": "cjk", "type": "step", "owner": "cjk", "label": "保存结果\n結果を保存", "description": ["Chinese and Japanese glyphs use installed browser font fallbacks."] },
+    { "id": "rtl", "type": "step", "owner": "rtl", "label": "حفظ النتيجة\nשמירת התוצאה", "description": ["The label determines its own text direction. Diagram layout direction is unchanged."] },
+    { "id": "indic", "type": "step", "owner": "indic", "label": "परिणाम सहेजें\nบันทึกผลลัพธ์", "description": ["Devanagari and Thai use installed browser font fallbacks."] }
+  ],
+  "edges": [
+    { "from": "latin", "to": "cjk", "type": "flow" },
+    { "from": "cjk", "to": "rtl", "type": "flow" },
+    { "from": "rtl", "to": "indic", "type": "flow" }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-04-shapes",
+  "title": "04 · Форми: Процеси и решения",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "rect",
+      "type": "step",
+      "label": "Процес",
+      "shape": "rect",
+      "owner": "customer",
+      "description": [
+        "Process / action",
+        "Точна стойност: shape: \"rect\"."
+      ]
+    },
+    {
+      "id": "rounded",
+      "type": "step",
+      "label": "Събитие",
+      "shape": "rounded",
+      "owner": "shop",
+      "description": [
+        "Event / rounded process",
+        "Точна стойност: shape: \"rounded\"."
+      ]
+    },
+    {
+      "id": "stadium",
+      "type": "step",
+      "label": "Начало / край",
+      "shape": "stadium",
+      "owner": "payment",
+      "description": [
+        "Start or end",
+        "Точна стойност: shape: \"stadium\"."
+      ]
+    },
+    {
+      "id": "diam",
+      "type": "step",
+      "label": "Решение",
+      "shape": "diam",
+      "owner": "data",
+      "description": [
+        "Decision",
+        "Точна стойност: shape: \"diam\"."
+      ]
+    },
+    {
+      "id": "fr-rect",
+      "type": "step",
+      "label": "Подпроцес",
+      "shape": "fr-rect",
+      "owner": "warehouse",
+      "description": [
+        "Subprocess",
+        "Точна стойност: shape: \"fr-rect\"."
+      ]
+    },
+    {
+      "id": "hex",
+      "type": "step",
+      "label": "Подготовка",
+      "shape": "hex",
+      "owner": "delivery",
+      "description": [
+        "Preparation",
+        "Точна стойност: shape: \"hex\"."
+      ]
+    },
+    {
+      "id": "odd",
+      "type": "step",
+      "label": "Асиметричен процес",
+      "shape": "odd",
+      "owner": "customer",
+      "description": [
+        "Asymmetric process",
+        "Точна стойност: shape: \"odd\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "rect",
+      "to": "diam",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "rounded",
+      "to": "fr-rect",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "stadium",
+      "to": "hex",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "diam",
+      "to": "odd",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

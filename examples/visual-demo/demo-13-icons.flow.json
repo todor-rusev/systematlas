@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-13-icons",
+  "title": "13 · Иконки 1–10",
+  "layout": "TB",
+  "overview": [
+    "Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "user",
+      "type": "step",
+      "label": "user",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "user"
+      },
+      "description": [
+        "Person / operator",
+        "icon: {kind: \"builtin\", name: \"user\"}"
+      ]
+    },
+    {
+      "id": "users",
+      "type": "step",
+      "label": "users",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "users"
+      },
+      "description": [
+        "Team",
+        "icon: {kind: \"builtin\", name: \"users\"}"
+      ]
+    },
+    {
+      "id": "settings",
+      "type": "step",
+      "label": "settings",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "settings"
+      },
+      "description": [
+        "Configuration",
+        "icon: {kind: \"builtin\", name: \"settings\"}"
+      ]
+    },
+    {
+      "id": "gear",
+      "type": "step",
+      "label": "gear",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "gear"
+      },
+      "description": [
+        "Processing / mechanism",
+        "icon: {kind: \"builtin\", name: \"gear\"}"
+      ]
+    },
+    {
+      "id": "database",
+      "type": "step",
+      "label": "database",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "database"
+      },
+      "description": [
+        "Database / persistence",
+        "icon: {kind: \"builtin\", name: \"database\"}"
+      ]
+    },
+    {
+      "id": "file",
+      "type": "step",
+      "label": "file",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "file"
+      },
+      "description": [
+        "File / document",
+        "icon: {kind: \"builtin\", name: \"file\"}"
+      ]
+    },
+    {
+      "id": "folder",
+      "type": "step",
+      "label": "folder",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "folder"
+      },
+      "description": [
+        "Directory / collection",
+        "icon: {kind: \"builtin\", name: \"folder\"}"
+      ]
+    },
+    {
+      "id": "queue",
+      "type": "step",
+      "label": "queue",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "queue"
+      },
+      "description": [
+        "Queue / inbox / outbox",
+        "icon: {kind: \"builtin\", name: \"queue\"}"
+      ]
+    },
+    {
+      "id": "clock",
+      "type": "step",
+      "label": "clock",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "clock"
+      },
+      "description": [
+        "Time / timeout",
+        "icon: {kind: \"builtin\", name: \"clock\"}"
+      ]
+    },
+    {
+      "id": "timer",
+      "type": "step",
+      "label": "timer",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "timer"
+      },
+      "description": [
+        "Scheduled event",
+        "icon: {kind: \"builtin\", name: \"timer\"}"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "user",
+      "to": "gear",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "users",
+      "to": "database",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "settings",
+      "to": "file",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "gear",
+      "to": "folder",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "database",
+      "to": "queue",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "file",
+      "to": "clock",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "folder",
+      "to": "timer",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

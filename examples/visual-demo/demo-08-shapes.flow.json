@@ -1,0 +1,171 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-08-shapes",
+  "title": "08 · Форми: Събития и интеграции",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "delay",
+      "type": "step",
+      "label": "Изчакване",
+      "shape": "delay",
+      "owner": "customer",
+      "description": [
+        "Delay",
+        "Точна стойност: shape: \"delay\"."
+      ]
+    },
+    {
+      "id": "tri",
+      "type": "step",
+      "label": "Извличане",
+      "shape": "tri",
+      "owner": "shop",
+      "description": [
+        "Extract",
+        "Точна стойност: shape: \"tri\"."
+      ]
+    },
+    {
+      "id": "flip-tri",
+      "type": "step",
+      "label": "Ръчен архив",
+      "shape": "flip-tri",
+      "owner": "payment",
+      "description": [
+        "Manual file",
+        "Точна стойност: shape: \"flip-tri\"."
+      ]
+    },
+    {
+      "id": "hourglass",
+      "type": "step",
+      "label": "Съпоставяне",
+      "shape": "hourglass",
+      "owner": "data",
+      "description": [
+        "Collate",
+        "Точна стойност: shape: \"hourglass\"."
+      ]
+    },
+    {
+      "id": "queue",
+      "type": "step",
+      "label": "Опашка",
+      "shape": "queue",
+      "owner": "warehouse",
+      "description": [
+        "Message queue",
+        "Точна стойност: shape: \"queue\"."
+      ]
+    },
+    {
+      "id": "timer",
+      "type": "step",
+      "label": "Таймер",
+      "shape": "timer",
+      "owner": "delivery",
+      "description": [
+        "Timer / scheduled event",
+        "Точна стойност: shape: \"timer\"."
+      ]
+    },
+    {
+      "id": "api",
+      "type": "step",
+      "label": "API",
+      "shape": "api",
+      "owner": "customer",
+      "description": [
+        "API endpoint",
+        "Точна стойност: shape: \"api\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "delay",
+      "to": "hourglass",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "tri",
+      "to": "queue",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "flip-tri",
+      "to": "timer",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "hourglass",
+      "to": "api",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

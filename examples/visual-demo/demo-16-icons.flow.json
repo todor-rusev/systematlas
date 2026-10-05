@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-16-icons",
+  "title": "16 · Иконки 31–40",
+  "layout": "TB",
+  "overview": [
+    "Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "key",
+      "type": "step",
+      "label": "key",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "key"
+      },
+      "description": [
+        "Credentials / identity",
+        "icon: {kind: \"builtin\", name: \"key\"}"
+      ]
+    },
+    {
+      "id": "branch",
+      "type": "step",
+      "label": "branch",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "branch"
+      },
+      "description": [
+        "Conditional branching",
+        "icon: {kind: \"builtin\", name: \"branch\"}"
+      ]
+    },
+    {
+      "id": "merge",
+      "type": "step",
+      "label": "merge",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "merge"
+      },
+      "description": [
+        "Merge / join",
+        "icon: {kind: \"builtin\", name: \"merge\"}"
+      ]
+    },
+    {
+      "id": "loop",
+      "type": "step",
+      "label": "loop",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "loop"
+      },
+      "description": [
+        "Loop / retry",
+        "icon: {kind: \"builtin\", name: \"loop\"}"
+      ]
+    },
+    {
+      "id": "link",
+      "type": "step",
+      "label": "link",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "link"
+      },
+      "description": [
+        "Reference / connection",
+        "icon: {kind: \"builtin\", name: \"link\"}"
+      ]
+    },
+    {
+      "id": "globe",
+      "type": "step",
+      "label": "globe",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "globe"
+      },
+      "description": [
+        "Internet / global system",
+        "icon: {kind: \"builtin\", name: \"globe\"}"
+      ]
+    },
+    {
+      "id": "browser",
+      "type": "step",
+      "label": "browser",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "browser"
+      },
+      "description": [
+        "Web UI / browser",
+        "icon: {kind: \"builtin\", name: \"browser\"}"
+      ]
+    },
+    {
+      "id": "cache",
+      "type": "step",
+      "label": "cache",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "cache"
+      },
+      "description": [
+        "Cache / fast storage",
+        "icon: {kind: \"builtin\", name: \"cache\"}"
+      ]
+    },
+    {
+      "id": "memory",
+      "type": "step",
+      "label": "memory",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "memory"
+      },
+      "description": [
+        "Memory / hardware",
+        "icon: {kind: \"builtin\", name: \"memory\"}"
+      ]
+    },
+    {
+      "id": "archive",
+      "type": "step",
+      "label": "archive",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "archive"
+      },
+      "description": [
+        "Archive / retained data",
+        "icon: {kind: \"builtin\", name: \"archive\"}"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "key",
+      "to": "loop",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "branch",
+      "to": "link",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "merge",
+      "to": "globe",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "loop",
+      "to": "browser",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "link",
+      "to": "cache",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "globe",
+      "to": "memory",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "browser",
+      "to": "archive",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

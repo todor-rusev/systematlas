@@ -1,0 +1,171 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-06-shapes",
+  "title": "06 · Форми: Документи и папки",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "doc",
+      "type": "step",
+      "label": "Документ",
+      "shape": "doc",
+      "owner": "customer",
+      "description": [
+        "Document",
+        "Точна стойност: shape: \"doc\"."
+      ]
+    },
+    {
+      "id": "docs",
+      "type": "step",
+      "label": "Документи",
+      "shape": "docs",
+      "owner": "shop",
+      "description": [
+        "Multiple documents",
+        "Точна стойност: shape: \"docs\"."
+      ]
+    },
+    {
+      "id": "lin-doc",
+      "type": "step",
+      "label": "Документ с поле",
+      "shape": "lin-doc",
+      "owner": "payment",
+      "description": [
+        "Lined document",
+        "Точна стойност: shape: \"lin-doc\"."
+      ]
+    },
+    {
+      "id": "tag-doc",
+      "type": "step",
+      "label": "Маркиран документ",
+      "shape": "tag-doc",
+      "owner": "data",
+      "description": [
+        "Tagged document",
+        "Точна стойност: shape: \"tag-doc\"."
+      ]
+    },
+    {
+      "id": "notch-rect",
+      "type": "step",
+      "label": "Карта",
+      "shape": "notch-rect",
+      "owner": "warehouse",
+      "description": [
+        "Card",
+        "Точна стойност: shape: \"notch-rect\"."
+      ]
+    },
+    {
+      "id": "folder",
+      "type": "step",
+      "label": "Папка",
+      "shape": "folder",
+      "owner": "delivery",
+      "description": [
+        "Folder",
+        "Точна стойност: shape: \"folder\"."
+      ]
+    },
+    {
+      "id": "flag",
+      "type": "step",
+      "label": "Хартиена лента",
+      "shape": "flag",
+      "owner": "customer",
+      "description": [
+        "Paper tape",
+        "Точна стойност: shape: \"flag\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "doc",
+      "to": "tag-doc",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "docs",
+      "to": "notch-rect",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "lin-doc",
+      "to": "folder",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "tag-doc",
+      "to": "flag",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

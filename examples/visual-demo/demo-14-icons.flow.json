@@ -1,0 +1,280 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-14-icons",
+  "title": "14 · Иконки 11–20",
+  "layout": "TB",
+  "overview": [
+    "Галерия на вградените иконки (Lucide). Надписът е точният icon.name; значението е в Details."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "calendar",
+      "type": "step",
+      "label": "calendar",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "calendar"
+      },
+      "description": [
+        "Date / schedule",
+        "icon: {kind: \"builtin\", name: \"calendar\"}"
+      ]
+    },
+    {
+      "id": "cloud",
+      "type": "step",
+      "label": "cloud",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "cloud"
+      },
+      "description": [
+        "Cloud / remote service",
+        "icon: {kind: \"builtin\", name: \"cloud\"}"
+      ]
+    },
+    {
+      "id": "server",
+      "type": "step",
+      "label": "server",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "server"
+      },
+      "description": [
+        "Server / host",
+        "icon: {kind: \"builtin\", name: \"server\"}"
+      ]
+    },
+    {
+      "id": "network",
+      "type": "step",
+      "label": "network",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "network"
+      },
+      "description": [
+        "Network / topology",
+        "icon: {kind: \"builtin\", name: \"network\"}"
+      ]
+    },
+    {
+      "id": "api",
+      "type": "step",
+      "label": "api",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "api"
+      },
+      "description": [
+        "API / integration",
+        "icon: {kind: \"builtin\", name: \"api\"}"
+      ]
+    },
+    {
+      "id": "code",
+      "type": "step",
+      "label": "code",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "code"
+      },
+      "description": [
+        "Code / function",
+        "icon: {kind: \"builtin\", name: \"code\"}"
+      ]
+    },
+    {
+      "id": "terminal",
+      "type": "step",
+      "label": "terminal",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "terminal"
+      },
+      "description": [
+        "Command / console",
+        "icon: {kind: \"builtin\", name: \"terminal\"}"
+      ]
+    },
+    {
+      "id": "mail",
+      "type": "step",
+      "label": "mail",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "mail"
+      },
+      "description": [
+        "Message / email",
+        "icon: {kind: \"builtin\", name: \"mail\"}"
+      ]
+    },
+    {
+      "id": "message",
+      "type": "step",
+      "label": "message",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "message"
+      },
+      "description": [
+        "Conversation / notification",
+        "icon: {kind: \"builtin\", name: \"message\"}"
+      ]
+    },
+    {
+      "id": "send",
+      "type": "step",
+      "label": "send",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Send / dispatch",
+        "icon: {kind: \"builtin\", name: \"send\"}"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "calendar",
+      "to": "network",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "cloud",
+      "to": "api",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "server",
+      "to": "code",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "network",
+      "to": "terminal",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "api",
+      "to": "mail",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "code",
+      "to": "message",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "terminal",
+      "to": "send",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

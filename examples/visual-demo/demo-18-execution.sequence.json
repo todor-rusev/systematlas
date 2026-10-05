@@ -1,0 +1,97 @@
+{
+  "$schema": "../../schema/sequence.schema.json",
+  "version": "1",
+  "kind": "sequence",
+  "id": "demo-18-execution",
+  "title": "18 · Sequence: заявка към банковия API",
+  "actors": [
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    }
+  ],
+  "overview": [
+    "Drill от „Банков API“. Nested calls, self-call, async известие, request/response, две фази."
+  ],
+  "phases": [
+    {
+      "id": "authorize",
+      "label": "Оторизация"
+    },
+    {
+      "id": "record",
+      "label": "Запис"
+    }
+  ],
+  "calls": [
+    {
+      "id": "charge",
+      "from": "shop",
+      "to": "payment",
+      "method": "charge",
+      "phase": "authorize",
+      "description": [
+        "Магазинът иска плащане."
+      ],
+      "request": "{ amount: 4990, currency: \"BGN\" }",
+      "response": "{ status: \"approved\" }",
+      "returnType": "Charge",
+      "children": [
+        {
+          "id": "validate",
+          "from": "payment",
+          "to": "payment",
+          "method": "validateToken",
+          "phase": "authorize",
+          "description": [
+            "Self-call: проверка на токена."
+          ]
+        },
+        {
+          "id": "limits",
+          "from": "payment",
+          "to": "data",
+          "method": "readLimits",
+          "phase": "authorize",
+          "description": [
+            "Лимити на клиента."
+          ],
+          "returnType": "Limits"
+        },
+        {
+          "id": "persist",
+          "from": "payment",
+          "to": "data",
+          "method": "saveCharge",
+          "phase": "record",
+          "description": [
+            "Запис на плащането."
+          ],
+          "returnType": "ChargeId"
+        },
+        {
+          "id": "notify",
+          "from": "payment",
+          "to": "shop",
+          "method": "chargeSucceeded",
+          "phase": "record",
+          "async": true,
+          "description": [
+            "Асинхронно събитие към магазина."
+          ]
+        }
+      ]
+    }
+  ]
+}

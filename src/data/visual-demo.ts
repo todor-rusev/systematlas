@@ -1,0 +1,20 @@
+import doc0 from "../../examples/visual-demo/demo-01-order.flow.json";
+import doc1 from "../../examples/visual-demo/demo-02-payment.flow.json";
+import doc2 from "../../examples/visual-demo/demo-03-fulfilment.flow.json";
+import doc3 from "../../examples/visual-demo/demo-04-shapes.flow.json";
+import doc4 from "../../examples/visual-demo/demo-05-shapes.flow.json";
+import doc5 from "../../examples/visual-demo/demo-06-shapes.flow.json";
+import doc6 from "../../examples/visual-demo/demo-07-shapes.flow.json";
+import doc7 from "../../examples/visual-demo/demo-08-shapes.flow.json";
+import doc8 from "../../examples/visual-demo/demo-09-shapes.flow.json";
+import doc9 from "../../examples/visual-demo/demo-10-shapes.flow.json";
+import doc10 from "../../examples/visual-demo/demo-11-shapes.flow.json";
+import doc11 from "../../examples/visual-demo/demo-12-lines.flow.json";
+import doc12 from "../../examples/visual-demo/demo-13-icons.flow.json";
+import doc13 from "../../examples/visual-demo/demo-14-icons.flow.json";
+import doc14 from "../../examples/visual-demo/demo-15-icons.flow.json";
+import doc15 from "../../examples/visual-demo/demo-16-icons.flow.json";
+import doc16 from "../../examples/visual-demo/demo-17-icons.flow.json";
+import doc17 from "../../examples/visual-demo/demo-18-execution.sequence.json";
+
+export const visualDemoDocs = [doc0, doc1, doc2, doc3, doc4, doc5, doc6, doc7, doc8, doc9, doc10, doc11, doc12, doc13, doc14, doc15, doc16, doc17];

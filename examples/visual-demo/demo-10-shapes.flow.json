@@ -1,0 +1,148 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-10-shapes",
+  "title": "10 · Форми: Коментари и контекст",
+  "layout": "TB",
+  "overview": [
+    "Смислови форми с кратки надписи. Изберете елемент за точната shape стойност в Details. Невидимите връзки само подреждат галерията."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "brace",
+      "type": "step",
+      "label": "Коментар отляво",
+      "shape": "brace",
+      "owner": "customer",
+      "description": [
+        "Comment on left",
+        "Точна стойност: shape: \"brace\"."
+      ]
+    },
+    {
+      "id": "brace-r",
+      "type": "step",
+      "label": "Коментар отдясно",
+      "shape": "brace-r",
+      "owner": "shop",
+      "description": [
+        "Comment on right",
+        "Точна стойност: shape: \"brace-r\"."
+      ]
+    },
+    {
+      "id": "braces",
+      "type": "step",
+      "label": "Коментар",
+      "shape": "braces",
+      "owner": "payment",
+      "description": [
+        "Comment on both sides",
+        "Точна стойност: shape: \"braces\"."
+      ]
+    },
+    {
+      "id": "text",
+      "type": "step",
+      "label": "Свободен текст",
+      "shape": "text",
+      "owner": "data",
+      "description": [
+        "Text block",
+        "Точна стойност: shape: \"text\"."
+      ]
+    },
+    {
+      "id": "cloud",
+      "type": "step",
+      "label": "Облак",
+      "shape": "cloud",
+      "owner": "warehouse",
+      "description": [
+        "Cloud",
+        "Точна стойност: shape: \"cloud\"."
+      ]
+    },
+    {
+      "id": "curv-trap",
+      "type": "step",
+      "label": "Екран",
+      "shape": "curv-trap",
+      "owner": "delivery",
+      "description": [
+        "Display",
+        "Точна стойност: shape: \"curv-trap\"."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "brace",
+      "to": "text",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "brace-r",
+      "to": "cloud",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    },
+    {
+      "from": "braces",
+      "to": "curv-trap",
+      "type": "flow",
+      "style": {
+        "line": "invisible",
+        "end": "none"
+      },
+      "description": [
+        "Само за подреждане на галерията; не описва реален процес."
+      ]
+    }
+  ]
+}

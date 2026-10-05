@@ -1,0 +1,286 @@
+{
+  "$schema": "../../schema/flow.schema.json",
+  "version": "1",
+  "id": "demo-12-lines",
+  "title": "12 · Линии, дебелини и краища",
+  "layout": "LR",
+  "overview": [
+    "Всичките шест стила, normal/thick и arrow/none/circle/cross. Invisible подрежда елементите, без видима линия."
+  ],
+  "actors": [
+    {
+      "id": "customer",
+      "label": "Клиент",
+      "kind": "human"
+    },
+    {
+      "id": "shop",
+      "label": "Онлайн магазин",
+      "kind": "service"
+    },
+    {
+      "id": "payment",
+      "label": "Плащания",
+      "kind": "service"
+    },
+    {
+      "id": "data",
+      "label": "Данни",
+      "kind": "infra"
+    },
+    {
+      "id": "warehouse",
+      "label": "Склад",
+      "kind": "system"
+    },
+    {
+      "id": "delivery",
+      "label": "Куриер",
+      "kind": "service"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "solid-from",
+      "type": "step",
+      "label": "solid",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: solid."
+      ]
+    },
+    {
+      "id": "solid-to",
+      "type": "step",
+      "label": "Приемник",
+      "shape": "rounded",
+      "owner": "customer",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Приемник."
+      ]
+    },
+    {
+      "id": "dashed-from",
+      "type": "step",
+      "label": "dashed",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: dashed."
+      ]
+    },
+    {
+      "id": "dashed-to",
+      "type": "step",
+      "label": "Приемник",
+      "shape": "rounded",
+      "owner": "shop",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Приемник."
+      ]
+    },
+    {
+      "id": "dotted-from",
+      "type": "step",
+      "label": "dotted",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: dotted."
+      ]
+    },
+    {
+      "id": "dotted-to",
+      "type": "step",
+      "label": "Приемник",
+      "shape": "rounded",
+      "owner": "payment",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Приемник."
+      ]
+    },
+    {
+      "id": "dash-dot-from",
+      "type": "step",
+      "label": "dash-dot",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: dash-dot."
+      ]
+    },
+    {
+      "id": "dash-dot-to",
+      "type": "step",
+      "label": "Приемник",
+      "shape": "rounded",
+      "owner": "data",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Приемник."
+      ]
+    },
+    {
+      "id": "double-from",
+      "type": "step",
+      "label": "double",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: double."
+      ]
+    },
+    {
+      "id": "double-to",
+      "type": "step",
+      "label": "Приемник",
+      "shape": "rounded",
+      "owner": "warehouse",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Приемник."
+      ]
+    },
+    {
+      "id": "invisible-from",
+      "type": "step",
+      "label": "invisible",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "send"
+      },
+      "description": [
+        "Демонстрационен елемент: invisible."
+      ]
+    },
+    {
+      "id": "invisible-to",
+      "type": "step",
+      "label": "Само подреждане",
+      "shape": "rounded",
+      "owner": "delivery",
+      "icon": {
+        "kind": "builtin",
+        "name": "check"
+      },
+      "description": [
+        "Демонстрационен елемент: Само подреждане."
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "solid-from",
+      "to": "solid-to",
+      "type": "flow",
+      "label": "solid",
+      "style": {
+        "line": "solid",
+        "width": "normal",
+        "start": "arrow",
+        "end": "none"
+      }
+    },
+    {
+      "from": "dashed-from",
+      "to": "dashed-to",
+      "type": "flow",
+      "label": "dashed",
+      "style": {
+        "line": "dashed",
+        "width": "thick",
+        "start": "none",
+        "end": "circle"
+      }
+    },
+    {
+      "from": "dotted-from",
+      "to": "dotted-to",
+      "type": "branch",
+      "label": "dotted",
+      "style": {
+        "line": "dotted",
+        "width": "normal",
+        "start": "circle",
+        "end": "cross"
+      }
+    },
+    {
+      "from": "dash-dot-from",
+      "to": "dash-dot-to",
+      "type": "return",
+      "label": "dash-dot",
+      "style": {
+        "line": "dash-dot",
+        "width": "thick",
+        "start": "cross",
+        "end": "arrow"
+      }
+    },
+    {
+      "from": "double-from",
+      "to": "double-to",
+      "type": "flow",
+      "label": "double",
+      "style": {
+        "line": "double",
+        "width": "normal",
+        "start": "arrow",
+        "end": "none"
+      }
+    },
+    {
+      "from": "invisible-from",
+      "to": "invisible-to",
+      "type": "flow",
+      "label": "invisible",
+      "style": {
+        "line": "invisible",
+        "width": "thick",
+        "start": "none",
+        "end": "circle"
+      }
+    }
+  ]
+}
