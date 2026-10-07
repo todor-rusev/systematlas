@@ -12,23 +12,23 @@ const HR: Actor = { id: "hr", label: "HR", kind: "human" };
 const step = (id: string, label: string, extra: Partial<FlowNode> = {}): FlowNode => ({
   id,
   type: "step",
-  label,
+  text: label,
   owner: "dir",
-  description: [label],
+  details: label,
   ...extra,
 });
                                                                      
 function process(id: string, node: FlowNode, actors: Actor[] = [DIRECTOR, HR]): FlowDocument {
   return {
-    version: "1",
+    version: "2",
     id,
     title: id,
     actors,
     nodes: [
-      { id: "start", type: "terminal", label: "Start", description: ["entry"] },
-      { id: "collect", type: "step", label: "Collect documents", owner: "hr", description: ["collects"] },
+      { id: "start", type: "terminal", text: "Start", details: "entry" },
+      { id: "collect", type: "step", text: "Collect documents", owner: "hr", details: "collects" },
       node,
-      { id: "done", type: "terminal", label: "Done", description: ["exit"] },
+      { id: "done", type: "terminal", text: "Done", details: "exit" },
     ],
     edges: [
       { from: "start", to: "collect", type: "flow" },
@@ -53,7 +53,7 @@ test("the same step in two processes is a similar candidate, and linking it is a
 });
 
 test("the message shows the existing step well enough to judge without opening its flow", () => {
-  const c = between(step("approve", "Approve by director"), step("prom.approve", "Approve by director", { description: ["The director signs the request off."] }));
+  const c = between(step("approve", "Approve by director"), step("prom.approve", "Approve by director", { details: "The director signs the request off." }));
   assert.match(c!.message, /"prom\.approve" \(flow promotion\) is "Approve by director", by Director, after "Collect documents", before "Done"; "The director signs the request off\."/);
 });
 

@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-02-payment",
   "title": "02 · Payment",
   "layout": "TB",
@@ -28,11 +28,9 @@
     {
       "id": "start",
       "type": "terminal",
-      "label": "Amount to pay",
+      "text": "Amount to pay",
       "owner": "shop",
-      "description": [
-        "The amount and currency come from the cart."
-      ],
+      "details": "The amount and currency come from the cart.",
       "icon": {
         "kind": "builtin",
         "name": "play"
@@ -41,11 +39,9 @@
     {
       "id": "token",
       "type": "step",
-      "label": "Card token",
+      "text": "Card token",
       "owner": "payment",
-      "description": [
-        "A saved token, so the card is not entered again."
-      ],
+      "details": "A saved token, so the card is not entered again.",
       "shape": "cache",
       "icon": {
         "kind": "builtin",
@@ -55,11 +51,9 @@
     {
       "id": "fraud",
       "type": "step",
-      "label": "Fraud check",
+      "text": "Fraud check: amount, country and card velocity against the shop’s rules",
       "owner": "payment",
-      "description": [
-        "Rules and limits before the request goes to the bank."
-      ],
+      "details": "Runs before the bank sees the request, so a rejected order costs no bank fee.\n\n- **amount** above the customer’s limit → manual review\n- **country** outside the shipping list → declined\n- more than 3 cards in an hour → declined",
       "shape": "hex",
       "icon": {
         "kind": "builtin",
@@ -69,11 +63,9 @@
     {
       "id": "gateway",
       "type": "step",
-      "label": "Bank API",
+      "text": "Bank API: `POST /charges` with the card token",
       "owner": "payment",
-      "description": [
-        "Request to the payment provider; Open shows the exact calls."
-      ],
+      "details": "Request to the payment provider; **Open** shows the exact calls.\n\n```json\n{\n  \"amount\": 4990,\n  \"currency\": \"EUR\",\n  \"token\": \"tok_…\"\n}\n```\n\nA timeout is retried once with the same idempotency key.",
       "shape": "api",
       "icon": {
         "kind": "builtin",
@@ -84,20 +76,16 @@
     {
       "id": "ok",
       "type": "decision",
-      "label": "Success?",
+      "text": "Success?",
       "owner": "payment",
-      "description": [
-        "The bank’s response."
-      ]
+      "details": "The bank’s response."
     },
     {
       "id": "ledger",
       "type": "step",
-      "label": "Ledger entry",
+      "text": "Ledger entry",
       "owner": "data",
-      "description": [
-        "The payment is recorded in the accounting database."
-      ],
+      "details": "The payment is recorded in the accounting database, in the same transaction as the order status.\n\n```sql\n-- one row per charge\nINSERT INTO ledger\n  (order_id, amount, kind)\nVALUES ($1, $2, 'charge');\n```",
       "shape": "cyl",
       "icon": {
         "kind": "builtin",
@@ -107,11 +95,9 @@
     {
       "id": "events",
       "type": "step",
-      "label": "Event queue",
+      "text": "Event queue",
       "owner": "data",
-      "description": [
-        "The “paid” event goes to the warehouse and accounting."
-      ],
+      "details": "The “paid” event goes to the warehouse and accounting.\n\n```ts\n// only after the ledger commit\nawait queue.publish(\"order.paid\", {\n  orderId,\n  amount: 4990,\n});\n```",
       "shape": "queue",
       "icon": {
         "kind": "builtin",
@@ -121,11 +107,9 @@
     {
       "id": "end",
       "type": "terminal",
-      "label": "Paid",
+      "text": "Paid",
       "owner": "shop",
-      "description": [
-        "Returns to the main process."
-      ],
+      "details": "Returns to the main process.",
       "icon": {
         "kind": "builtin",
         "name": "check"
@@ -157,19 +141,19 @@
       "from": "ok",
       "to": "ledger",
       "type": "branch",
-      "label": "yes"
+      "text": "yes"
     },
     {
       "from": "ok",
       "to": "gateway",
       "type": "return",
-      "label": "retry"
+      "text": "retry once on timeout"
     },
     {
       "from": "ledger",
       "to": "events",
       "type": "flow",
-      "label": "async",
+      "text": "async",
       "style": {
         "line": "dotted"
       }

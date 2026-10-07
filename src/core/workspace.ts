@@ -3,6 +3,7 @@ import path from "node:path";
 import type { ValidationResult } from "./validate";
 import { type AnyDoc, type DocKind, docKind, validateDoc } from "./validate-doc";
 import { STORE_DIRS } from "../brand";
+import { upgradeDoc } from "./flow-format";
 
 const FLOW = ".flow.json";
 const SEQUENCE = ".sequence.json";
@@ -80,7 +81,7 @@ export class Workspace {
   async read(id: string): Promise<WorkspaceDoc> {
     const r = await this.resolve(id);
     if (!r) throw new Error(`No document "${id}" in workspace`);
-    return JSON.parse(await fs.readFile(r.file, "utf8")) as WorkspaceDoc;
+    return upgradeDoc(JSON.parse(await fs.readFile(r.file, "utf8")) as WorkspaceDoc);
   }
 
                                                                       

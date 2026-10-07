@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-14-icons",
   "title": "14 · Icons 11–20",
   "layout": "TB",
@@ -43,152 +43,122 @@
     {
       "id": "calendar",
       "type": "step",
-      "label": "calendar",
+      "text": "calendar",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "calendar"
       },
-      "description": [
-        "Date / schedule",
-        "icon: {kind: \"builtin\", name: \"calendar\"}"
-      ]
+      "details": "Date / schedule\n\n`icon: {kind: \"builtin\", name: \"calendar\"}`"
     },
     {
       "id": "cloud",
       "type": "step",
-      "label": "cloud",
+      "text": "cloud",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "cloud"
       },
-      "description": [
-        "Cloud / remote service",
-        "icon: {kind: \"builtin\", name: \"cloud\"}"
-      ]
+      "details": "Cloud / remote service\n\n`icon: {kind: \"builtin\", name: \"cloud\"}`"
     },
     {
       "id": "server",
       "type": "step",
-      "label": "server",
+      "text": "server",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "server"
       },
-      "description": [
-        "Server / host",
-        "icon: {kind: \"builtin\", name: \"server\"}"
-      ]
+      "details": "Server / host\n\n`icon: {kind: \"builtin\", name: \"server\"}`"
     },
     {
       "id": "network",
       "type": "step",
-      "label": "network",
+      "text": "network",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "network"
       },
-      "description": [
-        "Network / topology",
-        "icon: {kind: \"builtin\", name: \"network\"}"
-      ]
+      "details": "Network / topology\n\n`icon: {kind: \"builtin\", name: \"network\"}`"
     },
     {
       "id": "api",
       "type": "step",
-      "label": "api",
+      "text": "api",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "api"
       },
-      "description": [
-        "API / integration",
-        "icon: {kind: \"builtin\", name: \"api\"}"
-      ]
+      "details": "API / integration\n\n`icon: {kind: \"builtin\", name: \"api\"}`"
     },
     {
       "id": "code",
       "type": "step",
-      "label": "code",
+      "text": "code",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "code"
       },
-      "description": [
-        "Code / function",
-        "icon: {kind: \"builtin\", name: \"code\"}"
-      ]
+      "details": "Code / function\n\n`icon: {kind: \"builtin\", name: \"code\"}`"
     },
     {
       "id": "terminal",
       "type": "step",
-      "label": "terminal",
+      "text": "terminal",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "terminal"
       },
-      "description": [
-        "Command / console",
-        "icon: {kind: \"builtin\", name: \"terminal\"}"
-      ]
+      "details": "Command / console\n\n`icon: {kind: \"builtin\", name: \"terminal\"}`"
     },
     {
       "id": "mail",
       "type": "step",
-      "label": "mail",
+      "text": "mail",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "mail"
       },
-      "description": [
-        "Message / email",
-        "icon: {kind: \"builtin\", name: \"mail\"}"
-      ]
+      "details": "Message / email\n\n`icon: {kind: \"builtin\", name: \"mail\"}`"
     },
     {
       "id": "message",
       "type": "step",
-      "label": "message",
+      "text": "message",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "message"
       },
-      "description": [
-        "Conversation / notification",
-        "icon: {kind: \"builtin\", name: \"message\"}"
-      ]
+      "details": "Conversation / notification\n\n`icon: {kind: \"builtin\", name: \"message\"}`"
     },
     {
       "id": "send",
       "type": "step",
-      "label": "send",
+      "text": "send",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Send / dispatch",
-        "icon: {kind: \"builtin\", name: \"send\"}"
-      ]
+      "details": "Send / dispatch\n\n`icon: {kind: \"builtin\", name: \"send\"}`"
     }
   ],
   "edges": [
@@ -200,9 +170,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "cloud",
@@ -212,9 +180,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "server",
@@ -224,9 +190,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "network",
@@ -236,9 +200,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "api",
@@ -248,9 +210,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "code",
@@ -260,9 +220,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "terminal",
@@ -272,9 +230,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

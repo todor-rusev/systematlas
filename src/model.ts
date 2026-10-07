@@ -37,9 +37,9 @@ export function docKind(d: Doc): DocKind {
 
                                                                                   
 export interface NodeData {
-  label: string;
+                                         
+  text: string;
   color: string;
-  summary?: string;                                                   
   owner?: string;
   shared?: boolean;
   visualMode?: VisualMode;

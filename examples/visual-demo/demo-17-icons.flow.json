@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-17-icons",
   "title": "17 · Icons 41–50",
   "layout": "TB",
@@ -43,152 +43,122 @@
     {
       "id": "trash",
       "type": "step",
-      "label": "trash",
+      "text": "trash",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "trash"
       },
-      "description": [
-        "Delete / discard",
-        "icon: {kind: \"builtin\", name: \"trash\"}"
-      ]
+      "details": "Delete / discard\n\n`icon: {kind: \"builtin\", name: \"trash\"}`"
     },
     {
       "id": "edit",
       "type": "step",
-      "label": "edit",
+      "text": "edit",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "edit"
       },
-      "description": [
-        "Edit / update",
-        "icon: {kind: \"builtin\", name: \"edit\"}"
-      ]
+      "details": "Edit / update\n\n`icon: {kind: \"builtin\", name: \"edit\"}`"
     },
     {
       "id": "play",
       "type": "step",
-      "label": "play",
+      "text": "play",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "play"
       },
-      "description": [
-        "Start / execute",
-        "icon: {kind: \"builtin\", name: \"play\"}"
-      ]
+      "details": "Start / execute\n\n`icon: {kind: \"builtin\", name: \"play\"}`"
     },
     {
       "id": "pause",
       "type": "step",
-      "label": "pause",
+      "text": "pause",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "pause"
       },
-      "description": [
-        "Pause / wait",
-        "icon: {kind: \"builtin\", name: \"pause\"}"
-      ]
+      "details": "Pause / wait\n\n`icon: {kind: \"builtin\", name: \"pause\"}`"
     },
     {
       "id": "stop",
       "type": "step",
-      "label": "stop",
+      "text": "stop",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "stop"
       },
-      "description": [
-        "Stop / finish",
-        "icon: {kind: \"builtin\", name: \"stop\"}"
-      ]
+      "details": "Stop / finish\n\n`icon: {kind: \"builtin\", name: \"stop\"}`"
     },
     {
       "id": "eye",
       "type": "step",
-      "label": "eye",
+      "text": "eye",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "eye"
       },
-      "description": [
-        "Observe / inspect",
-        "icon: {kind: \"builtin\", name: \"eye\"}"
-      ]
+      "details": "Observe / inspect\n\n`icon: {kind: \"builtin\", name: \"eye\"}`"
     },
     {
       "id": "chart",
       "type": "step",
-      "label": "chart",
+      "text": "chart",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "chart"
       },
-      "description": [
-        "Metrics / analysis",
-        "icon: {kind: \"builtin\", name: \"chart\"}"
-      ]
+      "details": "Metrics / analysis\n\n`icon: {kind: \"builtin\", name: \"chart\"}`"
     },
     {
       "id": "package",
       "type": "step",
-      "label": "package",
+      "text": "package",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "package"
       },
-      "description": [
-        "Package / artifact",
-        "icon: {kind: \"builtin\", name: \"package\"}"
-      ]
+      "details": "Package / artifact\n\n`icon: {kind: \"builtin\", name: \"package\"}`"
     },
     {
       "id": "bolt",
       "type": "step",
-      "label": "bolt",
+      "text": "bolt",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "bolt"
       },
-      "description": [
-        "Signal / trigger / energy",
-        "icon: {kind: \"builtin\", name: \"bolt\"}"
-      ]
+      "details": "Signal / trigger / energy\n\n`icon: {kind: \"builtin\", name: \"bolt\"}`"
     },
     {
       "id": "heart",
       "type": "step",
-      "label": "heart",
+      "text": "heart",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "heart"
       },
-      "description": [
-        "Health / heartbeat",
-        "icon: {kind: \"builtin\", name: \"heart\"}"
-      ]
+      "details": "Health / heartbeat\n\n`icon: {kind: \"builtin\", name: \"heart\"}`"
     }
   ],
   "edges": [
@@ -200,9 +170,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "edit",
@@ -212,9 +180,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "play",
@@ -224,9 +190,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "pause",
@@ -236,9 +200,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "stop",
@@ -248,9 +210,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "eye",
@@ -260,9 +220,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "chart",
@@ -272,9 +230,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

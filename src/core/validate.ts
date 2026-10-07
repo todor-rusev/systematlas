@@ -169,10 +169,10 @@ export function validateFlow(model: unknown, opts: ValidateOptions = {}): Valida
   const collectShared = (d: FlowDocument) => {
     const add = (id: string, occ: Occ) => sharedById.set(id, [...(sharedById.get(id) ?? []), occ]);
     for (const n of d.nodes) {
-      if (n.shared) add(n.id, { flowId: d.id, kind: `node/${n.type}`, owner: n.owner, label: n.label, definition: sourceDefinition(n.source) });
+      if (n.shared) add(n.id, { flowId: d.id, kind: `node/${n.type}`, owner: n.owner, label: n.text, definition: sourceDefinition(n.source) });
     }
     for (const e of d.edges) {
-      if (e.shared && e.id) add(e.id, { flowId: d.id, kind: `edge/${e.type}`, label: e.label, definition: sourceDefinition(e.source) });
+      if (e.shared && e.id) add(e.id, { flowId: d.id, kind: `edge/${e.type}`, label: e.text, definition: sourceDefinition(e.source) });
     }
   };
   collectShared(doc);
@@ -196,13 +196,13 @@ export function validateFlow(model: unknown, opts: ValidateOptions = {}): Valida
     const definitions = new Set(occ.map((o) => o.definition).filter(Boolean));
     if (labels.size > 1 || definitions.size > 1) {
       const where = occ
-        .map((o) => `${o.flowId}(${o.label ? `"${o.label}"` : "no label"}${o.definition ? `, ${o.definition}` : ""})`)
+        .map((o) => `${o.flowId}(${o.label ? `"${o.label}"` : "no text"}${o.definition ? `, ${o.definition}` : ""})`)
         .join(" vs ");
       warnings.push({
         code: "shared-divergence",
         severity: "warning",
-        message: `shared id "${id}" is one object, but its ${labels.size > 1 ? "label" : "source"}${labels.size > 1 && definitions.size > 1 ? " and source" : ""} differ across flows: ${where}`,
-        suggestion: "if it is the same object, align its label and source; if these are different things, give them distinct ids",
+        message: `shared id "${id}" is one object, but its ${labels.size > 1 ? "text" : "source"}${labels.size > 1 && definitions.size > 1 ? " and source" : ""} differ across flows: ${where}`,
+        suggestion: "if it is the same object, align its text and source; if these are different things, give them distinct ids",
       });
     }
   }

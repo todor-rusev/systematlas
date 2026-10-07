@@ -1,6 +1,6 @@
 {
   "$schema": "../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "multilingual",
   "title": "Multilingual labels",
   "layout": "TB",
@@ -11,10 +11,34 @@
     { "id": "indic", "label": "Devanagari / Thai", "kind": "service" }
   ],
   "nodes": [
-    { "id": "latin", "type": "step", "owner": "latin", "label": "Save the result\nЗапази резултата", "description": ["Latin and Cyrillic labels use the same font settings as Canvas measurement."] },
-    { "id": "cjk", "type": "step", "owner": "cjk", "label": "保存结果\n結果を保存", "description": ["Chinese and Japanese glyphs use installed browser font fallbacks."] },
-    { "id": "rtl", "type": "step", "owner": "rtl", "label": "حفظ النتيجة\nשמירת התוצאה", "description": ["The label determines its own text direction. Diagram layout direction is unchanged."] },
-    { "id": "indic", "type": "step", "owner": "indic", "label": "परिणाम सहेजें\nบันทึกผลลัพธ์", "description": ["Devanagari and Thai use installed browser font fallbacks."] }
+    {
+      "id": "latin",
+      "type": "step",
+      "owner": "latin",
+      "text": "Save the result\nЗапази резултата",
+      "details": "Latin and Cyrillic labels use the same font settings as Canvas measurement."
+    },
+    {
+      "id": "cjk",
+      "type": "step",
+      "owner": "cjk",
+      "text": "保存结果\n結果を保存",
+      "details": "Chinese and Japanese glyphs use installed browser font fallbacks."
+    },
+    {
+      "id": "rtl",
+      "type": "step",
+      "owner": "rtl",
+      "text": "حفظ النتيجة\nשמירת התוצאה",
+      "details": "The label determines its own text direction. Diagram layout direction is unchanged."
+    },
+    {
+      "id": "indic",
+      "type": "step",
+      "owner": "indic",
+      "text": "परिणाम सहेजें\nบันทึกผลลัพธ์",
+      "details": "Devanagari and Thai use installed browser font fallbacks."
+    }
   ],
   "edges": [
     { "from": "latin", "to": "cjk", "type": "flow" },

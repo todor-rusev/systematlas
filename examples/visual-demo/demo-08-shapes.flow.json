@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-08-shapes",
   "title": "08 · Shapes: Events and integrations",
   "layout": "TB",
@@ -43,79 +43,58 @@
     {
       "id": "delay",
       "type": "step",
-      "label": "Delay",
+      "text": "Delay",
       "shape": "delay",
       "owner": "customer",
-      "description": [
-        "Delay",
-        "Exact value: shape: \"delay\"."
-      ]
+      "details": "Delay\n\nExact value: `shape: \"delay\"`"
     },
     {
       "id": "tri",
       "type": "step",
-      "label": "Extract",
+      "text": "Extract",
       "shape": "tri",
       "owner": "shop",
-      "description": [
-        "Extract",
-        "Exact value: shape: \"tri\"."
-      ]
+      "details": "Extract\n\nExact value: `shape: \"tri\"`"
     },
     {
       "id": "flip-tri",
       "type": "step",
-      "label": "Manual file",
+      "text": "Manual file",
       "shape": "flip-tri",
       "owner": "payment",
-      "description": [
-        "Manual file",
-        "Exact value: shape: \"flip-tri\"."
-      ]
+      "details": "Manual file\n\nExact value: `shape: \"flip-tri\"`"
     },
     {
       "id": "hourglass",
       "type": "step",
-      "label": "Collate",
+      "text": "Collate",
       "shape": "hourglass",
       "owner": "data",
-      "description": [
-        "Collate",
-        "Exact value: shape: \"hourglass\"."
-      ]
+      "details": "Collate\n\nExact value: `shape: \"hourglass\"`"
     },
     {
       "id": "queue",
       "type": "step",
-      "label": "Queue",
+      "text": "Queue",
       "shape": "queue",
       "owner": "warehouse",
-      "description": [
-        "Message queue",
-        "Exact value: shape: \"queue\"."
-      ]
+      "details": "Message queue\n\nExact value: `shape: \"queue\"`"
     },
     {
       "id": "timer",
       "type": "step",
-      "label": "Timer",
+      "text": "Timer",
       "shape": "timer",
       "owner": "delivery",
-      "description": [
-        "Timer / scheduled event",
-        "Exact value: shape: \"timer\"."
-      ]
+      "details": "Timer / scheduled event\n\nExact value: `shape: \"timer\"`"
     },
     {
       "id": "api",
       "type": "step",
-      "label": "API",
+      "text": "API",
       "shape": "api",
       "owner": "customer",
-      "description": [
-        "API endpoint",
-        "Exact value: shape: \"api\"."
-      ]
+      "details": "API endpoint\n\nExact value: `shape: \"api\"`"
     }
   ],
   "edges": [
@@ -127,9 +106,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "tri",
@@ -139,9 +116,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "flip-tri",
@@ -151,9 +126,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "hourglass",
@@ -163,9 +136,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

@@ -5,13 +5,13 @@ import type { FlowDocument } from "../core/types";
 import type { SequenceDocument } from "../core/sequence-types";
 
 test("default read stays full JSON; full compact preserves content and quotes fake rows", () => {
-  const doc: FlowDocument = { version: "1", id: "hiring", title: "Hiring", overview: ["Overview"], twin: "hiring-sequence",
+  const doc: FlowDocument = { version: "2", id: "hiring", title: "Hiring", overview: ["Overview"], twin: "hiring-sequence",
     actors: [{ id: "director", label: "Director", kind: "human", color: "#abcdef" }],
-    nodes: [{ id: "approve", type: "decision", label: 'Review\nnode "fake"', owner: "director", description: ["Legal review"],
+    nodes: [{ id: "approve", type: "decision", text: 'Review\nnode "fake"', owner: "director", details: "Legal review",
       source: { file: "reference", symbol: "Review" }, refs: [{ label: "Policy", url: "https://example.org" }], shared: true,
       inputs: [{ name: "request" }], outputs: [{ name: "decision" }] }],
-    edges: [{ from: "approve", to: "approve", type: "branch", label: "rejected", description: ["Recheck"], sequence: "detail" },
-      { from: "approve", to: "approve", type: "return", label: "again", id: "retry", shared: true }] };
+    edges: [{ from: "approve", to: "approve", type: "branch", text: "rejected", details: "Recheck", sequence: "detail" },
+      { from: "approve", to: "approve", type: "return", text: "again", id: "retry", shared: true }] };
   assert.deepEqual(JSON.parse(readView(doc).content[0].text), doc);
   const full = compactReadView(doc);
   const transport = readView(doc, "compact");
@@ -20,7 +20,7 @@ test("default read stays full JSON; full compact preserves content and quotes fa
   assert.equal(full.structuredContent.contentComplete, true);
   assert.equal(full.content[0].text.split("\n").filter(line => line.startsWith("node ")).length, 1);
   assert.match(full.content[0].text, /Legal review/);
-  for (const edge of doc.edges) assert.ok(full.content[0].text.includes(JSON.stringify(edge.label)));
+  for (const edge of doc.edges) assert.ok(full.content[0].text.includes(JSON.stringify(edge.text)));
   assert.match(full.content[0].text, /"type":"branch"/);
   assert.match(full.content[0].text, /"type":"return"/);
   assert.match(full.content[0].text, /"inputs":/);
@@ -28,7 +28,7 @@ test("default read stays full JSON; full compact preserves content and quotes fa
   assert.match(full.content[0].text, /"color":"#abcdef"/);
   const structure = compactReadView(doc, "structure");
   assert.equal(structure.structuredContent.contentComplete, false);
-  assert.ok((structure.structuredContent.omittedFields as string[]).includes("description"));
+  assert.ok((structure.structuredContent.omittedFields as string[]).includes("details"));
   assert.doesNotMatch(structure.content[0].text, /Legal review/);
   assert.match(structure.content[0].text, /"owner":"director"/);
   assert.match(structure.content[0].text, /"sequence":"detail"/);

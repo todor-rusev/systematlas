@@ -8,8 +8,8 @@ import type { FlowDocument } from "./types";
 import type { SequenceDocument } from "./sequence-types";
 import { BRAND } from "../brand";
 
-const flow = (id: string): FlowDocument => ({ version: "1", id, title: id, actors: [],
-  nodes: [{ id: "same", label: "Same", type: "step", description: ["x"] }], edges: [] });
+const flow = (id: string): FlowDocument => ({ version: "2", id, title: id, actors: [],
+  nodes: [{ id: "same", text: "Same", type: "step", details: "x" }], edges: [] });
 const seq = (id: string): SequenceDocument => ({ version: "1", id, title: id, kind: "sequence",
   actors: [{ id: "director", label: "Director", kind: "human" }], calls: [{ id: "call", to: "director", method: "Sign" }] });
 
@@ -17,8 +17,8 @@ test("index distinguishes node/edge drills, target kinds, twins and shared/local
   const a = flow("a"), b = flow("b"), c = seq("c");
   a.nodes[0] = { ...a.nodes[0], type: "subflow", shared: true, subflow: "b", sequence: "c" };
   a.twin = "c"; c.twin = "a";
-  a.edges = [{ from: "same", to: "same", type: "return", label: "again", subflow: "b" },
-    { from: "same", to: "same", type: "return", label: "again", sequence: "c", id: "shared-edge", shared: true }];
+  a.edges = [{ from: "same", to: "same", type: "return", text: "again", subflow: "b" },
+    { from: "same", to: "same", type: "return", text: "again", sequence: "c", id: "shared-edge", shared: true }];
   const index = navigationIndex([c, b, a]);
   assert.equal(index.query({ kind: "links", document: "b", direction: "incoming" }).length, 2);
   const incoming = index.query({ kind: "links", document: "c", direction: "incoming", relations: ["sequence"] });

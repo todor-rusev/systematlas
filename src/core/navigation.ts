@@ -4,12 +4,13 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { STORE_DIRS } from "../brand";
 import { Workspace } from "./workspace";
+import { upgradeDoc } from "./flow-format";
 import { docKind, validateDoc, type AnyDoc, type DocKind } from "./validate-doc";
 import type { FlowDocument, FlowEdge } from "./types";
 
 export type RelationKind = "subflow" | "sequence" | "twin";
-export type Locator = { kind: "document" } | { kind: "node"; id: string; label: string } |
-  { kind: "edge"; index: number; id?: string; from: string; to: string; type: FlowEdge["type"]; label?: string };
+export type Locator = { kind: "document" } | { kind: "node"; id: string; text: string } |
+  { kind: "edge"; index: number; id?: string; from: string; to: string; type: FlowEdge["type"]; text?: string };
 export interface DocumentLink { document: string; relation: RelationKind; source: Locator; target: string; targetKind?: DocKind; targetExists: boolean }
 export interface SharedOccurrence { document: string; sharedId: string; object: Exclude<Locator, { kind: "document" }> }
 export interface CatalogEntry { id: string; title: string; kind: DocKind; category: string }
@@ -37,13 +38,13 @@ function indexDocument(doc: AnyDoc, category: string, hash: string): RecordData 
   if (docKind(doc) === "flow") {
     const flow = doc as FlowDocument;
     for (const node of flow.nodes) {
-      const object: Locator = { kind: "node", id: node.id, label: node.label };
+      const object: Locator = { kind: "node", id: node.id, text: node.text };
       link(object, node);
       if (node.shared) shared.push({ document: doc.id, sharedId: node.id, object });
     }
     flow.edges.forEach((edge, index) => {
       const object: Locator = { kind: "edge", index, from: edge.from, to: edge.to, type: edge.type,
-        ...(edge.id ? { id: edge.id } : {}), ...(edge.label !== undefined ? { label: edge.label } : {}) };
+        ...(edge.id ? { id: edge.id } : {}), ...(edge.text !== undefined ? { text: edge.text } : {}) };
       link(object, edge);
       if (edge.shared && edge.id) shared.push({ document: doc.id, sharedId: edge.id, object });
     });
@@ -172,7 +173,7 @@ export class ProjectNavigation {
       const previous = cache!.files.get(ref.file);
       if (previous?.stamp === before && previous.data.entry.id === ref.id && previous.data.entry.category === ref.category) return previous.data;
       const body = await fs.readFile(ref.file, "utf8");
-      const doc = JSON.parse(body) as AnyDoc;
+      const doc = upgradeDoc(JSON.parse(body) as AnyDoc);
       if (doc.id !== ref.id) throw new Error(`Document id differs from its project locator ${JSON.stringify(ref.id)}`);
       const data = indexDocument(doc, ref.category, digest(body));
       if (await stamp(ref.file) !== before) throw new Error("Workspace changed during reading; retry the query");

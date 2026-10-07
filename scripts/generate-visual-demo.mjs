@@ -19,14 +19,14 @@ const docs = [];
 function flow(id, title, nodes, edges, overview, layout = 'TB') {
   const owners = new Set(nodes.map(n => n.owner));
   const doc = {
-    $schema: '../../schema/flow.schema.json', version: '1', id, title, layout,
+    $schema: '../../schema/flow.schema.json', version: '2', id, title, layout,
     overview: [overview], actors: actors.filter(a => owners.has(a.id)), nodes, edges,
   };
   docs.push(doc);
   return doc;
 }
-const node = (id, label, owner, extra, description) =>
-  ({ id, type: 'step', label, owner, description: [description], ...extra });
+const node = (id, text, owner, extra, details) =>
+  ({ id, type: 'step', text, owner, details, ...extra });
 const builtin = (name) => ({ kind: 'builtin', name });
 const edge = (from, to, extra = {}) => ({ from, to, type: 'flow', ...extra });
 
@@ -40,9 +40,9 @@ const picture = (icon) => ({ kind: 'svg', viewBox: [-6, -6, 36, 36], paths: [
                                                                                             
 flow('demo-01-order', '01 · Online shop order', [
   { ...node('order', 'Customer orders', 'customer', { icon: builtin('user') }, 'The customer picks products and presses “Order”.'), type: 'terminal' },
-  node('checkout', 'Cart and address', 'shop', { icon: builtin('browser') }, 'The shop collects the cart, the address and the delivery method.'),
-  node('pay', 'Payment', 'payment', { type: 'subflow', subflow: 'demo-02-payment', icon: builtin('lock') }, 'Payment is a separate process: Open shows its steps.'),
-  { ...node('approved', 'Approved?', 'payment', {}, 'The payment result decides the path.'), type: 'decision' },
+  node('checkout', 'Cart and address — the shop also checks stock and the delivery options', 'shop', { icon: builtin('browser') }, 'The shop collects the cart, the address and the delivery method.'),
+  node('pay', 'Payment', 'payment', { type: 'subflow', subflow: 'demo-02-payment', icon: builtin('lock') }, 'Payment is a separate process: **Open** shows its steps, and from there the exact bank calls.'),
+  { ...node('approved', 'Approved?', 'payment', {}, 'The payment result decides the path:\n\n- **yes** — the warehouse starts packing\n- **no** — the customer sees why and can pay another way'), type: 'decision' },
   { ...node('declined', 'Declined', 'customer', { icon: builtin('error') }, 'The customer sees the reason and can try again.'), type: 'terminal' },
   node('fulfil', 'Warehouse and delivery', 'warehouse', { type: 'subflow', subflow: 'demo-03-fulfilment', icon: builtin('package') }, 'Packing and delivery: Open shows the pictures of the process.'),
   node('mail', 'Email: order shipped', 'shop', { icon: builtin('mail') }, 'Sent asynchronously; it does not hold up the process.'),
@@ -51,27 +51,30 @@ flow('demo-01-order', '01 · Online shop order', [
   edge('order', 'checkout'),
   edge('checkout', 'pay'),
   edge('pay', 'approved'),
-  { from: 'approved', to: 'fulfil', type: 'branch', label: 'yes' },
-  { from: 'approved', to: 'declined', type: 'branch', label: 'no' },
+  { from: 'approved', to: 'fulfil', type: 'branch', text: 'yes' },
+  { from: 'approved', to: 'declined', type: 'branch', text: 'no' },
   edge('fulfil', 'done'),
-  edge('fulfil', 'mail', { label: 'async', style: { line: 'dotted' } }),
-], 'A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there).');
+  edge('fulfil', 'mail', { text: 'async', style: { line: 'dotted' } }),
+], 'A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there). Select a step for its details; the toolbar switches the layout direction and the line style.');
 
                                                                                                 
 flow('demo-02-payment', '02 · Payment', [
   { ...node('start', 'Amount to pay', 'shop', { icon: builtin('play') }, 'The amount and currency come from the cart.'), type: 'terminal' },
   node('token', 'Card token', 'payment', { shape: 'cache', icon: builtin('cache') }, 'A saved token, so the card is not entered again.'),
-  node('fraud', 'Fraud check', 'payment', { shape: 'hex', icon: builtin('shield') }, 'Rules and limits before the request goes to the bank.'),
-  node('gateway', 'Bank API', 'payment', { shape: 'api', icon: builtin('api'), sequence: 'demo-18-execution' }, 'Request to the payment provider; Open shows the exact calls.'),
+  node('fraud', 'Fraud check: amount, country and card velocity against the shop’s rules', 'payment', { shape: 'hex', icon: builtin('shield') },
+    'Runs before the bank sees the request, so a rejected order costs no bank fee.\n\n- **amount** above the customer’s limit → manual review\n- **country** outside the shipping list → declined\n- more than 3 cards in an hour → declined'),
+  node('gateway', 'Bank API: `POST /charges` with the card token', 'payment', { shape: 'api', icon: builtin('api'), sequence: 'demo-18-execution' },
+    'Request to the payment provider; **Open** shows the exact calls.\n\n```json\n{\n  "amount": 4990,\n  "currency": "EUR",\n  "token": "tok_…"\n}\n```\n\nA timeout is retried once with the same idempotency key.'),
   { ...node('ok', 'Success?', 'payment', {}, 'The bank’s response.'), type: 'decision' },
-  node('ledger', 'Ledger entry', 'data', { shape: 'cyl', icon: builtin('database') }, 'The payment is recorded in the accounting database.'),
-  node('events', 'Event queue', 'data', { shape: 'queue', icon: builtin('queue') }, 'The “paid” event goes to the warehouse and accounting.'),
+  node('ledger', 'Ledger entry', 'data', { shape: 'cyl', icon: builtin('database') }, 'The payment is recorded in the accounting database, in the same transaction as the order status.\n\n```sql\n-- one row per charge\nINSERT INTO ledger\n  (order_id, amount, kind)\nVALUES ($1, $2, \'charge\');\n```'),
+  node('events', 'Event queue', 'data', { shape: 'queue', icon: builtin('queue') },
+    'The “paid” event goes to the warehouse and accounting.\n\n```ts\n// only after the ledger commit\nawait queue.publish("order.paid", {\n  orderId,\n  amount: 4990,\n});\n```'),
   { ...node('end', 'Paid', 'shop', { icon: builtin('check') }, 'Returns to the main process.'), type: 'terminal' },
 ], [
   edge('start', 'token'), edge('token', 'fraud'), edge('fraud', 'gateway'), edge('gateway', 'ok'),
-  { from: 'ok', to: 'ledger', type: 'branch', label: 'yes' },
-  { from: 'ok', to: 'gateway', type: 'return', label: 'retry' },
-  edge('ledger', 'events', { label: 'async', style: { line: 'dotted' } }),
+  { from: 'ok', to: 'ledger', type: 'branch', text: 'yes' },
+  { from: 'ok', to: 'gateway', type: 'return', text: 'retry once on timeout' },
+  edge('ledger', 'events', { text: 'async', style: { line: 'dotted' } }),
   edge('ledger', 'end'),
 ], 'The payment sub-process: a cache, rules, an external API with retry, a database and a queue.');
 
@@ -79,20 +82,21 @@ flow('demo-02-payment', '02 · Payment', [
 flow('demo-03-fulfilment', '03 · Warehouse and delivery', [
   node('pick', 'Pick from shelf', 'warehouse', { shape: 'image', icon: picture('archive') }, 'The warehouse picks the products on the list.'),
   node('pack', 'Packing', 'warehouse', { shape: 'image', icon: picture('package') }, 'The products are packed and the parcel is labelled.'),
-  node('label', 'Shipping label', 'delivery', { shape: 'doc', icon: builtin('file') }, 'The courier generates the shipping label.'),
+  node('label', 'Shipping label: the courier’s API returns a printable PDF', 'delivery', { shape: 'doc', icon: builtin('file') },
+    'The label carries the tracking number and a barcode the courier scans at every hand-off. See [shipping labels](https://en.wikipedia.org/wiki/Shipping_label).'),
   node('courier', 'Courier departs', 'delivery', { shape: 'image', icon: picture('send') }, 'The parcel is on its way.'),
   node('track', 'Tracking', 'customer', { shape: 'image', icon: picture('eye') }, 'The customer tracks the parcel.'),
   node('handover', 'Handover', 'customer', { shape: 'icon', icon: { kind: 'emoji', text: '🎉' } }, 'The parcel reaches the customer.'),
 ], [
   edge('pick', 'pack'), edge('pack', 'label'), edge('label', 'courier'),
-  edge('courier', 'track', { label: 'notification', style: { line: 'dotted' } }), edge('courier', 'handover'),
-], 'Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document.', 'LR');
+  edge('courier', 'track', { text: 'tracking link by SMS', style: { line: 'dotted' } }), edge('courier', 'handover'),
+], 'Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document. Node text can be a name or a full sentence; details add lists, code and links.', 'LR');
 
                                                                                             
-const sample = (id, label, shape, icon, index) => ({ id, type: 'step', label, shape, owner: actors[index % actors.length].id,
-  ...(icon ? { icon } : {}), description: [`Demo element: ${label.replaceAll('\n', ' / ')}.`] });
+const sample = (id, text, shape, icon, index) => ({ id, type: 'step', text, shape, owner: actors[index % actors.length].id,
+  ...(icon ? { icon } : {}), details: `Demo element: ${text.replaceAll('\n', ' / ')}.` });
 const grid = (nodes, columns = 3) => nodes.slice(columns).map((n, i) => ({ from: nodes[i].id, to: n.id, type: 'flow',
-  style: { line: 'invisible', end: 'none' }, description: ['Only arranges the gallery; it does not describe a real process.'] }));
+  style: { line: 'invisible', end: 'none' }, details: 'Only arranges the gallery; it does not describe a real process.' }));
 const number = () => String(docs.length + 1).padStart(2, '0');
 
 const groups = [
@@ -133,7 +137,7 @@ for (const [title, shapes] of groups) {
   const nodes = shapes.map((shape, i) => ({
     ...sample(shape, shapeCaptions[shape], shape,
       shape === 'image' ? picture('globe') : shape === 'icon' ? { kind: 'emoji', text: '🎨' } : undefined, i),
-    description: [SHAPES[shape], `Exact value: shape: "${shape}".`],
+    details: `${SHAPES[shape]}\n\nExact value: \`shape: "${shape}"\``,
   }));
   flow(`demo-${n}-shapes`, `${n} · Shapes: ${title}`, nodes, grid(nodes),
     'Semantic shapes with short captions. Select an element to see its exact shape value in Details. Invisible links only arrange the gallery.');
@@ -147,7 +151,7 @@ for (const [title, shapes] of groups) {
   ]);
   flow(`demo-${n}-lines`, `${n} · Lines, widths and ends`, lineNodes, LINE_STYLES.map((line, i) => ({
     from: `${line}-from`, to: `${line}-to`, type: i === 3 ? 'return' : i === 2 ? 'branch' : 'flow',
-    label: line, style: { line, width: i % 2 ? 'thick' : 'normal', start: END_MARKERS[i % 4], end: END_MARKERS[(i + 1) % 4] },
+    text: line, style: { line, width: i % 2 ? 'thick' : 'normal', start: END_MARKERS[i % 4], end: END_MARKERS[(i + 1) % 4] },
   })), 'All six styles, normal/thick and arrow/none/circle/cross. Invisible arranges elements without a visible line.', 'LR');
 }
 
@@ -155,7 +159,7 @@ for (let page = 0; page < 5; page++) {
   const n = number();
   const nodes = ICON_NAMES.slice(page * 10, page * 10 + 10).map((name, i) => ({
     ...sample(name, name, 'rounded', builtin(name), i),
-    description: [ICONS[name].description, `icon: {kind: "builtin", name: "${name}"}`],
+    details: `${ICONS[name].description}\n\n\`icon: {kind: "builtin", name: "${name}"}\``,
   }));
   flow(`demo-${n}-icons`, `${n} · Icons ${page * 10 + 1}–${page * 10 + nodes.length}`, nodes, grid(nodes),
     'A gallery of the built-in icons (Lucide). The caption is the exact icon.name; its meaning is in Details.');

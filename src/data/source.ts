@@ -19,6 +19,10 @@ import visualStyle from "../../examples/visual-style.flow.json";
 import visualCatalog from "../../examples/visual-catalog.flow.json";
 import multilingual from "../../examples/multilingual.flow.json";
 import { visualDemoDocs } from "./visual-demo";
+import { upgradeFlow } from "../core/flow-format";
+import type { SourceRef } from "../core/types";
+
+export type SourceAction = "open" | "reveal";
 import type { UpdateApiStatus } from "../core/update-types";
 
 export interface UpdateApi {
@@ -133,6 +137,10 @@ export interface FlowSource {
   writes?: ProjectWrites;
                                                                                     
   updates?: UpdateApi;
+                                                                                            
+                                                                                            
+                                                  
+  openSource?(source: SourceRef, how: SourceAction): Promise<"done" | "executable">;
 }
 
                                                                             
@@ -194,7 +202,7 @@ function devSource(): FlowSource {
     visualCatalog,
     multilingual,
     ...visualDemoDocs,
-  ] as unknown as Doc[];
+  ].map(upgradeFlow) as unknown as Doc[];
   const flows: Record<string, Doc> = {};
   for (const d of docs) flows[d.id] = d;
   return readOnlySource(flows, "Examples");
@@ -341,6 +349,17 @@ function serveSource(): FlowSource {
       reveal(target) {
         return send("/api/reveal", "POST", { path: target });
       },
+    },
+    async openSource(source, how) {
+      const r = await fetch("/api/open-source", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ file: source.file, how }),
+      });
+      const data = (await r.json().catch(() => null)) as { error?: string; code?: string } | null;
+      if (r.status === 409 && data?.code === "executable") return "executable";
+      if (!r.ok) throw new Error(data?.error ?? `/api/open-source ${r.status}`);
+      return "done";
     },
   };
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-07-shapes",
   "title": "07 · Shapes: Operations and input",
   "layout": "TB",
@@ -43,101 +43,74 @@
     {
       "id": "st-rect",
       "type": "step",
-      "label": "Multiple processes",
+      "text": "Multiple processes",
       "shape": "st-rect",
       "owner": "customer",
-      "description": [
-        "Multiple processes",
-        "Exact value: shape: \"st-rect\"."
-      ]
+      "details": "Multiple processes\n\nExact value: `shape: \"st-rect\"`"
     },
     {
       "id": "lin-rect",
       "type": "step",
-      "label": "Lined process",
+      "text": "Lined process",
       "shape": "lin-rect",
       "owner": "shop",
-      "description": [
-        "Lined process",
-        "Exact value: shape: \"lin-rect\"."
-      ]
+      "details": "Lined process\n\nExact value: `shape: \"lin-rect\"`"
     },
     {
       "id": "div-rect",
       "type": "step",
-      "label": "Divided process",
+      "text": "Divided process",
       "shape": "div-rect",
       "owner": "payment",
-      "description": [
-        "Divided process",
-        "Exact value: shape: \"div-rect\"."
-      ]
+      "details": "Divided process\n\nExact value: `shape: \"div-rect\"`"
     },
     {
       "id": "tag-rect",
       "type": "step",
-      "label": "Tagged process",
+      "text": "Tagged process",
       "shape": "tag-rect",
       "owner": "data",
-      "description": [
-        "Tagged process",
-        "Exact value: shape: \"tag-rect\"."
-      ]
+      "details": "Tagged process\n\nExact value: `shape: \"tag-rect\"`"
     },
     {
       "id": "win-pane",
       "type": "step",
-      "label": "Internal storage",
+      "text": "Internal storage",
       "shape": "win-pane",
       "owner": "warehouse",
-      "description": [
-        "Internal storage",
-        "Exact value: shape: \"win-pane\"."
-      ]
+      "details": "Internal storage\n\nExact value: `shape: \"win-pane\"`"
     },
     {
       "id": "sl-rect",
       "type": "step",
-      "label": "Manual input",
+      "text": "Manual input",
       "shape": "sl-rect",
       "owner": "delivery",
-      "description": [
-        "Manual input",
-        "Exact value: shape: \"sl-rect\"."
-      ]
+      "details": "Manual input\n\nExact value: `shape: \"sl-rect\"`"
     },
     {
       "id": "trap-t",
       "type": "step",
-      "label": "Manual operation",
+      "text": "Manual operation",
       "shape": "trap-t",
       "owner": "customer",
-      "description": [
-        "Manual operation",
-        "Exact value: shape: \"trap-t\"."
-      ]
+      "details": "Manual operation\n\nExact value: `shape: \"trap-t\"`"
     },
     {
       "id": "trap-b",
       "type": "step",
-      "label": "Priority",
+      "text": "Priority",
       "shape": "trap-b",
       "owner": "shop",
-      "description": [
-        "Priority action",
-        "Exact value: shape: \"trap-b\"."
-      ]
+      "details": "Priority action\n\nExact value: `shape: \"trap-b\"`"
     },
     {
       "id": "notch-pent",
       "type": "step",
-      "label": "Loop limit",
+      "text": "Loop limit",
       "shape": "notch-pent",
       "owner": "payment",
-      "description": [
-        "Loop limit",
-        "Exact value: shape: \"notch-pent\"."
-      ]
+      "details": "Loop limit\n\nExact value: `shape: \"notch-pent\"`"
     }
   ],
   "edges": [
@@ -149,9 +122,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "lin-rect",
@@ -161,9 +132,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "div-rect",
@@ -173,9 +142,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "tag-rect",
@@ -185,9 +152,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "win-pane",
@@ -197,9 +162,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "sl-rect",
@@ -209,9 +172,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "refund",
   "title": "Refund transaction",
   "layout": "TB",
@@ -11,38 +11,38 @@
     { "id": "db", "label": "Database", "kind": "infra" }
   ],
   "nodes": [
-    { "id": "start", "type": "terminal", "label": "Start", "description": ["Entry point of the flow."] },
+    { "id": "start", "type": "terminal", "text": "Start", "details": "Entry point of the flow." },
     {
       "id": "rfnd.submit",
       "type": "step",
-      "label": "Request refund",
+      "text": "Request refund",
       "owner": "user",
-      "description": ["User requests a refund for a past transaction."]
+      "details": "User requests a refund for a past transaction."
     },
     {
       "id": "rfnd.validate",
       "type": "step",
-      "label": "Validate request",
+      "text": "Validate request",
       "owner": "api",
-      "description": ["Checks the original transaction exists and is refundable."]
+      "details": "Checks the original transaction exists and is refundable."
     },
     {
       "id": "rfnd.pay",
       "type": "step",
-      "label": "Refund payment",
+      "text": "Refund payment",
       "owner": "payment",
-      "description": ["Reverses the charge via the gateway."],
+      "details": "Reverses the charge via the gateway.",
       "inputs": [{ "name": "chargeId", "type": "string" }],
       "outputs": [{ "name": "refundId", "type": "string" }]
     },
     {
       "id": "rfnd.update",
       "type": "step",
-      "label": "Update transaction",
+      "text": "Update transaction",
       "owner": "db",
-      "description": ["Marks the transaction as refunded."]
+      "details": "Marks the transaction as refunded."
     },
-    { "id": "done", "type": "terminal", "label": "Done", "description": ["Flow complete."] }
+    { "id": "done", "type": "terminal", "text": "Done", "details": "Flow complete." }
   ],
   "edges": [
     { "from": "start", "to": "rfnd.submit", "type": "flow" },

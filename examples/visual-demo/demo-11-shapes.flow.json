@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-11-shapes",
   "title": "11 · Shapes: Interfaces and pictures",
   "layout": "TB",
@@ -43,66 +43,51 @@
     {
       "id": "browser",
       "type": "step",
-      "label": "Browser",
+      "text": "Browser",
       "shape": "browser",
       "owner": "customer",
-      "description": [
-        "Browser window",
-        "Exact value: shape: \"browser\"."
-      ]
+      "details": "Browser window\n\nExact value: `shape: \"browser\"`"
     },
     {
       "id": "console",
       "type": "step",
-      "label": "Console",
+      "text": "Console",
       "shape": "console",
       "owner": "shop",
-      "description": [
-        "Console window",
-        "Exact value: shape: \"console\"."
-      ]
+      "details": "Console window\n\nExact value: `shape: \"console\"`"
     },
     {
       "id": "bucket",
       "type": "step",
-      "label": "Object storage",
+      "text": "Object storage",
       "shape": "bucket",
       "owner": "payment",
-      "description": [
-        "Object storage",
-        "Exact value: shape: \"bucket\"."
-      ]
+      "details": "Object storage\n\nExact value: `shape: \"bucket\"`"
     },
     {
       "id": "person",
       "type": "step",
-      "label": "Person",
+      "text": "Person",
       "shape": "person",
       "owner": "data",
-      "description": [
-        "Person",
-        "Exact value: shape: \"person\"."
-      ]
+      "details": "Person\n\nExact value: `shape: \"person\"`"
     },
     {
       "id": "icon",
       "type": "step",
-      "label": "Icon",
+      "text": "Icon",
       "shape": "icon",
       "owner": "warehouse",
       "icon": {
         "kind": "emoji",
         "text": "🎨"
       },
-      "description": [
-        "Icon with caption",
-        "Exact value: shape: \"icon\"."
-      ]
+      "details": "Icon with caption\n\nExact value: `shape: \"icon\"`"
     },
     {
       "id": "image",
       "type": "step",
-      "label": "Picture",
+      "text": "Picture",
       "shape": "image",
       "owner": "delivery",
       "icon": {
@@ -139,10 +124,7 @@
           }
         ]
       },
-      "description": [
-        "Custom vector with caption",
-        "Exact value: shape: \"image\"."
-      ]
+      "details": "Custom vector with caption\n\nExact value: `shape: \"image\"`"
     }
   ],
   "edges": [
@@ -154,9 +136,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "console",
@@ -166,9 +146,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "bucket",
@@ -178,9 +156,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

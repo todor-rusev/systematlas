@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-09-shapes",
   "title": "09 · Shapes: Circles and symbols",
   "layout": "TB",
@@ -43,101 +43,74 @@
     {
       "id": "circle",
       "type": "step",
-      "label": "Start",
+      "text": "Start",
       "shape": "circle",
       "owner": "customer",
-      "description": [
-        "Start / connector",
-        "Exact value: shape: \"circle\"."
-      ]
+      "details": "Start / connector\n\nExact value: `shape: \"circle\"`"
     },
     {
       "id": "dbl-circ",
       "type": "step",
-      "label": "End",
+      "text": "End",
       "shape": "dbl-circ",
       "owner": "shop",
-      "description": [
-        "Stop / double circle",
-        "Exact value: shape: \"dbl-circ\"."
-      ]
+      "details": "Stop / double circle\n\nExact value: `shape: \"dbl-circ\"`"
     },
     {
       "id": "fr-circ",
       "type": "step",
-      "label": "Stop",
+      "text": "Stop",
       "shape": "fr-circ",
       "owner": "payment",
-      "description": [
-        "Stop / framed circle",
-        "Exact value: shape: \"fr-circ\"."
-      ]
+      "details": "Stop / framed circle\n\nExact value: `shape: \"fr-circ\"`"
     },
     {
       "id": "cross-circ",
       "type": "step",
-      "label": "Summary",
+      "text": "Summary",
       "shape": "cross-circ",
       "owner": "data",
-      "description": [
-        "Summary",
-        "Exact value: shape: \"cross-circ\"."
-      ]
+      "details": "Summary\n\nExact value: `shape: \"cross-circ\"`"
     },
     {
       "id": "sm-circ",
       "type": "step",
-      "label": "Small start",
+      "text": "Small start",
       "shape": "sm-circ",
       "owner": "warehouse",
-      "description": [
-        "Small start",
-        "Exact value: shape: \"sm-circ\"."
-      ]
+      "details": "Small start\n\nExact value: `shape: \"sm-circ\"`"
     },
     {
       "id": "f-circ",
       "type": "step",
-      "label": "Junction",
+      "text": "Junction",
       "shape": "f-circ",
       "owner": "delivery",
-      "description": [
-        "Junction",
-        "Exact value: shape: \"f-circ\"."
-      ]
+      "details": "Junction\n\nExact value: `shape: \"f-circ\"`"
     },
     {
       "id": "fork",
       "type": "step",
-      "label": "Fork",
+      "text": "Fork",
       "shape": "fork",
       "owner": "customer",
-      "description": [
-        "Fork or join",
-        "Exact value: shape: \"fork\"."
-      ]
+      "details": "Fork or join\n\nExact value: `shape: \"fork\"`"
     },
     {
       "id": "bolt",
       "type": "step",
-      "label": "Communication",
+      "text": "Communication",
       "shape": "bolt",
       "owner": "shop",
-      "description": [
-        "Communication link",
-        "Exact value: shape: \"bolt\"."
-      ]
+      "details": "Communication link\n\nExact value: `shape: \"bolt\"`"
     },
     {
       "id": "bang",
       "type": "step",
-      "label": "Attention",
+      "text": "Attention",
       "shape": "bang",
       "owner": "payment",
-      "description": [
-        "Attention",
-        "Exact value: shape: \"bang\"."
-      ]
+      "details": "Attention\n\nExact value: `shape: \"bang\"`"
     }
   ],
   "edges": [
@@ -149,9 +122,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "dbl-circ",
@@ -161,9 +132,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "fr-circ",
@@ -173,9 +142,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "cross-circ",
@@ -185,9 +152,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "sm-circ",
@@ -197,9 +162,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "f-circ",
@@ -209,9 +172,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

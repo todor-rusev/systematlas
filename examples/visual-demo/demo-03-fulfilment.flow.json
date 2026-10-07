@@ -1,11 +1,11 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-03-fulfilment",
   "title": "03 · Warehouse and delivery",
   "layout": "LR",
   "overview": [
-    "Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document."
+    "Pictures: duotone illustrations in the same geometry as the icons, an emoji and a document. Node text can be a name or a full sentence; details add lists, code and links."
   ],
   "actors": [
     {
@@ -28,11 +28,9 @@
     {
       "id": "pick",
       "type": "step",
-      "label": "Pick from shelf",
+      "text": "Pick from shelf",
       "owner": "warehouse",
-      "description": [
-        "The warehouse picks the products on the list."
-      ],
+      "details": "The warehouse picks the products on the list.",
       "shape": "image",
       "icon": {
         "kind": "svg",
@@ -72,11 +70,9 @@
     {
       "id": "pack",
       "type": "step",
-      "label": "Packing",
+      "text": "Packing",
       "owner": "warehouse",
-      "description": [
-        "The products are packed and the parcel is labelled."
-      ],
+      "details": "The products are packed and the parcel is labelled.",
       "shape": "image",
       "icon": {
         "kind": "svg",
@@ -122,11 +118,9 @@
     {
       "id": "label",
       "type": "step",
-      "label": "Shipping label",
+      "text": "Shipping label: the courier’s API returns a printable PDF",
       "owner": "delivery",
-      "description": [
-        "The courier generates the shipping label."
-      ],
+      "details": "The label carries the tracking number and a barcode the courier scans at every hand-off. See [shipping labels](https://en.wikipedia.org/wiki/Shipping_label).",
       "shape": "doc",
       "icon": {
         "kind": "builtin",
@@ -136,11 +130,9 @@
     {
       "id": "courier",
       "type": "step",
-      "label": "Courier departs",
+      "text": "Courier departs",
       "owner": "delivery",
-      "description": [
-        "The parcel is on its way."
-      ],
+      "details": "The parcel is on its way.",
       "shape": "image",
       "icon": {
         "kind": "svg",
@@ -174,11 +166,9 @@
     {
       "id": "track",
       "type": "step",
-      "label": "Tracking",
+      "text": "Tracking",
       "owner": "customer",
-      "description": [
-        "The customer tracks the parcel."
-      ],
+      "details": "The customer tracks the parcel.",
       "shape": "image",
       "icon": {
         "kind": "svg",
@@ -212,11 +202,9 @@
     {
       "id": "handover",
       "type": "step",
-      "label": "Handover",
+      "text": "Handover",
       "owner": "customer",
-      "description": [
-        "The parcel reaches the customer."
-      ],
+      "details": "The parcel reaches the customer.",
       "shape": "icon",
       "icon": {
         "kind": "emoji",
@@ -244,7 +232,7 @@
       "from": "courier",
       "to": "track",
       "type": "flow",
-      "label": "notification",
+      "text": "tracking link by SMS",
       "style": {
         "line": "dotted"
       }

@@ -11,6 +11,8 @@ import { DIMS } from "../layout";
 import type { NodeData } from "../model";
 import { IconEnter } from "../shell/icons";
 import { NodeIcon } from "./NodeIcon";
+import { InlineMarkdown } from "../shell/Markdown";
+import { plainText } from "../core/markdown";
 import { nodeGeometry } from "../visual-geometry";
 import { drillStroke, FLOW_LABEL } from "../theme";
 import { actorTone, detailInk, DEFAULT_PRESET, VISUAL_PRESETS } from "../visual-tokens";
@@ -238,7 +240,7 @@ export function TerminalNode({ data, selected }: NodeProps) {
     >
       <Handles />
       <FitLabel
-        text={d.label}
+        text={d.text}
         max={13}
         min={9}
         weight={700}
@@ -280,7 +282,7 @@ export function StepNode({ id, data, selected }: NodeProps) {
       <Handles />
       <DrillBadge id={id} d={d} />
       <div style={{ paddingRight: d.drillTarget ? 44 : 0 }}>
-        <FitLabel text={d.label} max={13} min={9} />
+        <FitLabel text={d.text} max={13} min={9} />
       </div>
     </div>
   );
@@ -310,7 +312,7 @@ export function SubflowNode({ id, data, selected }: NodeProps) {
       {                                                                          }
       <DrillBadge id={id} d={d} />
       <div style={{ paddingRight: 44 }}>
-        <FitLabel text={d.label} max={13} min={9} />
+        <FitLabel text={d.text} max={13} min={9} />
       </div>
     </div>
   );
@@ -362,7 +364,7 @@ export function DecisionNode({ id, data, selected }: NodeProps) {
                                                                                     
                                                                 }
       <div style={{ position: "absolute", inset: labelInset }}>
-        <FitLabel text={d.label} max={12.5} min={8} weight={600} fixedHeight />
+        <FitLabel text={d.text} max={12.5} min={8} weight={600} fixedHeight />
       </div>
       {                                                                             
                                                                                   }
@@ -403,7 +405,7 @@ export function IoNode({ data, selected }: NodeProps) {
           boxSizing: "border-box",
         }}
       >
-        <FitLabel text={d.label} max={13} min={9} weight={600} fixedHeight />
+        <FitLabel text={d.text} max={13} min={9} weight={600} fixedHeight />
       </div>
     </div>
   );
@@ -426,7 +428,7 @@ export function VisualNode({ id, data, selected }: NodeProps) {
     d.geometry ??
     nodeGeometry({
       type: "step",
-      label: d.label,
+      text: d.text,
       shape: d.shape,
       icon: d.icon,
       subflow: d.drillKind === "flow" ? d.drillTarget : undefined,
@@ -461,7 +463,7 @@ export function VisualNode({ id, data, selected }: NodeProps) {
       data-mode={d.visualMode}
       data-drill={drillable || undefined}
       data-selected={selected || undefined}
-      title={d.owner ? `${d.label} · ${d.owner}` : d.label}
+      title={d.owner ? `${plainText(d.text)} · ${d.owner}` : plainText(d.text)}
       style={{
         width: g.w,
         height: g.h,
@@ -589,7 +591,7 @@ export function VisualNode({ id, data, selected }: NodeProps) {
               whiteSpace: "pre-line",
             }}
           >
-            {d.label}
+            <InlineMarkdown text={d.text} />
           </span>
           {!g.stacked ? drill : null}
         </div>

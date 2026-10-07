@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type Doc, docKind } from "../model";
-import type { FlowDocument } from "../core/types";
-import { getSource, type DocMeta, type McpStatus, type McpSetupResult, type McpSchema, type DirListing, type BuildResult, type UpdateApi } from "./source";
+import type { FlowDocument, SourceRef } from "../core/types";
+import { getSource, type DocMeta, type McpStatus, type McpSetupResult, type McpSchema, type DirListing, type BuildResult, type UpdateApi, type SourceAction } from "./source";
 
                                                                                     
                                                                                    
@@ -68,6 +68,8 @@ export interface FlowData {
   build: () => Promise<BuildResult>;
                                                                   
   reveal: (target: string) => Promise<void>;
+                                                                                                                 
+  openSource?: (source: SourceRef, how: SourceAction) => Promise<"done" | "executable">;
   doc: Doc | null;
   error: string | null;
                                                          
@@ -358,6 +360,7 @@ export function useFlowData(): FlowData {
     setupMcp,
     build,
     reveal,
+    openSource: source.openSource ? (ref: SourceRef, how: SourceAction) => source.openSource!(ref, how) : undefined,
     doc,
     error,
     live: !!source.subscribe,

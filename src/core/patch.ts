@@ -10,15 +10,15 @@ import type { SequenceCall, SequenceDocument } from "./sequence-types";
   
                                                                                   
                                                                                     
-                                                                                 
+                                                                                
                                  
 
-                                                                               
+                                                                              
 export interface EdgeSelector {
   from: string;
   to: string;
   type?: string;
-  label?: string;
+  text?: string;
 }
 
 export type PatchOp =
@@ -34,7 +34,7 @@ export type PatchOp =
 type AnyObj = Record<string, unknown>;
 type FlowEdge = FlowDocument["edges"][number];
 
-const describeEdge = (e: FlowEdge) => `${e.from} -> ${e.to} (${e.type}${e.label ? `, "${e.label}"` : ""}${e.id ? `, id ${e.id}` : ""})`;
+const describeEdge = (e: FlowEdge) => `${e.from} -> ${e.to} (${e.type}${e.text ? `, "${e.text}"` : ""}${e.id ? `, id ${e.id}` : ""})`;
 
                                                                                                  
 function edgeIndex(edges: FlowEdge[], op: string, id: string | undefined, sel: EdgeSelector | undefined): number {
@@ -43,16 +43,16 @@ function edgeIndex(edges: FlowEdge[], op: string, id: string | undefined, sel: E
     if (i < 0) throw new Error(`${op}: edge "${id}" not found${edges.some((e) => !e.id) ? " (edges without an id are addressed by edge: {from, to})" : ""}`);
     return i;
   }
-  if (!sel?.from || !sel?.to) throw new Error(`${op}: give the edge's id, or edge: {from, to, type?, label?}`);
+  if (!sel?.from || !sel?.to) throw new Error(`${op}: give the edge's id, or edge: {from, to, type?, text?}`);
   const hits = edges
     .map((e, i) => ({ e, i }))
-    .filter(({ e }) => e.from === sel.from && e.to === sel.to && (sel.type == null || e.type === sel.type) && (sel.label == null || e.label === sel.label));
+    .filter(({ e }) => e.from === sel.from && e.to === sel.to && (sel.type == null || e.type === sel.type) && (sel.text == null || e.text === sel.text));
   if (hits.length === 1) return hits[0].i;
   if (hits.length === 0) {
     const from = edges.filter((e) => e.from === sel.from);
     throw new Error(`${op}: no edge ${sel.from} -> ${sel.to}${from.length ? `; edges from ${sel.from}: ${from.map(describeEdge).join("; ")}` : ""}`);
   }
-  throw new Error(`${op}: ${hits.length} edges ${sel.from} -> ${sel.to} — add type or label: ${hits.map(({ e }) => describeEdge(e)).join("; ")}`);
+  throw new Error(`${op}: ${hits.length} edges ${sel.from} -> ${sel.to} — add type or text: ${hits.map(({ e }) => describeEdge(e)).join("; ")}`);
 }
 
 function findCall(calls: SequenceCall[], id: string): SequenceCall | null {

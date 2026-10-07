@@ -4,6 +4,7 @@ import { Project } from "../core/project";
 import type { AnyDoc as WorkspaceDoc } from "../core/validate-doc";
 import { readTemplate } from "./template";
 import { BRAND } from "../brand";
+import { upgradeDoc } from "../core/flow-format";
 
 const SUFFIX_RE = /\.(flow|sequence)\.json$/;
 
@@ -54,7 +55,7 @@ export async function runBuild(opts: BuildOptions): Promise<void> {
   const template = readTemplate();
 
   if (opts.target && SUFFIX_RE.test(opts.target)) {
-    const doc = JSON.parse(readFileSync(opts.target, "utf8")) as WorkspaceDoc;
+    const doc = upgradeDoc(JSON.parse(readFileSync(opts.target, "utf8")) as WorkspaceDoc);
     const dest = opts.out ? path.join(opts.out, `${doc.id}.html`) : path.join(path.dirname(path.resolve(opts.target)), `${doc.id}.html`);
     emit(dest, template, { [doc.id]: doc }, opts.minify);
     return;

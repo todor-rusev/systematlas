@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-12-lines",
   "title": "12 · Lines, widths and ends",
   "layout": "LR",
@@ -43,170 +43,146 @@
     {
       "id": "solid-from",
       "type": "step",
-      "label": "solid",
+      "text": "solid",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: solid."
-      ]
+      "details": "Demo element: solid."
     },
     {
       "id": "solid-to",
       "type": "step",
-      "label": "Receiver",
+      "text": "Receiver",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Receiver."
-      ]
+      "details": "Demo element: Receiver."
     },
     {
       "id": "dashed-from",
       "type": "step",
-      "label": "dashed",
+      "text": "dashed",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: dashed."
-      ]
+      "details": "Demo element: dashed."
     },
     {
       "id": "dashed-to",
       "type": "step",
-      "label": "Receiver",
+      "text": "Receiver",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Receiver."
-      ]
+      "details": "Demo element: Receiver."
     },
     {
       "id": "dotted-from",
       "type": "step",
-      "label": "dotted",
+      "text": "dotted",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: dotted."
-      ]
+      "details": "Demo element: dotted."
     },
     {
       "id": "dotted-to",
       "type": "step",
-      "label": "Receiver",
+      "text": "Receiver",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Receiver."
-      ]
+      "details": "Demo element: Receiver."
     },
     {
       "id": "dash-dot-from",
       "type": "step",
-      "label": "dash-dot",
+      "text": "dash-dot",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: dash-dot."
-      ]
+      "details": "Demo element: dash-dot."
     },
     {
       "id": "dash-dot-to",
       "type": "step",
-      "label": "Receiver",
+      "text": "Receiver",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Receiver."
-      ]
+      "details": "Demo element: Receiver."
     },
     {
       "id": "double-from",
       "type": "step",
-      "label": "double",
+      "text": "double",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: double."
-      ]
+      "details": "Demo element: double."
     },
     {
       "id": "double-to",
       "type": "step",
-      "label": "Receiver",
+      "text": "Receiver",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Receiver."
-      ]
+      "details": "Demo element: Receiver."
     },
     {
       "id": "invisible-from",
       "type": "step",
-      "label": "invisible",
+      "text": "invisible",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "send"
       },
-      "description": [
-        "Demo element: invisible."
-      ]
+      "details": "Demo element: invisible."
     },
     {
       "id": "invisible-to",
       "type": "step",
-      "label": "Layout only",
+      "text": "Layout only",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Demo element: Layout only."
-      ]
+      "details": "Demo element: Layout only."
     }
   ],
   "edges": [
@@ -214,7 +190,7 @@
       "from": "solid-from",
       "to": "solid-to",
       "type": "flow",
-      "label": "solid",
+      "text": "solid",
       "style": {
         "line": "solid",
         "width": "normal",
@@ -226,7 +202,7 @@
       "from": "dashed-from",
       "to": "dashed-to",
       "type": "flow",
-      "label": "dashed",
+      "text": "dashed",
       "style": {
         "line": "dashed",
         "width": "thick",
@@ -238,7 +214,7 @@
       "from": "dotted-from",
       "to": "dotted-to",
       "type": "branch",
-      "label": "dotted",
+      "text": "dotted",
       "style": {
         "line": "dotted",
         "width": "normal",
@@ -250,7 +226,7 @@
       "from": "dash-dot-from",
       "to": "dash-dot-to",
       "type": "return",
-      "label": "dash-dot",
+      "text": "dash-dot",
       "style": {
         "line": "dash-dot",
         "width": "thick",
@@ -262,7 +238,7 @@
       "from": "double-from",
       "to": "double-to",
       "type": "flow",
-      "label": "double",
+      "text": "double",
       "style": {
         "line": "double",
         "width": "normal",
@@ -274,7 +250,7 @@
       "from": "invisible-from",
       "to": "invisible-to",
       "type": "flow",
-      "label": "invisible",
+      "text": "invisible",
       "style": {
         "line": "invisible",
         "width": "thick",

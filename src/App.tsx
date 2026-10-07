@@ -37,7 +37,7 @@ import {
   type SequenceDocument,
 } from "./model";
 import { buildActorColors, FLOW_LABEL, NEUTRAL, type ActorColors } from "./theme";
-import { buildGraph, DIMS, edgeKey, FLOW_SPACING } from "./layout";
+import { buildGraph, DIMS, edgeKey, FLOW_SPACING, type FlowDirection, type LineStyle } from "./layout";
 import { nodeTypes } from "./nodes";
 import { edgeTypes } from "./edges";
 import { SequenceCanvas, flattenCalls } from "./sequence/SequenceCanvas";
@@ -72,6 +72,31 @@ function initialVisualMode(): VisualMode {
       : "actors";
   } catch {
     return "actors";
+  }
+}
+
+                                                                       
+const LINES_KEY = "systematlas.flow-lines";
+function initialLines(): LineStyle {
+  try {
+    return localStorage.getItem(LINES_KEY) === "curved" ? "curved" : "rounded";
+  } catch {
+    return "rounded";
+  }
+}
+
+                                                                                
+                                                                                     
+const FLOW_DIRECTION_KEY = "systematlas.flow-direction";
+function readDirections(): Record<string, FlowDirection> {
+  try {
+    const stored: unknown = JSON.parse(localStorage.getItem(FLOW_DIRECTION_KEY) ?? "{}");
+    if (!stored || typeof stored !== "object") return {};
+    return Object.fromEntries(
+      Object.entries(stored).filter((entry): entry is [string, FlowDirection] => entry[1] === "TB" || entry[1] === "LR"),
+    );
+  } catch {
+    return {};
   }
 }
 
@@ -144,8 +169,9 @@ function useFitScene() {
   }, [domNode, width, height, getNodes, setViewport]);
 }
 
-                                                                                              
-function InitialFlowFit({ fontsReady }: { fontsReady: boolean }) {
+                                                                                  
+                                                                                   
+function InitialFlowFit({ fontsReady, scene }: { fontsReady: boolean; scene: string }) {
                                                                                     
                                                                                        
   const initialized = useNodesInitialized({ includeHiddenNodes: true });
@@ -153,14 +179,15 @@ function InitialFlowFit({ fontsReady }: { fontsReady: boolean }) {
   const width = useStore(state => state.width);
   const height = useStore(state => state.height);
   const fitScene = useFitScene();
+                                                                                    
                                                                                   
-                                                                              
-  const fitted = useRef(false);
+                                                                               
+  const fitted = useRef<string | null>(null);
   useEffect(() => {
-    if (!fontsReady || !initialized || !viewportInitialized || !width || !height || fitted.current) return;
-    fitted.current = true;
+    if (!fontsReady || !initialized || !viewportInitialized || !width || !height || fitted.current === scene) return;
+    fitted.current = scene;
     fitScene();
-  }, [fontsReady, initialized, viewportInitialized, width, height, fitScene]);
+  }, [fontsReady, initialized, viewportInitialized, width, height, fitScene, scene]);
   return null;
 }
 
@@ -604,6 +631,7 @@ export default function App() {
     doc,
     error,
     updates,
+    openSource,
   } = useFlowData();
   const [selection, setSelection] = useState<Selection>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -731,12 +759,41 @@ export default function App() {
         onReset: resetSeqSize,
       }
     : undefined;
+  const [lines, setLines] = useState<LineStyle>(initialLines);
+  const changeLines = (next: LineStyle) => {
+    setLines(next);
+    try {
+      localStorage.setItem(LINES_KEY, next);
+    } catch {
+                                                     
+    }
+  };
+  const [directions, setDirections] = useState(readDirections);
+  const directionKey = flowDoc ? `${projectRoot}#${flowDoc.id}` : null;
+  const documentDirection: FlowDirection = flowDoc?.layout ?? "TB";
+  const flowDirection = (directionKey ? directions[directionKey] : undefined) ?? documentDirection;
+  const changeDirection = (direction: FlowDirection) => {
+    if (!directionKey) return;
+    const next = { ...directions };
+    if (direction === documentDirection) delete next[directionKey];
+    else next[directionKey] = direction;
+    setDirections(next);
+    try {
+      localStorage.setItem(FLOW_DIRECTION_KEY, JSON.stringify(next));
+    } catch {
+                                                     
+    }
+  };
   const flowControls = flowDoc
     ? {
         gap: flowGap,
         bounds: [FLOW_SPACING.min, FLOW_SPACING.max] as [number, number],
         onGap: setFlowGap,
         onReset: () => setFlowGap(FLOW_SPACING.default),
+        direction: flowDirection,
+        onDirection: changeDirection,
+        lines,
+        onLines: changeLines,
       }
     : undefined;
 
@@ -966,11 +1023,12 @@ export default function App() {
         ? buildGraph(
             flowDoc,
             colors,
-            { onDrill, flowsSet, visualMode, visualPreset, measureText },
+            { onDrill, flowsSet, visualMode, visualPreset, measureText, lines },
             flowGap,
+            flowDirection,
           )
         : { nodes: [], edges: [] },
-    [flowDoc, colors, onDrill, flowsSet, flowGap, visualMode, visualPreset, measureText],
+    [flowDoc, colors, onDrill, flowsSet, flowGap, flowDirection, lines, visualMode, visualPreset, measureText],
   );
 
                                                                                    
@@ -1317,7 +1375,7 @@ export default function App() {
                           }
                           onPaneClick={() => setSelection(null)}
                         >
-                          <InitialFlowFit fontsReady={fontRevision > 0} />
+                          <InitialFlowFit fontsReady={fontRevision > 0} scene={flowDirection} />
                           <FlowBackground classic={visualMode === "classic"} canvas={preset.canvas} />
                           <MiniMap
                             className={FIT_AVOID}
@@ -1398,6 +1456,7 @@ export default function App() {
                   : undefined,
               )
             }
+            onOpenSource={openSource}
             width={panelWidth}
             onResizeStart={startResize}
           />

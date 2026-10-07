@@ -1,138 +1,85 @@
 {
-  "version": "1",
+  "version": "2",
   "id": "visual-style",
   "title": "Visual vocabulary — actor colors",
   "overview": [
     "Actor colors fill each node. A separate shape and icon communicate the step's meaning. Switch View to Classic to compare the two presentations."
   ],
   "actors": [
-    {
-      "id": "operator",
-      "label": "Operator",
-      "kind": "human",
-      "color": "#087f78"
-    },
-    {
-      "id": "service",
-      "label": "Application service",
-      "kind": "service",
-      "color": "#2563ff"
-    },
+    { "id": "operator", "label": "Operator", "kind": "human", "color": "#087f78" },
+    { "id": "service", "label": "Application service", "kind": "service", "color": "#2563ff" },
     { "id": "store", "label": "Database", "kind": "infra", "color": "#8641ff" },
-    {
-      "id": "messenger",
-      "label": "Notification service",
-      "kind": "service",
-      "color": "#c71566"
-    },
-    {
-      "id": "audit",
-      "label": "Audit / very light actor color",
-      "kind": "service",
-      "color": "#fff0a4"
-    }
+    { "id": "messenger", "label": "Notification service", "kind": "service", "color": "#c71566" },
+    { "id": "audit", "label": "Audit / very light actor color", "kind": "service", "color": "#fff0a4" }
   ],
   "nodes": [
-    {
-      "id": "start",
-      "type": "terminal",
-      "label": "Request received",
-      "description": ["A request starts the process."]
-    },
+    { "id": "start", "type": "terminal", "text": "Request received", "details": "A request starts the process." },
     {
       "id": "submit",
       "type": "step",
       "shape": "rounded",
       "owner": "operator",
-      "label": "Submit the application",
+      "text": "Submit the application",
       "icon": { "kind": "emoji", "text": "👩‍💻" },
-      "description": ["The operator submits the application."]
+      "details": "The operator submits the application."
     },
     {
       "id": "valid",
       "type": "decision",
       "owner": "service",
-      "label": "Application valid?",
+      "text": "Application valid?",
       "icon": { "kind": "builtin", "name": "shield" },
-      "description": ["Check the application against the current policy."]
+      "details": "Check the application against the current policy."
     },
     {
       "id": "save",
       "type": "step",
       "shape": "cyl",
       "owner": "store",
-      "label": "Persist the application",
+      "text": "Persist the application",
       "icon": { "kind": "builtin", "name": "database" },
-      "description": ["Save the validated application to the database."]
+      "details": "Save the validated application to the database."
     },
     {
       "id": "notify",
       "type": "step",
       "shape": "queue",
       "owner": "messenger",
-      "label": "Queue the notification",
+      "text": "Queue the notification",
       "icon": { "kind": "builtin", "name": "mail" },
-      "description": ["Queue the confirmation message."]
+      "details": "Queue the confirmation message."
     },
     {
       "id": "audit",
       "type": "step",
       "shape": "doc",
       "owner": "audit",
-      "label": "Record the audit trail",
+      "text": "Record the audit trail",
       "icon": {
         "kind": "svg",
         "viewBox": [0, 0, 24, 24],
         "paths": [{ "d": "M4 2H15L20 7V22H4Z M15 2V7H20 M8 12H16 M8 16H16" }]
       },
-      "description": ["Write the audit record using a custom vector icon."]
+      "details": "Write the audit record using a custom vector icon."
     },
     {
       "id": "fix",
       "type": "step",
       "shape": "lean-r",
       "owner": "operator",
-      "label": "Correct the application",
+      "text": "Correct the application",
       "icon": { "kind": "builtin", "name": "edit" },
-      "description": ["Correct the rejected values before resubmission."]
+      "details": "Correct the rejected values before resubmission."
     },
-    {
-      "id": "done",
-      "type": "terminal",
-      "label": "Completed",
-      "description": ["The request has been processed."]
-    }
+    { "id": "done", "type": "terminal", "text": "Completed", "details": "The request has been processed." }
   ],
   "edges": [
     { "from": "start", "to": "submit", "type": "flow" },
     { "from": "submit", "to": "valid", "type": "flow" },
-    {
-      "from": "valid",
-      "to": "save",
-      "type": "branch",
-      "label": "yes",
-      "style": { "line": "solid", "width": "thick" }
-    },
-    {
-      "from": "valid",
-      "to": "fix",
-      "type": "branch",
-      "label": "no",
-      "style": { "line": "dotted", "end": "cross" }
-    },
-    {
-      "from": "fix",
-      "to": "submit",
-      "type": "return",
-      "label": "resubmit",
-      "style": { "line": "dash-dot" }
-    },
-    {
-      "from": "save",
-      "to": "notify",
-      "type": "flow",
-      "style": { "line": "double" }
-    },
+    { "from": "valid", "to": "save", "type": "branch", "text": "yes", "style": { "line": "solid", "width": "thick" } },
+    { "from": "valid", "to": "fix", "type": "branch", "text": "no", "style": { "line": "dotted", "end": "cross" } },
+    { "from": "fix", "to": "submit", "type": "return", "text": "resubmit", "style": { "line": "dash-dot" } },
+    { "from": "save", "to": "notify", "type": "flow", "style": { "line": "double" } },
     {
       "from": "notify",
       "to": "audit",

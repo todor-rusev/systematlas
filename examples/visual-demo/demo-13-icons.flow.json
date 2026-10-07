@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-13-icons",
   "title": "13 · Icons 1–10",
   "layout": "TB",
@@ -43,152 +43,122 @@
     {
       "id": "user",
       "type": "step",
-      "label": "user",
+      "text": "user",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "user"
       },
-      "description": [
-        "Person / operator",
-        "icon: {kind: \"builtin\", name: \"user\"}"
-      ]
+      "details": "Person / operator\n\n`icon: {kind: \"builtin\", name: \"user\"}`"
     },
     {
       "id": "users",
       "type": "step",
-      "label": "users",
+      "text": "users",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "users"
       },
-      "description": [
-        "Team",
-        "icon: {kind: \"builtin\", name: \"users\"}"
-      ]
+      "details": "Team\n\n`icon: {kind: \"builtin\", name: \"users\"}`"
     },
     {
       "id": "settings",
       "type": "step",
-      "label": "settings",
+      "text": "settings",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "settings"
       },
-      "description": [
-        "Configuration",
-        "icon: {kind: \"builtin\", name: \"settings\"}"
-      ]
+      "details": "Configuration\n\n`icon: {kind: \"builtin\", name: \"settings\"}`"
     },
     {
       "id": "gear",
       "type": "step",
-      "label": "gear",
+      "text": "gear",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "gear"
       },
-      "description": [
-        "Processing / mechanism",
-        "icon: {kind: \"builtin\", name: \"gear\"}"
-      ]
+      "details": "Processing / mechanism\n\n`icon: {kind: \"builtin\", name: \"gear\"}`"
     },
     {
       "id": "database",
       "type": "step",
-      "label": "database",
+      "text": "database",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "database"
       },
-      "description": [
-        "Database / persistence",
-        "icon: {kind: \"builtin\", name: \"database\"}"
-      ]
+      "details": "Database / persistence\n\n`icon: {kind: \"builtin\", name: \"database\"}`"
     },
     {
       "id": "file",
       "type": "step",
-      "label": "file",
+      "text": "file",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "file"
       },
-      "description": [
-        "File / document",
-        "icon: {kind: \"builtin\", name: \"file\"}"
-      ]
+      "details": "File / document\n\n`icon: {kind: \"builtin\", name: \"file\"}`"
     },
     {
       "id": "folder",
       "type": "step",
-      "label": "folder",
+      "text": "folder",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "folder"
       },
-      "description": [
-        "Directory / collection",
-        "icon: {kind: \"builtin\", name: \"folder\"}"
-      ]
+      "details": "Directory / collection\n\n`icon: {kind: \"builtin\", name: \"folder\"}`"
     },
     {
       "id": "queue",
       "type": "step",
-      "label": "queue",
+      "text": "queue",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "queue"
       },
-      "description": [
-        "Queue / inbox / outbox",
-        "icon: {kind: \"builtin\", name: \"queue\"}"
-      ]
+      "details": "Queue / inbox / outbox\n\n`icon: {kind: \"builtin\", name: \"queue\"}`"
     },
     {
       "id": "clock",
       "type": "step",
-      "label": "clock",
+      "text": "clock",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "clock"
       },
-      "description": [
-        "Time / timeout",
-        "icon: {kind: \"builtin\", name: \"clock\"}"
-      ]
+      "details": "Time / timeout\n\n`icon: {kind: \"builtin\", name: \"clock\"}`"
     },
     {
       "id": "timer",
       "type": "step",
-      "label": "timer",
+      "text": "timer",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "timer"
       },
-      "description": [
-        "Scheduled event",
-        "icon: {kind: \"builtin\", name: \"timer\"}"
-      ]
+      "details": "Scheduled event\n\n`icon: {kind: \"builtin\", name: \"timer\"}`"
     }
   ],
   "edges": [
@@ -200,9 +170,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "users",
@@ -212,9 +180,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "settings",
@@ -224,9 +190,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "gear",
@@ -236,9 +200,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "database",
@@ -248,9 +210,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "file",
@@ -260,9 +220,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "folder",
@@ -272,9 +230,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

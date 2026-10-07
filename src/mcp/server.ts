@@ -18,6 +18,7 @@ import { listNavigation, navigationInput } from "./navigation";
 import { readView, readViewInput } from "./read-view";
 import { vocabularyDocs } from "./vocabulary-docs";
 import { BRAND } from "../brand";
+import { upgradeDoc } from "../core/flow-format";
 
 const URI = BRAND.uriScheme;                                         
 
@@ -127,7 +128,7 @@ Tools:
 - read_flow {id} — JSON envelope {document, revision}; only document is an editable model.
   Optional \`format:"compact"|"dot"\` returns a read-only view; \`around:"local-node-id",depth:0..5\`
   selects a Flow neighborhood with boundary references, without opening drills. All formats share
-  this selection. \`detail:"structure"\` omits descriptions; use full detail to distinguish labels.
+  this selection. \`detail:"structure"\` omits details; use full detail to distinguish equal texts.
   Focused JSON is also read-only. Patch by local ids, never write a view or envelope as a model.
 - validate_flow {model} — dry-run validation (structure + referential integrity + split heuristic).
 - write_flow {model} — validate + write a WHOLE document (rejects on errors; else writes and reports
@@ -138,7 +139,7 @@ Tools:
 - manage_flow {action, id, ...} — lifecycle: delete | rename | set-category. Never move/delete files by
   hand (it bypasses validation).
 
-Key rules: identity is the \`id\`, not the label (set \`shared:true\` on a Flow node/edge for cross-flow
+Key rules: identity is the \`id\`, not the text (set \`shared:true\` on a Flow node/edge for cross-flow
 identity; actor ids stay local to each document). Never edit a diagram only to silence a warning or hint. You pass a
 document by \`id\` (never a file path) — docs are stored under \`<workspace>/${BRAND.storeDir}/\` automatically.
 Where to save: pass \`workspace\` (absolute project dir) on the tools. If you omit it, the server uses the
@@ -217,7 +218,7 @@ server.registerTool(
 
 server.registerTool(
   "read_flow",
-  { title: "Read document", description: "Read by document id. Default JSON: {document,revision}; only document is editable. format:'compact' or 'dot' gives a read-only view. around:'local-node-id', depth:0..5 selects a Flow neighborhood in any format, with incident edges and labeled boundary references; drills are not opened. detail:'structure' omits explanatory fields, full retains them. Focused JSON is a view envelope, never a document to write. Patch using local ids and expectRevision from this read.", inputSchema: { ...idInput, ...workspaceInput, ...readViewInput } },
+  { title: "Read document", description: "Read by document id. Default JSON: {document,revision}; only document is editable. format:'compact' or 'dot' gives a read-only view. around:'local-node-id', depth:0..5 selects a Flow neighborhood in any format, with incident edges and boundary references with their text; drills are not opened. detail:'structure' omits explanatory fields, full retains them. Focused JSON is a view envelope, never a document to write. Patch using local ids and expectRevision from this read.", inputSchema: { ...idInput, ...workspaceInput, ...readViewInput } },
   async (args) => {
     const { id } = args;
     const { project, error } = projectFor(args.workspace);
@@ -243,7 +244,7 @@ server.registerTool(
     inputSchema: { ...modelInput, ...workspaceInput },
   },
   async (args) => {
-    const model = args.model as unknown as AnyDoc;
+    const model = upgradeDoc(args.model as unknown as AnyDoc);
                                                                                     
                                                                                      
     const { project } = projectFor(args.workspace);
@@ -265,7 +266,8 @@ server.registerTool(
     inputSchema: { ...modelInput, ...revisionInput, ...workspaceInput },
   },
   async (args) => {
-    const model = args.model as unknown as AnyDoc;
+                                                                        
+    const model = upgradeDoc(args.model as unknown as AnyDoc);
     const { project, root, error } = projectFor(args.workspace);
     if (!project || !root) return errText(error ?? "No workspace set.");
     if (!existsSync(root)) return errText(`Workspace directory not found: ${root}. Pass an existing project directory as \`workspace\`.`);
@@ -339,7 +341,7 @@ server.registerTool(
       "WHOLE result is validated + written (rejects on errors, exactly like write_flow). `ops[]` items: " +
       "set-field {target:'doc'|'node'|'edge'|'call', id?, field, value} · upsert-node {node} · " +
       "remove-node {id} · upsert-edge {edge} · remove-edge {id} · upsert-call {call, parent?} · " +
-      "remove-call {id}. An edge without an id is addressed by `edge: {from, to, type?, label?}` instead " +
+      "remove-call {id}. An edge without an id is addressed by `edge: {from, to, type?, text?}` instead " +
       "of `id` (remove-edge, set-field target 'edge'). An op whose target does not exist fails the whole " +
       "patch. Example — insert X between A and B: upsert-node {X}, remove-edge {edge:{from:A,to:B}}, " +
       "upsert-edge A→X, upsert-edge X→B. Use this instead of resending the whole document for minor changes.",
@@ -456,30 +458,42 @@ A Flow document is one JSON file (\`<id>.flow.json\`) describing one behaviour a
 high altitude: a directed graph of steps, color-coded by which actor performs each.
 
 ## Shape
-\`{ version:"1", id, title, layout?:"TB"|"LR", actors[], nodes[], edges[] }\`
+\`{ version:"2", id, title, layout?:"TB"|"LR", actors[], nodes[], edges[] }\`
 
 - **actors**: every participant — human AND system. \`{ id, label, kind:human|system|service|infra, color? }\`.
-- **nodes**: \`{ id, type, label, description, owner?, shared?, subflow?, inputs?, outputs?, source?, refs?, shape?, icon? }\`.
+- **nodes**: \`{ id, type, text, details?, owner?, shared?, subflow?, inputs?, outputs?, source?, refs?, shape?, icon? }\`.
+  - **text** and **details** — what the reader sees, and what they can open. The diagram should read
+    on its own, the way a good Mermaid chart does: someone following the flow understands each step
+    from its node, without opening Details. So \`text\` holds as much as makes the step clear: a short
+    name when the step is obvious ("Charge payment"), a sentence when it needs one ("Reserve stock for
+    every cart line; release it after 15 minutes without payment"), more when the logic itself is the
+    point. \`details\` (optional) is depth beyond that — background, edge cases, the exact algorithm,
+    examples; a node whose text says everything needs none. Both are markdown: \`text\` inline
+    (\`code\`, **bold**, [links](https://example.com), line breaks), \`details\` also paragraphs, lists
+    and fenced code blocks (a language after the opening fence, e.g. \`\`\`sql, colours the code). The node grows to fit its text, so length is a choice about the reader.
   - **type → default shape**: terminal (start/end) · step (action) · decision (branch) ·
     subflow (drills into another flow; set \`subflow\` to that flow's id) · io (data).
   - **shape / icon** (opt): what the node IS (database, queue, document, person…) and a visual cue
-    beside the label. type keeps its meaning. Choose by meaning: get_docs {topic:"vocabulary"}.
+    beside the text. type keeps its meaning. Choose by meaning: get_docs {topic:"vocabulary"}.
   - **owner** (strongly recommended): the actor id that performs this step → its color. With more than
     one actor, set an owner on EVERY non-terminal node — otherwise the diagram has no color coding and
     the whole point of actors is lost (validate_flow warns: \`nodes-without-owner\`). Terminals (Start/
     Done) may stay neutral.
-  - **description** (required): a LIST OF POINTS (\`string[]\`) — one thesis per item, NOT one
-    blob. Rendered as bullets. Depth is your call, guided by the user.
   - **inputs/outputs** (opt): \`{name, type?}[]\`. **source** (opt): \`{file?, symbol?, line?}\` for
-    code. **refs** (opt): \`{label, url}[]\` for external docs/links (non-code systems).
-- **edges**: \`{ from, to, type, label?, style? }\` — type: flow · branch (label = condition) · return.
+    code, with \`file\` relative to the project root — readers open the file from Details, and \`line\` tells them where to look.
+    **refs** (opt): \`{label, url}[]\` for external docs/links (non-code systems).
+- **edges**: \`{ from, to, type, text?, style? }\` — type: flow · branch (text = condition) · return.
+  \`text\` sits on the line: the condition of a branch, or what travels along it when that helps.
   \`style\` (opt) changes only the look (dashed, dotted, thick, end markers); see the vocabulary.
-  An edge is a **first-class object like a node**: it may also carry optional \`id\`, \`description\`
-  (string[]), \`inputs\`/\`outputs\`, \`source\`, \`refs\`, \`shared\`, and \`subflow\` (drill into a flow
+  An edge is a **first-class object like a node**: it may also carry optional \`id\`, \`details\`,
+  \`inputs\`/\`outputs\`, \`source\`, \`refs\`, \`shared\`, and \`subflow\` (drill into a flow
   describing the whole transition). Edge \`id\` shares the node id-namespace (unique across nodes+edges).
 
+Documents written before version 2 (\`label\` / \`description[]\`) still open; the tools accept them and
+save them as version 2, so read before you patch.
+
 ## Identity (read this — it is where authoring breaks)
-Identity is the **id**, not the label. Two nodes may share a label if their ids differ.
+Identity is the **id**, not the text. Two nodes may share a text if their ids differ.
 - ids are **per-flow local by default** — the same id in two flows does NOT collide.
 - Set \`shared:true\` on a Flow **node or edge** to make its id **workspace-global**: the same shared id
   in other flows is the SAME object (enables cross-flow tracing). Use it deliberately. Actors cannot be
@@ -490,11 +504,11 @@ Identity is the **id**, not the label. Two nodes may share a label if their ids 
 - Avoid: false merge (two different things, one shared id) and false split (one thing, two ids in two
   flows). What validation reports:
   - \`shared-conflict\` (error) — one shared id with a different type or owner, or a node vs an edge.
-  - \`shared-divergence\` (warning) — one shared id whose label or source differs between flows: check
+  - \`shared-divergence\` (warning) — one shared id whose text or source differs between flows: check
     that it really is one object.
   - \`shared-one-sided\` (warning) — you shared an id that another flow still uses as a local id: the link
     is not made until that object is \`shared:true\` too (a \`patch_flow\` on the other document).
-  - \`similar-node\` (hint) — nodes of the same type in two flows look alike: the label, the participant
+  - \`similar-node\` (hint) — nodes of the same type in two flows look alike: the text, the participant
     and the neighbouring steps. Read both: if they are the same step, give them one id and
     \`shared:true\`; if they are different things or separate occurrences, leave them — no action needed.
   - \`possible-split\` (warning) — when nodes carry a \`source\`: nodes in two flows point to the same
@@ -503,7 +517,7 @@ Identity is the **id**, not the label. Two nodes may share a label if their ids 
     occurrence keeps its own id.
   Validation compares structure, not meaning: it cannot prove two objects are the same or different.
   That judgement is yours.
-- **Never edit a diagram only to silence a warning or hint** (renaming labels or ids, adding or removing
+- **Never edit a diagram only to silence a warning or hint** (rewording texts or ids, adding or removing
   \`shared\`). Change it when the diagram is wrong; otherwise leave it as it is.
 
 ## Convention
@@ -547,9 +561,9 @@ The document content never contains machine paths — only the write destination
 ## Workflow & tools
 - Read \`read_flow {id}\` for \`{document, revision}\`; only \`document\` is a writable model.
   For a known Flow node use \`around:nodeId,depth:0..5\` (default 1): incoming/outgoing neighborhoods,
-  all incident edges and labeled boundary references. Drills remain references. JSON/compact/DOT
+  all incident edges and boundary references with their text. Drills remain references. JSON/compact/DOT
   share the selection. Focus and compact/DOT are read-only; never submit them as a whole model.
-  Use full detail when descriptions distinguish equal labels. Structure explicitly omits fields.
+  Use full detail when details distinguish equal texts. Structure explicitly omits fields.
 - Pass the read's \`revision\` (in \`viewMetadata\` for views) as \`expectRevision\` on patch/write.
   A conflict writes nothing; reread and reconsider the change. Views use local ids for patching;
   DOT's document/node names are qualified addresses, not new ids. Edge indices are not patch ids.
@@ -557,7 +571,7 @@ The document content never contains machine paths — only the write destination
   \`validate_flow\` = dry run. See ${URI}://schema for the contract.
 - **Before adding steps that may already exist elsewhere** (a step another process also has, a step
   renamed since), run the draft through \`validate_flow\` and read its \`similar-node\` hints: each shows
-  the existing step — label, participant, neighbours, description. If it is the same step, reuse its
+  the existing step — text, participant, neighbours, details. If it is the same step, reuse its
   id (and \`shared:true\` on both); if not, add yours. Then write. After a \`patch_flow\` the same hints
   arrive with the result; the write is reversible, so a duplicate you spot there is one more patch away.
 - **Small change → \`patch_flow\`** (edit by object id: set-field / upsert·remove node/edge/call; an edge

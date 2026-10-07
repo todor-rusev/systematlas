@@ -32,6 +32,19 @@ export const tokens = {
     violetDot: "#8B7FD4",
     violetBg: "#EDEAF8",
   },
+                                                                                      
+  syntax: {
+    comment: "#6F6858",
+    keyword: "#5E54A8",
+    string: "#2F6B2A",
+    number: "#99500F",
+    func: "#285A96",
+    type: "#0B6670",
+    property: "#87355A",
+    tag: "#A1372A",
+    punctuation: "#6B655B",
+    deleted: "#A8241B",
+  },
   grid: 28,
   size: {
     topbar: 52,

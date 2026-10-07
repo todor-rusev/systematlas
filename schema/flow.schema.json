@@ -5,15 +5,25 @@
   "description": "Object model for the Flow mode (high-level, abstract view). A single *.flow.json file is one Flow document. The Trace mode (low-level) extends this in a later schema version with source refs, request/response and params.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "id", "title", "actors", "nodes", "edges"],
+  "required": [
+    "version",
+    "id",
+    "title",
+    "actors",
+    "nodes",
+    "edges"
+  ],
   "properties": {
     "$schema": {
       "description": "Optional pointer to this schema for editor/IDE validation. Ignored by SystemAtlas.",
       "type": "string"
     },
     "version": {
-      "description": "Schema version of this document, for migrations.",
-      "enum": ["1"]
+      "description": "Format version. 2 is current: nodes and edges carry `text` (shown on the diagram) and optional `details`. Version 1 documents (label/description) remain readable and are upgraded when loaded.",
+      "enum": [
+        "1",
+        "2"
+      ]
     },
     "id": {
       "description": "Identity of THIS flow. Workspace-unique. Stable, scoped id (e.g. 'transaction-create'), not a display label.",
@@ -26,7 +36,10 @@
     },
     "layout": {
       "description": "Auto-layout direction. TB = top-to-bottom, LR = left-to-right.",
-      "enum": ["TB", "LR"],
+      "enum": [
+        "TB",
+        "LR"
+      ],
       "default": "TB"
     },
     "overview": {
@@ -52,16 +65,48 @@
     "nodes": {
       "description": "The steps of the flow.",
       "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/node"
-      }
+      "minItems": 1
     },
     "edges": {
       "description": "Directed connections between nodes.",
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/edge"
+      "type": "array"
+    }
+  },
+  "if": {
+    "properties": {
+      "version": {
+        "const": "1"
+      }
+    },
+    "required": [
+      "version"
+    ]
+  },
+  "then": {
+    "properties": {
+      "nodes": {
+        "items": {
+          "$ref": "#/$defs/nodeV1"
+        }
+      },
+      "edges": {
+        "items": {
+          "$ref": "#/$defs/edgeV1"
+        }
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "nodes": {
+        "items": {
+          "$ref": "#/$defs/node"
+        }
+      },
+      "edges": {
+        "items": {
+          "$ref": "#/$defs/edge"
+        }
       }
     }
   },
@@ -74,7 +119,11 @@
     "actor": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "label", "kind"],
+      "required": [
+        "id",
+        "label",
+        "kind"
+      ],
       "properties": {
         "id": {
           "description": "Actor identity, referenced by node.owner.",
@@ -87,7 +136,12 @@
         },
         "kind": {
           "description": "Nature of the participant. human = external user/operator; system = external system/remote API; service = internal component/service; infra = database/queue/cache.",
-          "enum": ["human", "system", "service", "infra"]
+          "enum": [
+            "human",
+            "system",
+            "service",
+            "infra"
+          ]
         },
         "color": {
           "description": "Optional explicit node color for this actor (hex). If omitted, an auto-palette is used that avoids red/green as accidental success/error signals.",
@@ -99,7 +153,11 @@
     "node": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "type", "label", "description"],
+      "required": [
+        "id",
+        "type",
+        "text"
+      ],
       "properties": {
         "id": {
           "description": "Node identity. By DEFAULT file-local (per-flow): the same id in two different flow files does NOT collide — flows are isolated namespaces. Set 'shared': true to flip this id into the workspace-global namespace.",
@@ -107,7 +165,526 @@
         },
         "type": {
           "description": "terminal = flow start/end (capsule); step = action (rounded rect); decision = branch/if (diamond); subflow = drills down into another flow (double-border + ⊕); io = data in/out (parallelogram).",
-          "enum": ["terminal", "step", "decision", "subflow", "io"]
+          "enum": [
+            "terminal",
+            "step",
+            "decision",
+            "subflow",
+            "io"
+          ]
+        },
+        "text": {
+          "description": "What the reader sees in the node. Write as much as makes the step clear on the diagram itself, so nobody needs Details to follow the flow: a short name when that is enough ('Charge payment'), a sentence when the step needs one ('Reserve stock for every cart line; release it after 15 minutes without payment'), or a few, with code where it helps ('Retry `POST /charges` up to 3 times, doubling the wait each time'). Inline markdown: `code`, **bold**, [links](https://example.com), line breaks. Two nodes may share a text as long as their ids differ — the system never confuses them.",
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "description": "Reference to actors[].id — who performs this step. Drives node color. Optional for type:terminal.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "details": {
+          "description": "Optional depth beyond the node text, shown in the Details panel: background, edge cases, the exact algorithm, examples. Markdown: paragraphs, lists, `code`, fenced code blocks, **bold**, links. Leave it out when the node text already says everything.",
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "description": "Optional — what the step receives.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ioField"
+          }
+        },
+        "outputs": {
+          "description": "Optional — what the step returns/produces.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ioField"
+          }
+        },
+        "source": {
+          "description": "Optional — a code reference for this step (file / symbol / line).",
+          "$ref": "#/$defs/sourceRef"
+        },
+        "refs": {
+          "description": "Optional — external documents/links (useful when describing a global system rather than concrete code).",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/externalRef"
+          }
+        },
+        "shared": {
+          "description": "Opt-in cross-flow identity (the hybrid model). When true, this node's id lives in the workspace-global namespace: the same shared id in other flows refers to the SAME object (enables cross-flow tracing/consistency). Default false = per-flow local.",
+          "type": "boolean",
+          "default": false
+        },
+        "subflow": {
+          "description": "For type:subflow only — the id of the flow that this node drills down into (optional depth / nested mode).",
+          "$ref": "#/$defs/scopedId"
+        },
+        "sequence": {
+          "description": "Optional drill-down into a Sequence document (low-level execution sequence) describing how this step runs. Opened the same way as a subflow.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "shape": {
+          "description": "Optional visual form, independent of type/control-flow semantics. Canonical Mermaid short names plus queue, timer, cache and api. Omit for the type default. Consult the visual vocabulary for meanings.",
+          "enum": [
+            "rect",
+            "rounded",
+            "stadium",
+            "diam",
+            "fr-rect",
+            "lean-r",
+            "lean-l",
+            "cyl",
+            "h-cyl",
+            "lin-cyl",
+            "doc",
+            "docs",
+            "lin-doc",
+            "tag-doc",
+            "notch-rect",
+            "st-rect",
+            "lin-rect",
+            "div-rect",
+            "tag-rect",
+            "win-pane",
+            "bow-rect",
+            "hex",
+            "trap-t",
+            "trap-b",
+            "notch-pent",
+            "sl-rect",
+            "curv-trap",
+            "delay",
+            "tri",
+            "flip-tri",
+            "hourglass",
+            "circle",
+            "dbl-circ",
+            "fr-circ",
+            "cross-circ",
+            "sm-circ",
+            "f-circ",
+            "fork",
+            "brace",
+            "brace-r",
+            "braces",
+            "bolt",
+            "flag",
+            "cloud",
+            "bang",
+            "odd",
+            "text",
+            "browser",
+            "console",
+            "bucket",
+            "datastore",
+            "folder",
+            "person",
+            "icon",
+            "image",
+            "queue",
+            "timer",
+            "cache",
+            "api"
+          ]
+        },
+        "icon": {
+          "$ref": "#/$defs/nodeIcon",
+          "description": "Optional offline icon: built-in name, emoji, or safe bounded SVG path data. A dedicated slot is reserved; the label is never replaced."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "subflow"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "subflow"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "subflow"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "edge": {
+      "description": "A directed connection. An edge is a first-class object like a node: it may carry the same optional content (details, inputs/outputs, source, refs) and drill down into a sub-flow describing how the transition happens.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "description": "Optional edge identity. Lives in the SAME object-id namespace as nodes (must be unique across nodes+edges in this flow). Required only if you select/drill/share this edge. Set 'shared': true to make it workspace-global like a shared node.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "from": {
+          "description": "Source node id.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "to": {
+          "description": "Target node id.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "type": {
+          "description": "flow = next step (solid arrow); branch = labeled exit from a decision (solid arrow + label); return = return/loop back (dashed curved arrow).",
+          "enum": [
+            "flow",
+            "branch",
+            "return"
+          ]
+        },
+        "text": {
+          "description": "Text on the line. For a branch, its condition ('yes', 'amount > 0'); for any edge, what travels or happens along it when that helps the reader ('signed receipt, as PDF'). Inline markdown, like a node's text.",
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {
+          "description": "Optional depth about the transition, shown in the Details panel. Markdown, like a node’s details.",
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "description": "Optional — what flows across this edge.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ioField"
+          }
+        },
+        "outputs": {
+          "description": "Optional — what the transition produces.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ioField"
+          }
+        },
+        "source": {
+          "description": "Optional — a code reference for this transition (file / symbol / line).",
+          "$ref": "#/$defs/sourceRef"
+        },
+        "refs": {
+          "description": "Optional — external documents/links for this transition.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/externalRef"
+          }
+        },
+        "shared": {
+          "description": "Opt-in cross-flow identity (same as a node's). When true, this edge's id is workspace-global: the same shared id elsewhere refers to the SAME object. Requires id. Default false.",
+          "type": "boolean",
+          "default": false
+        },
+        "subflow": {
+          "description": "Optional drill-down — the id of a flow that describes the full process of getting from 'from' to 'to'. Opened the same way as a subflow node.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "sequence": {
+          "description": "Optional drill-down into a Sequence document (low-level execution sequence) for this transition.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "style": {
+          "$ref": "#/$defs/edgeStyle",
+          "description": "Optional appearance overrides. Transition type still defines meaning. Omit to retain solid arrow/dashed return defaults."
+        }
+      }
+    },
+    "ioField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "description": "Field name (e.g. 'amount').",
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "description": "Optional type (e.g. 'number', 'CreateTxDTO').",
+          "type": "string"
+        }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "description": "Path to the source file, relative to the project root (e.g. 'src/adapters/payment.ts'). Readers open the file from Details; `line` tells them where to look.",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "Function / method / class (e.g. 'PaymentAdapter.charge').",
+          "type": "string"
+        },
+        "line": {
+          "description": "Line number (1-based), where the editor opens the file.",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "externalRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "url"
+      ],
+      "properties": {
+        "label": {
+          "description": "Human label for the link.",
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "description": "URL or document reference.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nodeIcon": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "name"
+          ],
+          "properties": {
+            "kind": {
+              "const": "builtin"
+            },
+            "name": {
+              "enum": [
+                "user",
+                "users",
+                "settings",
+                "gear",
+                "database",
+                "file",
+                "folder",
+                "queue",
+                "clock",
+                "timer",
+                "calendar",
+                "cloud",
+                "server",
+                "network",
+                "api",
+                "code",
+                "terminal",
+                "mail",
+                "message",
+                "send",
+                "download",
+                "upload",
+                "search",
+                "filter",
+                "check",
+                "error",
+                "warning",
+                "info",
+                "lock",
+                "shield",
+                "key",
+                "branch",
+                "merge",
+                "loop",
+                "link",
+                "globe",
+                "browser",
+                "cache",
+                "memory",
+                "archive",
+                "trash",
+                "edit",
+                "play",
+                "pause",
+                "stop",
+                "eye",
+                "chart",
+                "package",
+                "bolt",
+                "heart"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "emoji"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "viewBox",
+            "paths"
+          ],
+          "properties": {
+            "kind": {
+              "const": "svg"
+            },
+            "viewBox": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": -10000,
+                  "maximum": 10000
+                },
+                {
+                  "type": "number",
+                  "minimum": -10000,
+                  "maximum": 10000
+                },
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                },
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10000
+                }
+              ],
+              "items": false
+            },
+            "paths": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "d"
+                ],
+                "properties": {
+                  "d": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096,
+                    "pattern": "^[MmLlHhVvCcSsQqTtAaZz0-9eE.,+ \\-]+$"
+                  },
+                  "fill": {
+                    "type": "string",
+                    "pattern": "^(currentColor|none|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})$"
+                  },
+                  "stroke": {
+                    "type": "string",
+                    "pattern": "^(currentColor|none|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})$"
+                  },
+                  "strokeWidth": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 12
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "edgeStyle": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "line": {
+          "enum": [
+            "solid",
+            "dashed",
+            "dotted",
+            "dash-dot",
+            "double",
+            "invisible"
+          ]
+        },
+        "width": {
+          "enum": [
+            "normal",
+            "thick"
+          ]
+        },
+        "start": {
+          "enum": [
+            "arrow",
+            "none",
+            "circle",
+            "cross"
+          ]
+        },
+        "end": {
+          "enum": [
+            "arrow",
+            "none",
+            "circle",
+            "cross"
+          ]
+        }
+      }
+    },
+    "nodeV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "label",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "description": "Node identity. By DEFAULT file-local (per-flow): the same id in two different flow files does NOT collide — flows are isolated namespaces. Set 'shared': true to flip this id into the workspace-global namespace.",
+          "$ref": "#/$defs/scopedId"
+        },
+        "type": {
+          "description": "terminal = flow start/end (capsule); step = action (rounded rect); decision = branch/if (diamond); subflow = drills down into another flow (double-border + ⊕); io = data in/out (parallelogram).",
+          "enum": [
+            "terminal",
+            "step",
+            "decision",
+            "subflow",
+            "io"
+          ]
         },
         "label": {
           "description": "Display text (e.g. 'Charge payment'). Two nodes may share a label as long as their ids differ — the system never confuses them.",
@@ -244,21 +821,30 @@
             }
           },
           "then": {
-            "required": ["subflow"]
+            "required": [
+              "subflow"
+            ]
           },
           "else": {
             "not": {
-              "required": ["subflow"]
+              "required": [
+                "subflow"
+              ]
             }
           }
         }
-      ]
+      ],
+      "description": "A step in a version 1 document (label/description). Read and upgraded to version 2 on load."
     },
-    "edge": {
-      "description": "A directed connection. An edge is a first-class object like a node: it may carry the same optional content (description, inputs/outputs, source, refs) and drill down into a sub-flow describing how the transition happens.",
+    "edgeV1": {
+      "description": "An edge in a version 1 document (label/description). Read and upgraded to version 2 on load.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["from", "to", "type"],
+      "required": [
+        "from",
+        "to",
+        "type"
+      ],
       "properties": {
         "id": {
           "description": "Optional edge identity. Lives in the SAME object-id namespace as nodes (must be unique across nodes+edges in this flow). Required only if you select/drill/share this edge. Set 'shared': true to make it workspace-global like a shared node.",
@@ -274,7 +860,11 @@
         },
         "type": {
           "description": "flow = next step (solid arrow); branch = labeled exit from a decision (solid arrow + label); return = return/loop back (dashed curved arrow).",
-          "enum": ["flow", "branch", "return"]
+          "enum": [
+            "flow",
+            "branch",
+            "return"
+          ]
         },
         "label": {
           "description": "Edge label. Primarily for type:branch (the condition, e.g. 'yes' / 'amount > 0').",
@@ -330,236 +920,6 @@
         "style": {
           "$ref": "#/$defs/edgeStyle",
           "description": "Optional appearance overrides. Transition type still defines meaning. Omit to retain solid arrow/dashed return defaults."
-        }
-      }
-    },
-    "ioField": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["name"],
-      "properties": {
-        "name": {
-          "description": "Field name (e.g. 'amount').",
-          "type": "string",
-          "minLength": 1
-        },
-        "type": {
-          "description": "Optional type (e.g. 'number', 'CreateTxDTO').",
-          "type": "string"
-        }
-      }
-    },
-    "sourceRef": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "file": {
-          "description": "Path to the source file (e.g. 'src/adapters/payment.ts').",
-          "type": "string"
-        },
-        "symbol": {
-          "description": "Function / method / class (e.g. 'PaymentAdapter.charge').",
-          "type": "string"
-        },
-        "line": {
-          "description": "Line number.",
-          "type": "integer",
-          "minimum": 1
-        }
-      }
-    },
-    "externalRef": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["label", "url"],
-      "properties": {
-        "label": {
-          "description": "Human label for the link.",
-          "type": "string",
-          "minLength": 1
-        },
-        "url": {
-          "description": "URL or document reference.",
-          "type": "string",
-          "minLength": 1
-        }
-      }
-    },
-    "nodeIcon": {
-      "oneOf": [
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["kind", "name"],
-          "properties": {
-            "kind": {
-              "const": "builtin"
-            },
-            "name": {
-              "enum": [
-                "user",
-                "users",
-                "settings",
-                "gear",
-                "database",
-                "file",
-                "folder",
-                "queue",
-                "clock",
-                "timer",
-                "calendar",
-                "cloud",
-                "server",
-                "network",
-                "api",
-                "code",
-                "terminal",
-                "mail",
-                "message",
-                "send",
-                "download",
-                "upload",
-                "search",
-                "filter",
-                "check",
-                "error",
-                "warning",
-                "info",
-                "lock",
-                "shield",
-                "key",
-                "branch",
-                "merge",
-                "loop",
-                "link",
-                "globe",
-                "browser",
-                "cache",
-                "memory",
-                "archive",
-                "trash",
-                "edit",
-                "play",
-                "pause",
-                "stop",
-                "eye",
-                "chart",
-                "package",
-                "bolt",
-                "heart"
-              ]
-            }
-          }
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["kind", "text"],
-          "properties": {
-            "kind": {
-              "const": "emoji"
-            },
-            "text": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 32
-            }
-          }
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["kind", "viewBox", "paths"],
-          "properties": {
-            "kind": {
-              "const": "svg"
-            },
-            "viewBox": {
-              "type": "array",
-              "minItems": 4,
-              "maxItems": 4,
-              "prefixItems": [
-                {
-                  "type": "number",
-                  "minimum": -10000,
-                  "maximum": 10000
-                },
-                {
-                  "type": "number",
-                  "minimum": -10000,
-                  "maximum": 10000
-                },
-                {
-                  "type": "number",
-                  "exclusiveMinimum": 0,
-                  "maximum": 10000
-                },
-                {
-                  "type": "number",
-                  "exclusiveMinimum": 0,
-                  "maximum": 10000
-                }
-              ],
-              "items": false
-            },
-            "paths": {
-              "type": "array",
-              "minItems": 1,
-              "maxItems": 32,
-              "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "required": ["d"],
-                "properties": {
-                  "d": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 4096,
-                    "pattern": "^[MmLlHhVvCcSsQqTtAaZz0-9eE.,+ \\-]+$"
-                  },
-                  "fill": {
-                    "type": "string",
-                    "pattern": "^(currentColor|none|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})$"
-                  },
-                  "stroke": {
-                    "type": "string",
-                    "pattern": "^(currentColor|none|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})$"
-                  },
-                  "strokeWidth": {
-                    "type": "number",
-                    "minimum": 0,
-                    "maximum": 12
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "edgeStyle": {
-      "type": "object",
-      "additionalProperties": false,
-      "minProperties": 1,
-      "properties": {
-        "line": {
-          "enum": [
-            "solid",
-            "dashed",
-            "dotted",
-            "dash-dot",
-            "double",
-            "invisible"
-          ]
-        },
-        "width": {
-          "enum": ["normal", "thick"]
-        },
-        "start": {
-          "enum": ["arrow", "none", "circle", "cross"]
-        },
-        "end": {
-          "enum": ["arrow", "none", "circle", "cross"]
         }
       }
     }

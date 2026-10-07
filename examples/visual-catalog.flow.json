@@ -1,878 +1,553 @@
 {
-  "version": "1",
+  "version": "2",
   "id": "visual-catalog",
   "title": "Visual vocabulary — all shapes",
   "actors": [
-    {
-      "id": "owner-0",
-      "label": "Actor 1",
-      "kind": "service",
-      "color": "#087f78"
-    },
-    {
-      "id": "owner-1",
-      "label": "Actor 2",
-      "kind": "service",
-      "color": "#2563ff"
-    },
-    {
-      "id": "owner-2",
-      "label": "Actor 3",
-      "kind": "service",
-      "color": "#8641ff"
-    },
-    {
-      "id": "owner-3",
-      "label": "Actor 4",
-      "kind": "service",
-      "color": "#fff"
-    },
-    {
-      "id": "owner-4",
-      "label": "Actor 5",
-      "kind": "service",
-      "color": "#abc"
-    }
+    { "id": "owner-0", "label": "Actor 1", "kind": "service", "color": "#087f78" },
+    { "id": "owner-1", "label": "Actor 2", "kind": "service", "color": "#2563ff" },
+    { "id": "owner-2", "label": "Actor 3", "kind": "service", "color": "#8641ff" },
+    { "id": "owner-3", "label": "Actor 4", "kind": "service", "color": "#fff" },
+    { "id": "owner-4", "label": "Actor 5", "kind": "service", "color": "#abc" }
   ],
   "nodes": [
     {
       "id": "shape-rect",
       "type": "step",
       "shape": "rect",
-      "label": "rect\nProcess / action",
-      "description": [
-        "Process / action. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "rect\nProcess / action",
+      "details": "Process / action. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "user"
-      }
+      "icon": { "kind": "builtin", "name": "user" }
     },
     {
       "id": "shape-rounded",
       "type": "step",
       "shape": "rounded",
-      "label": "rounded\nEvent / rounded process",
-      "description": [
-        "Event / rounded process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "rounded\nEvent / rounded process",
+      "details": "Event / rounded process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "users"
-      }
+      "icon": { "kind": "builtin", "name": "users" }
     },
     {
       "id": "shape-stadium",
       "type": "step",
       "shape": "stadium",
-      "label": "stadium\nStart or end",
-      "description": [
-        "Start or end. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "stadium\nStart or end",
+      "details": "Start or end. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "settings"
-      }
+      "icon": { "kind": "builtin", "name": "settings" }
     },
     {
       "id": "shape-diam",
       "type": "step",
       "shape": "diam",
-      "label": "diam\nDecision",
-      "description": [
-        "Decision. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "diam\nDecision",
+      "details": "Decision. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "gear"
-      }
+      "icon": { "kind": "builtin", "name": "gear" }
     },
     {
       "id": "shape-fr-rect",
       "type": "step",
       "shape": "fr-rect",
-      "label": "fr-rect\nSubprocess",
-      "description": [
-        "Subprocess. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "fr-rect\nSubprocess",
+      "details": "Subprocess. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "database"
-      }
+      "icon": { "kind": "builtin", "name": "database" }
     },
     {
       "id": "shape-lean-r",
       "type": "step",
       "shape": "lean-r",
-      "label": "lean-r\nData input/output",
-      "description": [
-        "Data input/output. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "lean-r\nData input/output",
+      "details": "Data input/output. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "file"
-      }
+      "icon": { "kind": "builtin", "name": "file" }
     },
     {
       "id": "shape-lean-l",
       "type": "step",
       "shape": "lean-l",
-      "label": "lean-l\nData output/input",
-      "description": [
-        "Data output/input. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "lean-l\nData output/input",
+      "details": "Data output/input. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "folder"
-      }
+      "icon": { "kind": "builtin", "name": "folder" }
     },
     {
       "id": "shape-cyl",
       "type": "step",
       "shape": "cyl",
-      "label": "cyl\nDatabase",
-      "description": [
-        "Database. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "cyl\nDatabase",
+      "details": "Database. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "queue"
-      }
+      "icon": { "kind": "builtin", "name": "queue" }
     },
     {
       "id": "shape-h-cyl",
       "type": "step",
       "shape": "h-cyl",
-      "label": "h-cyl\nDirect-access storage",
-      "description": [
-        "Direct-access storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "h-cyl\nDirect-access storage",
+      "details": "Direct-access storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "clock"
-      }
+      "icon": { "kind": "builtin", "name": "clock" }
     },
     {
       "id": "shape-lin-cyl",
       "type": "step",
       "shape": "lin-cyl",
-      "label": "lin-cyl\nDisk storage",
-      "description": [
-        "Disk storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "lin-cyl\nDisk storage",
+      "details": "Disk storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "timer"
-      }
+      "icon": { "kind": "builtin", "name": "timer" }
     },
     {
       "id": "shape-doc",
       "type": "step",
       "shape": "doc",
-      "label": "doc\nDocument",
-      "description": [
-        "Document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "doc\nDocument",
+      "details": "Document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "calendar"
-      }
+      "icon": { "kind": "builtin", "name": "calendar" }
     },
     {
       "id": "shape-docs",
       "type": "step",
       "shape": "docs",
-      "label": "docs\nMultiple documents",
-      "description": [
-        "Multiple documents. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "docs\nMultiple documents",
+      "details": "Multiple documents. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "cloud"
-      }
+      "icon": { "kind": "builtin", "name": "cloud" }
     },
     {
       "id": "shape-lin-doc",
       "type": "step",
       "shape": "lin-doc",
-      "label": "lin-doc\nLined document",
-      "description": [
-        "Lined document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "lin-doc\nLined document",
+      "details": "Lined document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "server"
-      }
+      "icon": { "kind": "builtin", "name": "server" }
     },
     {
       "id": "shape-tag-doc",
       "type": "step",
       "shape": "tag-doc",
-      "label": "tag-doc\nTagged document",
-      "description": [
-        "Tagged document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "tag-doc\nTagged document",
+      "details": "Tagged document. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "network"
-      }
+      "icon": { "kind": "builtin", "name": "network" }
     },
     {
       "id": "shape-notch-rect",
       "type": "step",
       "shape": "notch-rect",
-      "label": "notch-rect\nCard",
-      "description": [
-        "Card. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "notch-rect\nCard",
+      "details": "Card. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "api"
-      }
+      "icon": { "kind": "builtin", "name": "api" }
     },
     {
       "id": "shape-st-rect",
       "type": "step",
       "shape": "st-rect",
-      "label": "st-rect\nMultiple processes",
-      "description": [
-        "Multiple processes. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "st-rect\nMultiple processes",
+      "details": "Multiple processes. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "code"
-      }
+      "icon": { "kind": "builtin", "name": "code" }
     },
     {
       "id": "shape-lin-rect",
       "type": "step",
       "shape": "lin-rect",
-      "label": "lin-rect\nLined process",
-      "description": [
-        "Lined process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "lin-rect\nLined process",
+      "details": "Lined process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "terminal"
-      }
+      "icon": { "kind": "builtin", "name": "terminal" }
     },
     {
       "id": "shape-div-rect",
       "type": "step",
       "shape": "div-rect",
-      "label": "div-rect\nDivided process",
-      "description": [
-        "Divided process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "div-rect\nDivided process",
+      "details": "Divided process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "mail"
-      }
+      "icon": { "kind": "builtin", "name": "mail" }
     },
     {
       "id": "shape-tag-rect",
       "type": "step",
       "shape": "tag-rect",
-      "label": "tag-rect\nTagged process",
-      "description": [
-        "Tagged process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "tag-rect\nTagged process",
+      "details": "Tagged process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "message"
-      }
+      "icon": { "kind": "builtin", "name": "message" }
     },
     {
       "id": "shape-win-pane",
       "type": "step",
       "shape": "win-pane",
-      "label": "win-pane\nInternal storage",
-      "description": [
-        "Internal storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "win-pane\nInternal storage",
+      "details": "Internal storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "send"
-      }
+      "icon": { "kind": "builtin", "name": "send" }
     },
     {
       "id": "shape-bow-rect",
       "type": "step",
       "shape": "bow-rect",
-      "label": "bow-rect\nStored data",
-      "description": [
-        "Stored data. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "bow-rect\nStored data",
+      "details": "Stored data. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "download"
-      }
+      "icon": { "kind": "builtin", "name": "download" }
     },
     {
       "id": "shape-hex",
       "type": "step",
       "shape": "hex",
-      "label": "hex\nPreparation",
-      "description": [
-        "Preparation. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "hex\nPreparation",
+      "details": "Preparation. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "upload"
-      }
+      "icon": { "kind": "builtin", "name": "upload" }
     },
     {
       "id": "shape-trap-t",
       "type": "step",
       "shape": "trap-t",
-      "label": "trap-t\nManual operation",
-      "description": [
-        "Manual operation. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "trap-t\nManual operation",
+      "details": "Manual operation. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "search"
-      }
+      "icon": { "kind": "builtin", "name": "search" }
     },
     {
       "id": "shape-trap-b",
       "type": "step",
       "shape": "trap-b",
-      "label": "trap-b\nPriority action",
-      "description": [
-        "Priority action. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "trap-b\nPriority action",
+      "details": "Priority action. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "filter"
-      }
+      "icon": { "kind": "builtin", "name": "filter" }
     },
     {
       "id": "shape-notch-pent",
       "type": "step",
       "shape": "notch-pent",
-      "label": "notch-pent\nLoop limit",
-      "description": [
-        "Loop limit. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "notch-pent\nLoop limit",
+      "details": "Loop limit. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "check"
-      }
+      "icon": { "kind": "builtin", "name": "check" }
     },
     {
       "id": "shape-sl-rect",
       "type": "step",
       "shape": "sl-rect",
-      "label": "sl-rect\nManual input",
-      "description": [
-        "Manual input. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "sl-rect\nManual input",
+      "details": "Manual input. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "error"
-      }
+      "icon": { "kind": "builtin", "name": "error" }
     },
     {
       "id": "shape-curv-trap",
       "type": "step",
       "shape": "curv-trap",
-      "label": "curv-trap\nDisplay",
-      "description": [
-        "Display. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "curv-trap\nDisplay",
+      "details": "Display. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "warning"
-      }
+      "icon": { "kind": "builtin", "name": "warning" }
     },
     {
       "id": "shape-delay",
       "type": "step",
       "shape": "delay",
-      "label": "delay\nDelay",
-      "description": [
-        "Delay. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "delay\nDelay",
+      "details": "Delay. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "info"
-      }
+      "icon": { "kind": "builtin", "name": "info" }
     },
     {
       "id": "shape-tri",
       "type": "step",
       "shape": "tri",
-      "label": "tri\nExtract",
-      "description": [
-        "Extract. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "tri\nExtract",
+      "details": "Extract. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "lock"
-      }
+      "icon": { "kind": "builtin", "name": "lock" }
     },
     {
       "id": "shape-flip-tri",
       "type": "step",
       "shape": "flip-tri",
-      "label": "flip-tri\nManual file",
-      "description": [
-        "Manual file. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "flip-tri\nManual file",
+      "details": "Manual file. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "shield"
-      }
+      "icon": { "kind": "builtin", "name": "shield" }
     },
     {
       "id": "shape-hourglass",
       "type": "step",
       "shape": "hourglass",
-      "label": "hourglass\nCollate",
-      "description": [
-        "Collate. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "hourglass\nCollate",
+      "details": "Collate. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "key"
-      }
+      "icon": { "kind": "builtin", "name": "key" }
     },
     {
       "id": "shape-circle",
       "type": "step",
       "shape": "circle",
-      "label": "circle\nStart / connector",
-      "description": [
-        "Start / connector. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "circle\nStart / connector",
+      "details": "Start / connector. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "branch"
-      }
+      "icon": { "kind": "builtin", "name": "branch" }
     },
     {
       "id": "shape-dbl-circ",
       "type": "step",
       "shape": "dbl-circ",
-      "label": "dbl-circ\nStop / double circle",
-      "description": [
-        "Stop / double circle. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "dbl-circ\nStop / double circle",
+      "details": "Stop / double circle. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "merge"
-      }
+      "icon": { "kind": "builtin", "name": "merge" }
     },
     {
       "id": "shape-fr-circ",
       "type": "step",
       "shape": "fr-circ",
-      "label": "fr-circ\nStop / framed circle",
-      "description": [
-        "Stop / framed circle. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "fr-circ\nStop / framed circle",
+      "details": "Stop / framed circle. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "loop"
-      }
+      "icon": { "kind": "builtin", "name": "loop" }
     },
     {
       "id": "shape-cross-circ",
       "type": "step",
       "shape": "cross-circ",
-      "label": "cross-circ\nSummary",
-      "description": [
-        "Summary. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "cross-circ\nSummary",
+      "details": "Summary. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "link"
-      }
+      "icon": { "kind": "builtin", "name": "link" }
     },
     {
       "id": "shape-sm-circ",
       "type": "step",
       "shape": "sm-circ",
-      "label": "sm-circ\nSmall start",
-      "description": [
-        "Small start. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "sm-circ\nSmall start",
+      "details": "Small start. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "globe"
-      }
+      "icon": { "kind": "builtin", "name": "globe" }
     },
     {
       "id": "shape-f-circ",
       "type": "step",
       "shape": "f-circ",
-      "label": "f-circ\nJunction",
-      "description": [
-        "Junction. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "f-circ\nJunction",
+      "details": "Junction. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "browser"
-      }
+      "icon": { "kind": "builtin", "name": "browser" }
     },
     {
       "id": "shape-fork",
       "type": "step",
       "shape": "fork",
-      "label": "fork\nFork or join",
-      "description": [
-        "Fork or join. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "fork\nFork or join",
+      "details": "Fork or join. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "cache"
-      }
+      "icon": { "kind": "builtin", "name": "cache" }
     },
     {
       "id": "shape-brace",
       "type": "step",
       "shape": "brace",
-      "label": "brace\nComment on left",
-      "description": [
-        "Comment on left. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "brace\nComment on left",
+      "details": "Comment on left. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "memory"
-      }
+      "icon": { "kind": "builtin", "name": "memory" }
     },
     {
       "id": "shape-brace-r",
       "type": "step",
       "shape": "brace-r",
-      "label": "brace-r\nComment on right",
-      "description": [
-        "Comment on right. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "brace-r\nComment on right",
+      "details": "Comment on right. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "archive"
-      }
+      "icon": { "kind": "builtin", "name": "archive" }
     },
     {
       "id": "shape-braces",
       "type": "step",
       "shape": "braces",
-      "label": "braces\nComment on both sides",
-      "description": [
-        "Comment on both sides. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "braces\nComment on both sides",
+      "details": "Comment on both sides. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "trash"
-      }
+      "icon": { "kind": "builtin", "name": "trash" }
     },
     {
       "id": "shape-bolt",
       "type": "step",
       "shape": "bolt",
-      "label": "bolt\nCommunication link",
-      "description": [
-        "Communication link. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "bolt\nCommunication link",
+      "details": "Communication link. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "edit"
-      }
+      "icon": { "kind": "builtin", "name": "edit" }
     },
     {
       "id": "shape-flag",
       "type": "step",
       "shape": "flag",
-      "label": "flag\nPaper tape",
-      "description": [
-        "Paper tape. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "flag\nPaper tape",
+      "details": "Paper tape. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "play"
-      }
+      "icon": { "kind": "builtin", "name": "play" }
     },
     {
       "id": "shape-cloud",
       "type": "step",
       "shape": "cloud",
-      "label": "cloud\nCloud",
-      "description": [
-        "Cloud. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "cloud\nCloud",
+      "details": "Cloud. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "pause"
-      }
+      "icon": { "kind": "builtin", "name": "pause" }
     },
     {
       "id": "shape-bang",
       "type": "step",
       "shape": "bang",
-      "label": "bang\nAttention",
-      "description": [
-        "Attention. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "bang\nAttention",
+      "details": "Attention. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "stop"
-      }
+      "icon": { "kind": "builtin", "name": "stop" }
     },
     {
       "id": "shape-odd",
       "type": "step",
       "shape": "odd",
-      "label": "odd\nAsymmetric process",
-      "description": [
-        "Asymmetric process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "odd\nAsymmetric process",
+      "details": "Asymmetric process. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "eye"
-      }
+      "icon": { "kind": "builtin", "name": "eye" }
     },
     {
       "id": "shape-text",
       "type": "step",
       "shape": "text",
-      "label": "text\nText block",
-      "description": [
-        "Text block. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "text\nText block",
+      "details": "Text block. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "chart"
-      }
+      "icon": { "kind": "builtin", "name": "chart" }
     },
     {
       "id": "shape-browser",
       "type": "step",
       "shape": "browser",
-      "label": "browser\nBrowser window",
-      "description": [
-        "Browser window. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "browser\nBrowser window",
+      "details": "Browser window. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "package"
-      }
+      "icon": { "kind": "builtin", "name": "package" }
     },
     {
       "id": "shape-console",
       "type": "step",
       "shape": "console",
-      "label": "console\nConsole window",
-      "description": [
-        "Console window. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "console\nConsole window",
+      "details": "Console window. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "bolt"
-      }
+      "icon": { "kind": "builtin", "name": "bolt" }
     },
     {
       "id": "shape-bucket",
       "type": "step",
       "shape": "bucket",
-      "label": "bucket\nObject storage",
-      "description": [
-        "Object storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "bucket\nObject storage",
+      "details": "Object storage. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "heart"
-      }
+      "icon": { "kind": "builtin", "name": "heart" }
     },
     {
       "id": "shape-datastore",
       "type": "step",
       "shape": "datastore",
-      "label": "datastore\nData store",
-      "description": [
-        "Data store. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "datastore\nData store",
+      "details": "Data store. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "user"
-      }
+      "icon": { "kind": "builtin", "name": "user" }
     },
     {
       "id": "shape-folder",
       "type": "step",
       "shape": "folder",
-      "label": "folder\nFolder",
-      "description": [
-        "Folder. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "folder\nFolder",
+      "details": "Folder. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "users"
-      }
+      "icon": { "kind": "builtin", "name": "users" }
     },
     {
       "id": "shape-person",
       "type": "step",
       "shape": "person",
-      "label": "person\nPerson",
-      "description": [
-        "Person. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "person\nPerson",
+      "details": "Person. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "settings"
-      }
+      "icon": { "kind": "builtin", "name": "settings" }
     },
     {
       "id": "shape-icon",
       "type": "step",
       "shape": "icon",
-      "label": "icon\nIcon with caption",
-      "description": [
-        "Icon with caption. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "icon\nIcon with caption",
+      "details": "Icon with caption. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "gear"
-      }
+      "icon": { "kind": "builtin", "name": "gear" }
     },
     {
       "id": "shape-image",
       "type": "step",
       "shape": "image",
-      "label": "image\nCustom vector with caption",
-      "description": [
-        "Custom vector with caption. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "image\nCustom vector with caption",
+      "details": "Custom vector with caption. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-4",
-      "icon": {
-        "kind": "builtin",
-        "name": "database"
-      }
+      "icon": { "kind": "builtin", "name": "database" }
     },
     {
       "id": "shape-queue",
       "type": "step",
       "shape": "queue",
-      "label": "queue\nMessage queue",
-      "description": [
-        "Message queue. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "queue\nMessage queue",
+      "details": "Message queue. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-0",
-      "icon": {
-        "kind": "builtin",
-        "name": "file"
-      }
+      "icon": { "kind": "builtin", "name": "file" }
     },
     {
       "id": "shape-timer",
       "type": "step",
       "shape": "timer",
-      "label": "timer\nTimer / scheduled event",
-      "description": [
-        "Timer / scheduled event. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "timer\nTimer / scheduled event",
+      "details": "Timer / scheduled event. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-1",
-      "icon": {
-        "kind": "builtin",
-        "name": "folder"
-      }
+      "icon": { "kind": "builtin", "name": "folder" }
     },
     {
       "id": "shape-cache",
       "type": "step",
       "shape": "cache",
-      "label": "cache\nCache",
-      "description": [
-        "Cache. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "cache\nCache",
+      "details": "Cache. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-2",
-      "icon": {
-        "kind": "builtin",
-        "name": "queue"
-      }
+      "icon": { "kind": "builtin", "name": "queue" }
     },
     {
       "id": "shape-api",
       "type": "step",
       "shape": "api",
-      "label": "api\nAPI endpoint",
-      "description": [
-        "API endpoint. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics."
-      ],
+      "text": "api\nAPI endpoint",
+      "details": "API endpoint. This gallery deliberately keeps type:step to demonstrate that shape does not change transition semantics.",
       "owner": "owner-3",
-      "icon": {
-        "kind": "builtin",
-        "name": "clock"
-      }
+      "icon": { "kind": "builtin", "name": "clock" }
     },
     {
       "id": "long-label",
       "type": "step",
-      "label": "Много дълъг надпис с няколко реда\nSomeVeryLongMethodIdentifierThatMustRemainReadableWithoutClipping(ArgumentName)",
+      "text": "Много дълъг надпис с няколко реда\nSomeVeryLongMethodIdentifierThatMustRemainReadableWithoutClipping(ArgumentName)",
       "owner": "owner-0",
-      "description": [
-        "Exercises explicit newlines and a long unbroken identifier."
-      ],
-      "icon": {
-        "kind": "emoji",
-        "text": "👩‍💻"
-      }
+      "details": "Exercises explicit newlines and a long unbroken identifier.",
+      "icon": { "kind": "emoji", "text": "👩‍💻" }
     }
   ],
   "edges": [
@@ -880,541 +555,325 @@
       "from": "shape-rect",
       "to": "shape-lean-l",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-rounded",
       "to": "shape-cyl",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-stadium",
       "to": "shape-h-cyl",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-diam",
       "to": "shape-lin-cyl",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-fr-rect",
       "to": "shape-doc",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-lean-r",
       "to": "shape-docs",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-lean-l",
       "to": "shape-lin-doc",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-cyl",
       "to": "shape-tag-doc",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-h-cyl",
       "to": "shape-notch-rect",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-lin-cyl",
       "to": "shape-st-rect",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-doc",
       "to": "shape-lin-rect",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-docs",
       "to": "shape-div-rect",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-lin-doc",
       "to": "shape-tag-rect",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "solid", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-tag-doc",
       "to": "shape-win-pane",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-notch-rect",
       "to": "shape-bow-rect",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-st-rect",
       "to": "shape-hex",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-lin-rect",
       "to": "shape-trap-t",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-div-rect",
       "to": "shape-trap-b",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-tag-rect",
       "to": "shape-notch-pent",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-win-pane",
       "to": "shape-sl-rect",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-bow-rect",
       "to": "shape-curv-trap",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-hex",
       "to": "shape-delay",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-trap-t",
       "to": "shape-tri",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-trap-b",
       "to": "shape-flip-tri",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-notch-pent",
       "to": "shape-hourglass",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-sl-rect",
       "to": "shape-circle",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-curv-trap",
       "to": "shape-dbl-circ",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-delay",
       "to": "shape-fr-circ",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-tri",
       "to": "shape-cross-circ",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-flip-tri",
       "to": "shape-sm-circ",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-hourglass",
       "to": "shape-f-circ",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "solid", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-circle",
       "to": "shape-fork",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-dbl-circ",
       "to": "shape-brace",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-fr-circ",
       "to": "shape-brace-r",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-cross-circ",
       "to": "shape-braces",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-sm-circ",
       "to": "shape-bolt",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-f-circ",
       "to": "shape-flag",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-fork",
       "to": "shape-cloud",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-brace",
       "to": "shape-bang",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-brace-r",
       "to": "shape-odd",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-braces",
       "to": "shape-text",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-bolt",
       "to": "shape-browser",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-flag",
       "to": "shape-console",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "solid", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-cloud",
       "to": "shape-bucket",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-bang",
       "to": "shape-datastore",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-odd",
       "to": "shape-folder",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-text",
       "to": "shape-person",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-browser",
       "to": "shape-icon",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-console",
       "to": "shape-image",
       "type": "flow",
-      "style": {
-        "line": "solid",
-        "start": "none",
-        "end": "cross"
-      }
+      "style": { "line": "solid", "start": "none", "end": "cross" }
     },
     {
       "from": "shape-bucket",
       "to": "shape-queue",
       "type": "flow",
-      "style": {
-        "line": "dashed",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dashed", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-datastore",
       "to": "shape-timer",
       "type": "flow",
-      "style": {
-        "line": "dotted",
-        "start": "circle",
-        "end": "arrow"
-      }
+      "style": { "line": "dotted", "start": "circle", "end": "arrow" }
     },
     {
       "from": "shape-folder",
       "to": "shape-cache",
       "type": "flow",
-      "style": {
-        "line": "dash-dot",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "dash-dot", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-person",
       "to": "shape-api",
       "type": "flow",
-      "style": {
-        "line": "double",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "double", "start": "none", "end": "arrow" }
     },
     {
       "from": "shape-icon",
       "to": "long-label",
       "type": "flow",
-      "style": {
-        "line": "invisible",
-        "start": "none",
-        "end": "arrow"
-      }
+      "style": { "line": "invisible", "start": "none", "end": "arrow" }
     }
   ],
   "overview": [

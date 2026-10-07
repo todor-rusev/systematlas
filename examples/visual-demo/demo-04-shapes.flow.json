@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-04-shapes",
   "title": "04 · Shapes: Processes and decisions",
   "layout": "TB",
@@ -43,79 +43,58 @@
     {
       "id": "rect",
       "type": "step",
-      "label": "Process",
+      "text": "Process",
       "shape": "rect",
       "owner": "customer",
-      "description": [
-        "Process / action",
-        "Exact value: shape: \"rect\"."
-      ]
+      "details": "Process / action\n\nExact value: `shape: \"rect\"`"
     },
     {
       "id": "rounded",
       "type": "step",
-      "label": "Event",
+      "text": "Event",
       "shape": "rounded",
       "owner": "shop",
-      "description": [
-        "Event / rounded process",
-        "Exact value: shape: \"rounded\"."
-      ]
+      "details": "Event / rounded process\n\nExact value: `shape: \"rounded\"`"
     },
     {
       "id": "stadium",
       "type": "step",
-      "label": "Start / end",
+      "text": "Start / end",
       "shape": "stadium",
       "owner": "payment",
-      "description": [
-        "Start or end",
-        "Exact value: shape: \"stadium\"."
-      ]
+      "details": "Start or end\n\nExact value: `shape: \"stadium\"`"
     },
     {
       "id": "diam",
       "type": "step",
-      "label": "Decision",
+      "text": "Decision",
       "shape": "diam",
       "owner": "data",
-      "description": [
-        "Decision",
-        "Exact value: shape: \"diam\"."
-      ]
+      "details": "Decision\n\nExact value: `shape: \"diam\"`"
     },
     {
       "id": "fr-rect",
       "type": "step",
-      "label": "Subprocess",
+      "text": "Subprocess",
       "shape": "fr-rect",
       "owner": "warehouse",
-      "description": [
-        "Subprocess",
-        "Exact value: shape: \"fr-rect\"."
-      ]
+      "details": "Subprocess\n\nExact value: `shape: \"fr-rect\"`"
     },
     {
       "id": "hex",
       "type": "step",
-      "label": "Preparation",
+      "text": "Preparation",
       "shape": "hex",
       "owner": "delivery",
-      "description": [
-        "Preparation",
-        "Exact value: shape: \"hex\"."
-      ]
+      "details": "Preparation\n\nExact value: `shape: \"hex\"`"
     },
     {
       "id": "odd",
       "type": "step",
-      "label": "Asymmetric process",
+      "text": "Asymmetric process",
       "shape": "odd",
       "owner": "customer",
-      "description": [
-        "Asymmetric process",
-        "Exact value: shape: \"odd\"."
-      ]
+      "details": "Asymmetric process\n\nExact value: `shape: \"odd\"`"
     }
   ],
   "edges": [
@@ -127,9 +106,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "rounded",
@@ -139,9 +116,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "stadium",
@@ -151,9 +126,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "diam",
@@ -163,9 +136,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

@@ -4,6 +4,7 @@ import path from "node:path";
 import type { ValidationResult } from "./validate";
 import { type AnyDoc, docKind, validateDoc } from "./validate-doc";
 import { Workspace } from "./workspace";
+import { upgradeDoc } from "./flow-format";
 import { withWriteLock, writeFileAtomic } from "./write-lock";
 import { BRAND, STORE_DIRS } from "../brand";
 
@@ -119,7 +120,7 @@ export class Project {
   }
 
   private async readFile(file: string): Promise<AnyDoc> {
-    return JSON.parse(await fs.readFile(file, "utf8")) as AnyDoc;
+    return upgradeDoc(JSON.parse(await fs.readFile(file, "utf8")) as AnyDoc);
   }
 
   async read(id: string): Promise<AnyDoc> {
@@ -131,7 +132,7 @@ export class Project {
     const file = await this.resolvePath(id);
     if (!file) throw new Error(`No document "${id}" in project`);
     const stored = await fs.readFile(file, "utf8");
-    return { doc: JSON.parse(stored) as AnyDoc, revision: revisionOf(stored) };
+    return { doc: upgradeDoc(JSON.parse(stored) as AnyDoc), revision: revisionOf(stored) };
   }
 
                                                            

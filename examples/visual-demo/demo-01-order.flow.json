@@ -1,11 +1,11 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-01-order",
   "title": "01 · Online shop order",
   "layout": "TB",
   "overview": [
-    "A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there)."
+    "A complete six-step process: a decision, a rejection, an asynchronous notification and two drill-downs into sub-processes (Payment also leads to a Sequence; the database and the queue live there). Select a step for its details; the toolbar switches the layout direction and the line style."
   ],
   "actors": [
     {
@@ -33,11 +33,9 @@
     {
       "id": "order",
       "type": "terminal",
-      "label": "Customer orders",
+      "text": "Customer orders",
       "owner": "customer",
-      "description": [
-        "The customer picks products and presses “Order”."
-      ],
+      "details": "The customer picks products and presses “Order”.",
       "icon": {
         "kind": "builtin",
         "name": "user"
@@ -46,11 +44,9 @@
     {
       "id": "checkout",
       "type": "step",
-      "label": "Cart and address",
+      "text": "Cart and address — the shop also checks stock and the delivery options",
       "owner": "shop",
-      "description": [
-        "The shop collects the cart, the address and the delivery method."
-      ],
+      "details": "The shop collects the cart, the address and the delivery method.",
       "icon": {
         "kind": "builtin",
         "name": "browser"
@@ -59,11 +55,9 @@
     {
       "id": "pay",
       "type": "subflow",
-      "label": "Payment",
+      "text": "Payment",
       "owner": "payment",
-      "description": [
-        "Payment is a separate process: Open shows its steps."
-      ],
+      "details": "Payment is a separate process: **Open** shows its steps, and from there the exact bank calls.",
       "subflow": "demo-02-payment",
       "icon": {
         "kind": "builtin",
@@ -73,20 +67,16 @@
     {
       "id": "approved",
       "type": "decision",
-      "label": "Approved?",
+      "text": "Approved?",
       "owner": "payment",
-      "description": [
-        "The payment result decides the path."
-      ]
+      "details": "The payment result decides the path:\n\n- **yes** — the warehouse starts packing\n- **no** — the customer sees why and can pay another way"
     },
     {
       "id": "declined",
       "type": "terminal",
-      "label": "Declined",
+      "text": "Declined",
       "owner": "customer",
-      "description": [
-        "The customer sees the reason and can try again."
-      ],
+      "details": "The customer sees the reason and can try again.",
       "icon": {
         "kind": "builtin",
         "name": "error"
@@ -95,11 +85,9 @@
     {
       "id": "fulfil",
       "type": "subflow",
-      "label": "Warehouse and delivery",
+      "text": "Warehouse and delivery",
       "owner": "warehouse",
-      "description": [
-        "Packing and delivery: Open shows the pictures of the process."
-      ],
+      "details": "Packing and delivery: Open shows the pictures of the process.",
       "subflow": "demo-03-fulfilment",
       "icon": {
         "kind": "builtin",
@@ -109,11 +97,9 @@
     {
       "id": "mail",
       "type": "step",
-      "label": "Email: order shipped",
+      "text": "Email: order shipped",
       "owner": "shop",
-      "description": [
-        "Sent asynchronously; it does not hold up the process."
-      ],
+      "details": "Sent asynchronously; it does not hold up the process.",
       "icon": {
         "kind": "builtin",
         "name": "mail"
@@ -122,11 +108,9 @@
     {
       "id": "done",
       "type": "terminal",
-      "label": "Delivered",
+      "text": "Delivered",
       "owner": "customer",
-      "description": [
-        "The customer receives the parcel."
-      ],
+      "details": "The customer receives the parcel.",
       "icon": {
         "kind": "builtin",
         "name": "check"
@@ -153,13 +137,13 @@
       "from": "approved",
       "to": "fulfil",
       "type": "branch",
-      "label": "yes"
+      "text": "yes"
     },
     {
       "from": "approved",
       "to": "declined",
       "type": "branch",
-      "label": "no"
+      "text": "no"
     },
     {
       "from": "fulfil",
@@ -170,7 +154,7 @@
       "from": "fulfil",
       "to": "mail",
       "type": "flow",
-      "label": "async",
+      "text": "async",
       "style": {
         "line": "dotted"
       }

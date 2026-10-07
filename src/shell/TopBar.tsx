@@ -2,11 +2,16 @@ import { tokens } from "../tokens";
 import { BRAND } from "../brand";
 import type { VisualMode } from "../visual-geometry";
 import type { PresetName } from "../visual-tokens";
+import type { FlowDirection, LineStyle } from "../layout";
 import {
   IconChevronRight,
   IconDiagonalAdjust,
   IconFlowKind,
   IconHeightAdjust,
+  IconLayoutLR,
+  IconLayoutTB,
+  IconLinesCurved,
+  IconLinesRounded,
   IconReset,
   IconSeqKind,
   IconWidthAdjust,
@@ -32,12 +37,58 @@ export interface SeqControls {
   onReset: () => void;
 }
 
-                                                                                  
+                                                                                                
 export interface FlowControls {
   gap: number;
   bounds: [number, number];
   onGap: (v: number) => void;
   onReset: () => void;
+  direction: FlowDirection;
+  onDirection: (direction: FlowDirection) => void;
+  lines: LineStyle;
+  onLines: (lines: LineStyle) => void;
+}
+
+const DIRECTIONS: { value: FlowDirection; title: string; icon: React.ReactNode }[] = [
+  { value: "TB", title: "Lay out top to bottom", icon: <IconLayoutTB size={15} /> },
+  { value: "LR", title: "Lay out left to right", icon: <IconLayoutLR size={15} /> },
+];
+
+const LINES: { value: LineStyle; title: string; icon: React.ReactNode }[] = [
+  { value: "rounded", title: "Lines with rounded corners", icon: <IconLinesRounded size={15} /> },
+  { value: "curved", title: "Smooth curved lines", icon: <IconLinesCurved size={15} /> },
+];
+
+                                                                         
+function Segmented<T extends string>({ label, value, options, onChange }: {
+  label: string;
+  value: T;
+  options: { value: T; title: string; icon: React.ReactNode }[];
+  onChange: (value: T) => void;
+}) {
+  return (
+    <div role="radiogroup" aria-label={label} style={{ display: "flex", gap: 2, padding: 2, background: "#ECE5D7", borderRadius: 9 }}>
+      {options.map((option) => (
+        <button
+          key={option.value}
+          role="radio"
+          aria-checked={value === option.value}
+          className="ft-quiet"
+          title={option.title}
+          onClick={() => onChange(option.value)}
+          style={{
+            width: 28,
+            height: 26,
+            borderRadius: 7,
+            background: value === option.value ? "#FFFFFF" : "transparent",
+            boxShadow: value === option.value ? "0 1px 2px rgba(74,60,30,0.12)" : "none",
+          }}
+        >
+          {option.icon}
+        </button>
+      ))}
+    </div>
+  );
 }
 
 interface TopBarProps {
@@ -280,6 +331,8 @@ export function TopBar({
         ) : null}
         {tab === "flow" && flow ? (
           <>
+            <Segmented label="Layout direction" value={flow.direction} options={DIRECTIONS} onChange={flow.onDirection} />
+            <Segmented label="Line style" value={flow.lines} options={LINES} onChange={flow.onLines} />
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <SizeSlider
                 icon={<IconDiagonalAdjust size={15} />}

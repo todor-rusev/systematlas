@@ -6,7 +6,7 @@ export interface ReadFocus { around?: string; depth?: number }
 export interface ReadSelection {
   document: AnyDoc;
   edges: { index: number; edge: FlowEdge }[];
-  boundaryNodes: Pick<FlowNode, "id" | "label" | "type" | "owner">[];
+  boundaryNodes: Pick<FlowNode, "id" | "text" | "type" | "owner">[];
   scope: {
     kind: "document" | "focus";
     around?: string;
@@ -59,7 +59,7 @@ export function selectRead(doc: AnyDoc, focus: ReadFocus = {}): ReadSelection {
   if (boundary.size > 1000) throw new Error("Focus exceeds 1000 boundary nodes; request a narrower focus");
   const nodes = flow.nodes.filter(node => included.has(node.id));
   const owners = new Set(nodes.map(node => node.owner).filter(Boolean));
-  const boundaryNodes = flow.nodes.filter(node => boundary.has(node.id)).map(({ id, label, type, owner }) => ({ id, label, type, ...(owner ? { owner } : {}) }));
+  const boundaryNodes = flow.nodes.filter(node => boundary.has(node.id)).map(({ id, text, type, owner }) => ({ id, text, type, ...(owner ? { owner } : {}) }));
   for (const node of boundaryNodes) if (node.owner) owners.add(node.owner);
   return { document: { ...flow, nodes, edges: edges.map(row => row.edge), actors: flow.actors.filter(actor => owners.has(actor.id)) },
     edges, boundaryNodes, scope: { kind: "focus", around: focus.around, depth, distance: "undirected-flow-edges",

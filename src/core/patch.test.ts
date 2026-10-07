@@ -5,17 +5,17 @@ import type { FlowDocument, FlowNode } from "./types";
 import type { SequenceDocument } from "./sequence-types";
 
 const flow = (): FlowDocument => ({
-  version: "1",
+  version: "2",
   id: "f",
   title: "F",
   actors: [],
-  nodes: [{ id: "a", type: "step", label: "A", description: ["x"] }],
+  nodes: [{ id: "a", type: "step", text: "A", details: "x" }],
   edges: [],
 });
 
 test("set-field on a node (the common 'add one field' case)", () => {
-  const out = applyPatch(flow(), [{ op: "set-field", target: "node", id: "a", field: "label", value: "A2" }]) as FlowDocument;
-  assert.equal(out.nodes[0].label, "A2");
+  const out = applyPatch(flow(), [{ op: "set-field", target: "node", id: "a", field: "text", value: "A2" }]) as FlowDocument;
+  assert.equal(out.nodes[0].text, "A2");
 });
 
 test("set-field on the doc", () => {
@@ -24,11 +24,11 @@ test("set-field on the doc", () => {
 });
 
 test("upsert-node adds then replaces by id; remove-node removes", () => {
-  let out = applyPatch(flow(), [{ op: "upsert-node", node: { id: "b", type: "terminal", label: "B", description: ["b"] } }]) as FlowDocument;
+  let out = applyPatch(flow(), [{ op: "upsert-node", node: { id: "b", type: "terminal", text: "B", details: "b" } }]) as FlowDocument;
   assert.equal(out.nodes.length, 2);
-  out = applyPatch(out, [{ op: "upsert-node", node: { id: "b", type: "terminal", label: "B2", description: ["b"] } }]) as FlowDocument;
+  out = applyPatch(out, [{ op: "upsert-node", node: { id: "b", type: "terminal", text: "B2", details: "b" } }]) as FlowDocument;
   assert.equal(out.nodes.length, 2);
-  assert.equal(out.nodes.find((n) => n.id === "b")?.label, "B2");
+  assert.equal(out.nodes.find((n) => n.id === "b")?.text, "B2");
   out = applyPatch(out, [{ op: "remove-node", id: "b" }]) as FlowDocument;
   assert.equal(out.nodes.length, 1);
 });
@@ -44,20 +44,20 @@ test("upsert-edge / remove-edge by id", () => {
 const chain = (): FlowDocument => ({
   ...flow(),
   nodes: [
-    ...["a", "b", "c"].map((id): FlowNode => ({ id, type: "step", label: id.toUpperCase(), description: ["x"] })),
-    { id: "d", type: "decision", label: "D?", description: ["x"] },
+    ...["a", "b", "c"].map((id): FlowNode => ({ id, type: "step", text: id.toUpperCase(), details: "x" })),
+    { id: "d", type: "decision", text: "D?", details: "x" },
   ],
   edges: [
     { from: "a", to: "b", type: "flow" },
     { from: "b", to: "c", type: "flow" },
-    { from: "d", to: "a", type: "branch", label: "yes" },
-    { from: "d", to: "a", type: "branch", label: "retry" },
+    { from: "d", to: "a", type: "branch", text: "yes" },
+    { from: "d", to: "a", type: "branch", text: "retry" },
   ],
 });
 
 test("an edge without an id is removed by its ends — inserting a step between two", () => {
   const out = applyPatch(chain(), [
-    { op: "upsert-node", node: { id: "x", type: "step", label: "X", description: ["x"] } },
+    { op: "upsert-node", node: { id: "x", type: "step", text: "X", details: "x" } },
     { op: "remove-edge", edge: { from: "a", to: "b" } },
     { op: "upsert-edge", edge: { from: "a", to: "x", type: "flow" } },
     { op: "upsert-edge", edge: { from: "x", to: "b", type: "flow" } },
@@ -67,11 +67,11 @@ test("an edge without an id is removed by its ends — inserting a step between 
   assert.ok(ends.includes("a>x") && ends.includes("x>b") && ends.includes("b>c"));
 });
 
-test("an edge without an id is changed by its ends; type or label picks one of several", () => {
-  let out = applyPatch(chain(), [{ op: "set-field", target: "edge", edge: { from: "b", to: "c" }, field: "label", value: "next" }]) as FlowDocument;
-  assert.equal(out.edges.find((e) => e.from === "b")?.label, "next");
-  out = applyPatch(chain(), [{ op: "remove-edge", edge: { from: "d", to: "a", label: "retry" } }]) as FlowDocument;
-  assert.deepEqual(out.edges.filter((e) => e.from === "d").map((e) => e.label), ["yes"]);
+test("an edge without an id is changed by its ends; type or text picks one of several", () => {
+  let out = applyPatch(chain(), [{ op: "set-field", target: "edge", edge: { from: "b", to: "c" }, field: "text", value: "next" }]) as FlowDocument;
+  assert.equal(out.edges.find((e) => e.from === "b")?.text, "next");
+  out = applyPatch(chain(), [{ op: "remove-edge", edge: { from: "d", to: "a", text: "retry" } }]) as FlowDocument;
+  assert.deepEqual(out.edges.filter((e) => e.from === "d").map((e) => e.text), ["yes"]);
 });
 
 test("an ambiguous or missing edge is an error that names the candidates", () => {
@@ -93,7 +93,7 @@ test("set-field unknown node throws (caught by the tool → reported)", () => {
 test("does not mutate the input document", () => {
   const original = flow();
   applyPatch(original, [{ op: "set-field", target: "node", id: "a", field: "label", value: "Z" }]);
-  assert.equal(original.nodes[0].label, "A");
+  assert.equal(original.nodes[0].text, "A");
 });
 
 const seq = (): SequenceDocument => ({

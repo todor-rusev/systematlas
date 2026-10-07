@@ -41,6 +41,16 @@ export const IconChevronDown = ({ size = 14 }: IconProps) =>
   svg(size, <path d="M6 9l6 6 6-6" {...S} strokeWidth={2} />);
 export const IconArrowDiagonal = ({ size = 24 }: IconProps) =>
   svg(size, <path d="M22 22L2 2M2 22V2h20" {...S} />);
+                                                                                           
+export const IconLayoutTB = ({ size = 16 }: IconProps) =>
+  svg(size, <path d="M8 3h8v5H8zM8 16h8v5H8zM12 8v8M9.5 13.5L12 16l2.5-2.5" {...S} />);
+export const IconLayoutLR = ({ size = 16 }: IconProps) =>
+  svg(size, <path d="M3 8h5v8H3zM16 8h5v8h-5zM8 12h8M13.5 9.5L16 12l-2.5 2.5" {...S} />);
+                                                                            
+export const IconLinesRounded = ({ size = 16 }: IconProps) =>
+  svg(size, <path d="M4 4v6a4 4 0 0 0 4 4h8a4 4 0 0 1 4 4v2" {...S} />);
+export const IconLinesCurved = ({ size = 16 }: IconProps) =>
+  svg(size, <path d="M4 4c0 9 16 7 16 16" {...S} />);
 export const IconChevronRight = ({ size = 16 }: IconProps) =>
   svg(size, <path d="M9 6l6 6-6 6" {...S} strokeWidth={1.9} />);
 export const IconChevronLeft = ({ size = 16 }: IconProps) =>

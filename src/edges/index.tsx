@@ -13,6 +13,8 @@ import type { EdgeStyle } from "../core/visual-vocabulary";
 import { clipToOutline, type Point } from "../visual-geometry";
 import { DEFAULT_PRESET, VISUAL_PRESETS, type PresetName } from "../visual-tokens";
 import { smoothRoute } from "../edge-routing";
+import { InlineMarkdown } from "../shell/Markdown";
+import { plainText } from "../core/markdown";
 
                                                                                 
                                                                              
@@ -26,7 +28,8 @@ const DUR = 4.2;
 
 export interface FtEdgeData {
   edgeType: EdgeType;
-  label?: string;
+                                            
+  text?: string;
   style?: EdgeStyle;
   visualPreset?: PresetName;
                                                                         
@@ -308,7 +311,7 @@ export function FtEdge({
                                                                                      
                                                                                      
                                                                                          }
-      {d.drillTarget || d.label ? (
+      {d.drillTarget || d.text ? (
         <EdgeLabelRenderer>
           <div
             className="nodrag nopan"
@@ -361,12 +364,12 @@ export function FtEdge({
                 {selected ? "Open" : null}
               </button>
             ) : null}
-            {d.label ? (
+            {d.text ? (
                                                                                     
                                                                                       
               <div
                 className="nodrag nopan"
-                title={d.label}
+                title={plainText(d.text)}
                 onClick={(e) => {
                   e.stopPropagation();
                   d.onSelect?.();
@@ -392,7 +395,7 @@ export function FtEdge({
                   pointerEvents: "all",
                 }}
               >
-                {d.label}
+                <InlineMarkdown text={d.text} />
               </div>
             ) : null}
           </div>

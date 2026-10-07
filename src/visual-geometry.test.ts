@@ -16,7 +16,7 @@ import {
 } from "./theme";
 
 const doc = (): FlowDocument => ({
-  version: "1",
+  version: "2",
   id: "visual-test",
   title: "Visual test",
   actors: [{ id: "a", label: "Owner", kind: "service" }],
@@ -24,8 +24,8 @@ const doc = (): FlowDocument => ({
     {
       id: "n",
       type: "step",
-      label: "Save the result",
-      description: ["Persists the result."],
+      text: "Save the result",
+      details: "Persists the result.",
       owner: "a",
     },
   ],
@@ -115,7 +115,7 @@ test("shape caption boxes stay inside the rendered outline for all non-symbol sh
     const g = nodeGeometry({
       type: "step",
       shape,
-      label: "Save result",
+      text: "Save result",
       icon: { kind: "builtin", name: "database" },
     });
     assert.ok(g.w > 0 && g.h > 0 && Number.isFinite(g.w + g.h), shape);
@@ -133,27 +133,27 @@ test("shape caption boxes stay inside the rendered outline for all non-symbol sh
 });
 
 test("labels grow the reserved node dimensions, icons and drill controls have separate space", () => {
-  const short = nodeGeometry({ type: "step", label: "Save" });
+  const short = nodeGeometry({ type: "step", text: "Save" });
   const long = nodeGeometry({
     type: "step",
-    label:
+    text:
       "A considerably longer explanation of all application checkpoints and the next stage of processing",
   });
   const token = nodeGeometry({
     type: "step",
-    label: "SomeExtremelyLongButReadableIdentifierForAPublicMethodCall",
+    text: "SomeExtremelyLongButReadableIdentifierForAPublicMethodCall",
   });
   assert.ok(long.h > short.h);
   assert.ok(token.w > short.w);
   const withExtras = nodeGeometry({
     type: "step",
-    label: "Save",
+    text: "Save",
     icon: { kind: "builtin", name: "database" },
     sequence: "details",
   });
   assert.ok(withExtras.w > short.w);
   assert.ok(
-    nodeGeometry({ type: "step", label: "One\nTwo\nThree" }).h > short.h,
+    nodeGeometry({ type: "step", text: "One\nTwo\nThree" }).h > short.h,
   );
 });
 
@@ -161,7 +161,7 @@ test("all shapes keep captions, icons and drill controls inside across presets",
   for (const preset of Object.keys(VISUAL_PRESETS) as PresetName[]) {
     for (const shape of SHAPE_NAMES) {
       for (const label of ["Store", "A longer caption\nwith a second line and details"]) {
-        const g = nodeGeometry({ type: "subflow", shape, label,
+        const g = nodeGeometry({ type: "subflow", shape, text: label,
           icon: { kind: "builtin", name: "database" }, subflow: "details" }, undefined, preset);
         const c = g.content;
         for (const x of [c.x, c.x + c.w]) for (const y of [c.y, c.y + c.h]) {
@@ -185,7 +185,7 @@ test("bucket rim belongs to the filled silhouette and folded cards have a real c
 test("drill cards retain explicit shapes and reserve a readable Open control on every shape", () => {
   const subflow = nodeGeometry({
     type: "subflow",
-    label: "Charge payment",
+    text: "Charge payment",
     subflow: "payment",
   });
   assert.equal(subflow.shape, "rounded");
@@ -193,7 +193,7 @@ test("drill cards retain explicit shapes and reserve a readable Open control on 
     const g = nodeGeometry({
       type: "subflow",
       shape,
-      label: "Inspect result",
+      text: "Inspect result",
       subflow: "payment",
       icon: { kind: "builtin", name: "file" },
     });
@@ -344,7 +344,7 @@ test("edge endpoints clip to a diamond and ellipse instead of their bounding rec
   const dot = nodeGeometry({
     type: "step",
     shape: "sm-circ",
-    label: "Connector caption",
+    text: "Connector caption",
   });
   const exit = clipToOutline(
     { x: 0, y: 0, w: dot.w, h: dot.h, outline: dot.outline },
@@ -359,7 +359,7 @@ test("edge endpoints clip to a diamond and ellipse instead of their bounding rec
 
 test("extended layout reserves actual geometry and classic keeps the legacy appearance on old documents", () => {
   const d = doc();
-  d.nodes.push({ ...d.nodes[0], id: "end", type: "terminal", label: "Done" });
+  d.nodes.push({ ...d.nodes[0], id: "end", type: "terminal", text: "Done" });
   d.edges.push({ from: "n", to: "end", type: "flow" });
   const modern = buildGraph(d, { a: "#abc" });
   for (const n of modern.nodes) {

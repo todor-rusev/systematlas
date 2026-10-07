@@ -6,12 +6,14 @@ import type {
   DrillHandler,
   FlowDocument,
   FlowEdge,
+  FlowNode,
   NodeData,
   NodeType,
 } from "./model";
 import { nodeGeometry, type VisualMode } from "./visual-geometry";
+import { hasMarkup, plainText } from "./core/markdown";
 import { DEFAULT_PRESET, VISUAL_PRESETS, type PresetName } from "./visual-tokens";
-import { routeReturn, clipRoute, smoothRoute, type RouteBox } from "./edge-routing";
+import { routeReturn, clipRoute, curvedRoute, loopRoute, smoothRoute, type RouteBox } from "./edge-routing";
 
                                                                                
                                                                                 
@@ -39,6 +41,17 @@ export const DIMS: Record<NodeType, { w: number; h: number }> = {
 const DECISION_MIN_FONT = 8;                                                   
 const DECISION_CHAR_W = 0.62;                                                    
 const DECISION_LINE_H = 1.25;
+
+                                                                                   
+                                                                                     
+                                                                               
+const CLASSIC_CHAR_W = 7.2;                                                              
+const CLASSIC_INNER_W: Record<NodeType, number> = { terminal: 98, step: 176, decision: Infinity, subflow: 142, io: 160 };
+export function fitsClassicBox(n: Pick<FlowNode, "type" | "text">): boolean {
+  if (hasMarkup(n.text) || n.text.includes("\n")) return false;
+  const width = CLASSIC_INNER_W[n.type];
+  return n.text.length * CLASSIC_CHAR_W <= 2 * width && Math.max(...n.text.split(/\s+/).map((w) => w.length * CLASSIC_CHAR_W)) <= width;
+}
 
                                                                      
 export function decisionSize(label: string): number {
@@ -76,6 +89,9 @@ function nodeDims(n: Node): { w: number; h: number } {
                                                                               
                                                                                
 export const LABEL_MAX_W = 200;                                           
+                                                                                         
+                                                                                 
+const WIDE_TURN = 120;
 const LABEL_CHAR_W = 6.2;                                           
 const LABEL_LINE_H = 15;                       
 const LABEL_PAD_X = 12;                        
@@ -83,7 +99,7 @@ const LABEL_PAD_Y = 4;
 
                                                                            
 export function labelBox(label: string): { width: number; height: number } {
-  const textW = label.length * LABEL_CHAR_W;
+  const textW = plainText(label).length * LABEL_CHAR_W;
   const innerW = LABEL_MAX_W - LABEL_PAD_X;
   const lines = Math.max(1, Math.ceil(textW / innerW));
   return {
@@ -101,24 +117,30 @@ export interface DrillOptions {
   visualMode?: VisualMode;
   visualPreset?: PresetName;
   measureText?: (text: string) => number;
+                                                                                              
+  lines?: LineStyle;
 }
 
                                                                                  
                                                                               
 export const FLOW_SPACING = { default: 50, min: 40, max: 130 } as const;
 
-                                                                             
+export type FlowDirection = "TB" | "LR";
+export type LineStyle = "rounded" | "curved";
+
+                                                                          
+                                                                       
 export function buildGraph(
   doc: FlowDocument,
   colors: ActorColors,
   drill?: DrillOptions,
   gap: number = FLOW_SPACING.default,
+  direction: FlowDirection = doc.layout ?? "TB",
 ): { nodes: Node[]; edges: Edge[] } {
   const nodes: Node[] = doc.nodes.map((n) => {
     const data: NodeData = {
-      label: n.label,
+      text: n.text,
       color: n.owner ? (colors[n.owner] ?? NEUTRAL) : NEUTRAL,
-      summary: n.description?.[0],
       owner: n.owner,
       shared: n.shared,
       visualMode: drill?.visualMode ?? "actors",
@@ -126,9 +148,9 @@ export function buildGraph(
       shape: n.shape,
       icon: n.icon,
     };
-    if (data.visualMode !== "classic" || n.shape || n.icon)
+    if (data.visualMode !== "classic" || n.shape || n.icon || !fitsClassicBox(n))
       data.geometry = nodeGeometry(n, drill?.measureText, drill?.visualPreset);
-    if (n.type === "decision") data.decisionSize = decisionSize(n.label);
+    if (n.type === "decision") data.decisionSize = decisionSize(plainText(n.text));
                                                                                         
     const subTarget = n.type === "subflow" ? n.subflow : undefined;
     const target = subTarget ?? n.sequence;
@@ -167,7 +189,7 @@ export function buildGraph(
       data: {
         edgeType: e.type,
         visualPreset: drill?.visualPreset,
-        label: e.label,
+        text: e.text,
         style: e.style,
         drillTarget: target,
         drillKind: e.subflow
@@ -181,14 +203,15 @@ export function buildGraph(
     };
   });
 
-  return layout(nodes, edges, doc.layout ?? "TB", gap);
+  return layout(nodes, edges, direction, gap, drill?.lines ?? "rounded");
 }
 
 function layout(
   nodes: Node[],
   edges: Edge[],
-  dir: "TB" | "LR",
+  dir: FlowDirection,
   gap: number,
+  lines: LineStyle,
 ): { nodes: Node[]; edges: Edge[] } {
                                                                              
                                                                                  
@@ -212,7 +235,7 @@ function layout(
                                                                                   
                                
   edges.forEach((e) => {
-    const label = (e.data as { label?: string } | undefined)?.label;
+    const label = (e.data as { text?: string } | undefined)?.text;
                                                                                  
                                                                                
     const lbl = label ? { ...labelBox(label), labelpos: "c" as const } : {};
@@ -251,7 +274,7 @@ function layout(
   const nodeById = new Map(nodes.map((n) => [n.id, n]));
   const boxes = nodes.map(n => { const p = g.node(n.id), dim = nodeDims(n); return { x: p.x - dim.w / 2, y: p.y - dim.h / 2, w: dim.w, h: dim.h }; });
   const returnLanes = new Map(edges.filter(e => e.data?.edgeType === "return").map((e, index) => [e.id, index]));
-  const returnLabels = edges.filter(e => e.data?.edgeType === "return").map(e => labelBox((e.data?.label as string | undefined) ?? ""));
+  const returnLabels = edges.filter(e => e.data?.edgeType === "return").map(e => labelBox((e.data?.text as string | undefined) ?? ""));
   const laneWidth = Math.max(0, ...returnLabels.map(size => size.width));
   const laneHeight = Math.max(0, ...returnLabels.map(size => size.height));
   const outerRight = Math.max(...nodes.map(n => g.node(n.id).x + nodeDims(n).w / 2));
@@ -275,6 +298,7 @@ function layout(
       height: number;
     };
     let returnLabel: { x: number; y: number } | undefined;
+    let returnReach: number | undefined;
     if (returnLanes.has(e.id)) {
                                                                               
                                                                                     
@@ -285,6 +309,7 @@ function layout(
         { x: tc.x - tc.width / 2, y: tc.y - tc.height / 2, w: tc.width, h: tc.height }, dir, outerLane);
       points = routedReturn.points;
       returnLabel = routedReturn.label;
+      returnReach = routedReturn.reach;
     }
     if (!points || points.length < 2) return e;
     const sourceHandle = `s-${sideOf(points[0], sc)}`;
@@ -325,7 +350,7 @@ function layout(
       ...e,
       sourceHandle,
       targetHandle,
-      data: { ...e.data, points, labelXY, sourceBox, targetBox },
+      data: { ...e.data, points, labelXY, returnReach, sourceBox, targetBox },
     };
   });
 
@@ -334,12 +359,40 @@ function layout(
     ["circle", "cross"].includes((e.data!.style as { start?: string } | undefined)?.start ?? "") ? 6 : 2));
   const labels = routed.flatMap(e => {
     const p = e.data?.labelXY as { x: number; y: number } | undefined;
-    if (!p || !e.data?.label) return [];
-    const size = labelBox(e.data.label as string);
+    if (!p || !e.data?.text) return [];
+    const size = labelBox(e.data.text as string);
     return [{ edgeId: e.id, x: p.x - size.width / 2, y: p.y - size.height / 2, w: size.width, h: size.height }];
   });
-  return { nodes: positioned, edges: routed.map((e, i) => ({ ...e, data: { ...e.data,
-    path: smoothRoute(clipped[i], [...boxes, ...labels.filter(label => label.edgeId !== e.id)], clipped.filter((_, j) => i !== j), 36,
-      VISUAL_PRESETS[(e.data?.visualPreset as PresetName | undefined) ?? DEFAULT_PRESET].edge.headSize + 3),
-  } })) };
+  const boxOf = new Map(nodes.map((n, i) => [n.id, boxes[i]]));
+  return { nodes: positioned, edges: routed.map((e, i) => {
+    const others = clipped.filter((_, j) => i !== j);
+    const otherLabels = labels.filter(label => label.edgeId !== e.id);
+    const shaft = VISUAL_PRESETS[(e.data?.visualPreset as PresetName | undefined) ?? DEFAULT_PRESET].edge.headSize + 3;
+    if (lines === "curved") {
+                                                                                      
+                                                                                        
+                                                                                          
+                                                     
+      const own = new Set([boxOf.get(e.source), boxOf.get(e.target)]);
+      const obstacles = [...boxes.filter(box => !own.has(box)), ...otherLabels];
+                                                                                             
+                                                                                             
+      const reach = e.data?.returnReach as number | undefined;
+      const at = e.data?.labelXY as { x: number; y: number } | undefined;
+      if (reach !== undefined && at) {
+        const route = clipped[i], axis = dir === "TB" ? "x" : "y";
+        const loop = loopRoute(route, reach, axis === "x" ? at.y : at.x, axis, obstacles, others, shaft);
+        const size = e.data?.text ? labelBox(e.data.text as string) : { width: 0, height: 0 };
+        const box = { x: loop.label.x - size.width / 2, y: loop.label.y - size.height / 2, w: size.width, h: size.height };
+        const overlaps = (r: { x: number; y: number; w: number; h: number }) =>
+          box.x < r.x + r.w && r.x < box.x + box.w && box.y < r.y + r.h && r.y < box.y + box.h;
+        if (loop.clear && !boxes.some(overlaps) && !otherLabels.some(overlaps))
+          return { ...e, data: { ...e.data, path: loop.path, labelXY: loop.label } };
+      }
+      const curve = curvedRoute(clipped[i], obstacles, others, shaft);
+      if (curve.clear) return { ...e, data: { ...e.data, path: curve.path } };
+      return { ...e, data: { ...e.data, path: smoothRoute(clipped[i], [...boxes, ...otherLabels], others, WIDE_TURN, shaft) } };
+    }
+    return { ...e, data: { ...e.data, path: smoothRoute(clipped[i], [...boxes, ...otherLabels], others, 36, shaft) } };
+  }) };
 }

@@ -11,11 +11,11 @@ import type { SequenceDocument } from "./sequence-types";
 
 const tmp = () => fs.mkdtemp(path.join(os.tmpdir(), "ft-proj-"));
 const flow = (id: string): FlowDocument => ({
-  version: "1",
+  version: "2",
   id,
   title: `T ${id}`,
   actors: [],
-  nodes: [{ id: "a", type: "step", label: "A", description: ["x"] }],
+  nodes: [{ id: "a", type: "step", text: "A", details: "x" }],
   edges: [],
 });
 const seq = (id: string): SequenceDocument => ({
@@ -224,4 +224,30 @@ test("separate processes racing the same revision commit once and retain both ma
   assert.deepEqual(outcomes.map(o => o.outcome).sort(), ["conflict", "written"]);
   assert.equal((await p.read("race")).title, outcomes.find(o => o.outcome === "written")!.writer);
   assert.deepEqual((await p.entries()).map(e => e.id).sort(), ["race", "writer-a", "writer-b"]);
+});
+
+test("a version 1 file reads as version 2, stays untouched on read, and is saved as version 2", async () => {
+  const dir = await tmp();
+  const legacy = {
+    version: "1", id: "old", title: "Old", actors: [],
+    nodes: [{ id: "a", type: "step", label: "A", description: ["one", "two"] }],
+    edges: [{ from: "a", to: "a", type: "return", label: "again" }],
+  };
+  await write(dir, "old.flow.json", legacy);
+  const file = path.join(dir, "old.flow.json");
+  const before = await fs.readFile(file, "utf8");
+  const project = new Project(dir);
+  const { doc, revision } = await project.readWithRevision("old");
+  const read = doc as FlowDocument;
+  assert.equal(read.version, "2");
+  assert.deepEqual(read.nodes[0], { id: "a", type: "step", text: "A", details: "- one\n- two" });
+  assert.equal(read.edges[0].text, "again");
+  assert.equal((await project.readAll()).length, 1);
+  assert.equal(await fs.readFile(file, "utf8"), before, "reading never rewrites the file");
+  assert.equal((await project.validate(read)).ok, true);
+  await project.write({ ...read, title: "Renamed" }, { expectRevision: revision });
+  const saved = JSON.parse(await fs.readFile(file, "utf8"));
+  assert.equal(saved.version, "2");
+  assert.equal(saved.nodes[0].text, "A");
+  assert.equal("label" in saved.nodes[0], false);
 });

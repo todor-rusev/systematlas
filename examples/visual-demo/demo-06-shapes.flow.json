@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-06-shapes",
   "title": "06 · Shapes: Documents and folders",
   "layout": "TB",
@@ -43,79 +43,58 @@
     {
       "id": "doc",
       "type": "step",
-      "label": "Document",
+      "text": "Document",
       "shape": "doc",
       "owner": "customer",
-      "description": [
-        "Document",
-        "Exact value: shape: \"doc\"."
-      ]
+      "details": "Document\n\nExact value: `shape: \"doc\"`"
     },
     {
       "id": "docs",
       "type": "step",
-      "label": "Documents",
+      "text": "Documents",
       "shape": "docs",
       "owner": "shop",
-      "description": [
-        "Multiple documents",
-        "Exact value: shape: \"docs\"."
-      ]
+      "details": "Multiple documents\n\nExact value: `shape: \"docs\"`"
     },
     {
       "id": "lin-doc",
       "type": "step",
-      "label": "Lined document",
+      "text": "Lined document",
       "shape": "lin-doc",
       "owner": "payment",
-      "description": [
-        "Lined document",
-        "Exact value: shape: \"lin-doc\"."
-      ]
+      "details": "Lined document\n\nExact value: `shape: \"lin-doc\"`"
     },
     {
       "id": "tag-doc",
       "type": "step",
-      "label": "Tagged document",
+      "text": "Tagged document",
       "shape": "tag-doc",
       "owner": "data",
-      "description": [
-        "Tagged document",
-        "Exact value: shape: \"tag-doc\"."
-      ]
+      "details": "Tagged document\n\nExact value: `shape: \"tag-doc\"`"
     },
     {
       "id": "notch-rect",
       "type": "step",
-      "label": "Card",
+      "text": "Card",
       "shape": "notch-rect",
       "owner": "warehouse",
-      "description": [
-        "Card",
-        "Exact value: shape: \"notch-rect\"."
-      ]
+      "details": "Card\n\nExact value: `shape: \"notch-rect\"`"
     },
     {
       "id": "folder",
       "type": "step",
-      "label": "Folder",
+      "text": "Folder",
       "shape": "folder",
       "owner": "delivery",
-      "description": [
-        "Folder",
-        "Exact value: shape: \"folder\"."
-      ]
+      "details": "Folder\n\nExact value: `shape: \"folder\"`"
     },
     {
       "id": "flag",
       "type": "step",
-      "label": "Paper tape",
+      "text": "Paper tape",
       "shape": "flag",
       "owner": "customer",
-      "description": [
-        "Paper tape",
-        "Exact value: shape: \"flag\"."
-      ]
+      "details": "Paper tape\n\nExact value: `shape: \"flag\"`"
     }
   ],
   "edges": [
@@ -127,9 +106,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "docs",
@@ -139,9 +116,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "lin-doc",
@@ -151,9 +126,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "tag-doc",
@@ -163,9 +136,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

@@ -39,10 +39,10 @@ test("a query without matches lists every name instead of an empty answer", () =
 });
 
 test("structure detail keeps shape and style, omits icon and says so", () => {
-  const doc: FlowDocument = { version: "1", id: "store", title: "Store", actors: [],
-    nodes: [{ id: "db", type: "step", label: "Orders", description: ["Keeps orders"], shape: "cyl",
+  const doc: FlowDocument = { version: "2", id: "store", title: "Store", actors: [],
+    nodes: [{ id: "db", type: "step", text: "Orders", details: "Keeps orders", shape: "cyl",
       icon: { kind: "svg", viewBox: [0, 0, 24, 24], paths: [{ d: "M0 0L24 24" }] } },
-      { id: "w", type: "step", label: "Worker", description: ["Works"] }],
+      { id: "w", type: "step", text: "Worker", details: "Works" }],
     edges: [{ from: "db", to: "w", type: "flow", style: { line: "dashed", end: "circle" } }] };
   const view = readView(doc, "json", "structure", { around: "db", depth: 1 }).structuredContent as {
     nodes: Record<string, unknown>[]; edges: Record<string, unknown>[]; viewMetadata: { omittedFields: string[] } };

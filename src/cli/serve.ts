@@ -14,6 +14,8 @@ import { BRAND } from "../brand";
 import { pkgPath } from "../core/paths";
 import { UpdateService } from "../core/updates";
 import { handleUpdateApi } from "./update-api";
+import { upgradeDoc } from "../core/flow-format";
+import { ExecutableSourceError, openSource, revealInOs } from "./open-source";
 
 const SUFFIX_RE = /\.(flow|sequence)\.json$/;
 const MANIFEST_RE = new RegExp(`[\\\\/]${BRAND.storeDir.replace(/[.]/g, "\\.")}[\\\\/]project\\.json$`);
@@ -39,18 +41,6 @@ function openUrl(url: string): void {
   if (platform === "win32") spawn("cmd", ["/c", "start", "", url], { detached: true, stdio: "ignore" }).unref();
   else if (platform === "darwin") spawn("open", [url], { detached: true, stdio: "ignore" }).unref();
   else spawn("xdg-open", [url], { detached: true, stdio: "ignore" }).unref();
-}
-
-                                                                                      
-function revealInOs(target: string): void {
-  const t = path.resolve(target);
-  try {
-    if (process.platform === "win32") spawn("explorer", [`/select,${t}`], { detached: true, stdio: "ignore" }).unref();
-    else if (process.platform === "darwin") spawn("open", ["-R", t], { detached: true, stdio: "ignore" }).unref();
-    else spawn("xdg-open", [path.dirname(t)], { detached: true, stdio: "ignore" }).unref();
-  } catch {
-                     
-  }
 }
 
                                                                               
@@ -344,6 +334,18 @@ export async function runServe(opts: ServeOptions): Promise<void> {
         return json(res, 500, { error: String(e instanceof Error ? e.message : e) });
       }
     }
+    if (p === "/api/open-source" && method === "POST") {
+      try {
+        const { file, how } = JSON.parse(await readBody(req)) as { file?: unknown; how?: unknown };
+        if (typeof file !== "string" || !file) return json(res, 400, { error: "A source file is required" });
+        if (how !== "open" && how !== "reveal") return json(res, 400, { error: 'how must be "open" or "reveal"' });
+        await openSource(projectDir, file, how);
+        return json(res, 200, { ok: true });
+      } catch (e) {
+        if (e instanceof ExecutableSourceError) return json(res, 409, { error: e.message, code: "executable" });
+        return json(res, 400, { error: e instanceof Error ? e.message : String(e) });
+      }
+    }
     if (p === "/api/reveal" && method === "POST") {
       try {
         const { path: target } = JSON.parse(await readBody(req)) as { path: string };
@@ -370,7 +372,7 @@ export async function runServe(opts: ServeOptions): Promise<void> {
       const id = decodeURIComponent(rawId);
       try {
         if (method === "PUT" && !action) {
-          const doc = JSON.parse(await readBody(req)) as AnyDoc;
+          const doc = upgradeDoc(JSON.parse(await readBody(req)) as AnyDoc);
           const result = await project.validate(doc);
           if (!result.ok) return json(res, 400, result);
           await project.write(doc);

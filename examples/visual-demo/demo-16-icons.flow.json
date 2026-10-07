@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-16-icons",
   "title": "16 · Icons 31–40",
   "layout": "TB",
@@ -43,152 +43,122 @@
     {
       "id": "key",
       "type": "step",
-      "label": "key",
+      "text": "key",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "key"
       },
-      "description": [
-        "Credentials / identity",
-        "icon: {kind: \"builtin\", name: \"key\"}"
-      ]
+      "details": "Credentials / identity\n\n`icon: {kind: \"builtin\", name: \"key\"}`"
     },
     {
       "id": "branch",
       "type": "step",
-      "label": "branch",
+      "text": "branch",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "branch"
       },
-      "description": [
-        "Conditional branching",
-        "icon: {kind: \"builtin\", name: \"branch\"}"
-      ]
+      "details": "Conditional branching\n\n`icon: {kind: \"builtin\", name: \"branch\"}`"
     },
     {
       "id": "merge",
       "type": "step",
-      "label": "merge",
+      "text": "merge",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "merge"
       },
-      "description": [
-        "Merge / join",
-        "icon: {kind: \"builtin\", name: \"merge\"}"
-      ]
+      "details": "Merge / join\n\n`icon: {kind: \"builtin\", name: \"merge\"}`"
     },
     {
       "id": "loop",
       "type": "step",
-      "label": "loop",
+      "text": "loop",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "loop"
       },
-      "description": [
-        "Loop / retry",
-        "icon: {kind: \"builtin\", name: \"loop\"}"
-      ]
+      "details": "Loop / retry\n\n`icon: {kind: \"builtin\", name: \"loop\"}`"
     },
     {
       "id": "link",
       "type": "step",
-      "label": "link",
+      "text": "link",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "link"
       },
-      "description": [
-        "Reference / connection",
-        "icon: {kind: \"builtin\", name: \"link\"}"
-      ]
+      "details": "Reference / connection\n\n`icon: {kind: \"builtin\", name: \"link\"}`"
     },
     {
       "id": "globe",
       "type": "step",
-      "label": "globe",
+      "text": "globe",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "globe"
       },
-      "description": [
-        "Internet / global system",
-        "icon: {kind: \"builtin\", name: \"globe\"}"
-      ]
+      "details": "Internet / global system\n\n`icon: {kind: \"builtin\", name: \"globe\"}`"
     },
     {
       "id": "browser",
       "type": "step",
-      "label": "browser",
+      "text": "browser",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "browser"
       },
-      "description": [
-        "Web UI / browser",
-        "icon: {kind: \"builtin\", name: \"browser\"}"
-      ]
+      "details": "Web UI / browser\n\n`icon: {kind: \"builtin\", name: \"browser\"}`"
     },
     {
       "id": "cache",
       "type": "step",
-      "label": "cache",
+      "text": "cache",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "cache"
       },
-      "description": [
-        "Cache / fast storage",
-        "icon: {kind: \"builtin\", name: \"cache\"}"
-      ]
+      "details": "Cache / fast storage\n\n`icon: {kind: \"builtin\", name: \"cache\"}`"
     },
     {
       "id": "memory",
       "type": "step",
-      "label": "memory",
+      "text": "memory",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "memory"
       },
-      "description": [
-        "Memory / hardware",
-        "icon: {kind: \"builtin\", name: \"memory\"}"
-      ]
+      "details": "Memory / hardware\n\n`icon: {kind: \"builtin\", name: \"memory\"}`"
     },
     {
       "id": "archive",
       "type": "step",
-      "label": "archive",
+      "text": "archive",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "archive"
       },
-      "description": [
-        "Archive / retained data",
-        "icon: {kind: \"builtin\", name: \"archive\"}"
-      ]
+      "details": "Archive / retained data\n\n`icon: {kind: \"builtin\", name: \"archive\"}`"
     }
   ],
   "edges": [
@@ -200,9 +170,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "branch",
@@ -212,9 +180,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "merge",
@@ -224,9 +190,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "loop",
@@ -236,9 +200,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "link",
@@ -248,9 +210,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "globe",
@@ -260,9 +220,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "browser",
@@ -272,9 +230,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

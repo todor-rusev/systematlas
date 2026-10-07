@@ -11,16 +11,18 @@ Plain JSON documents connect the high-level process to the exact call trace.
 
 [![SystemAtlas — a Flow with a selected step](https://raw.githubusercontent.com/todor-rusev/systematlas/main/docs/img/screen_1.png)](https://todor-rusev.github.io/systematlas/)
 
-*A **Flow**: steps colored by actor. Select a step for its details; **Open** drills down
+*A **Flow** that reads on its own: each node shows as much text as its step needs, with `code`
+where it helps. Select a step for its details — lists, links, code blocks; **Open** drills down
 into a sub-flow or a Sequence.*
 
 [![SystemAtlas — a Sequence of calls](https://raw.githubusercontent.com/todor-rusev/systematlas/main/docs/img/screen_2.png)](https://todor-rusev.github.io/systematlas/)
 
 *A **Sequence**: the exact calls, returns and phases, reached from the Flow above.*
 
-[![SystemAtlas — built-in icons](https://raw.githubusercontent.com/todor-rusev/systematlas/main/docs/img/screen_3.png)](https://todor-rusev.github.io/systematlas/)
+[![SystemAtlas — curved lines and a decision with details](https://raw.githubusercontent.com/todor-rusev/systematlas/main/docs/img/screen_3.png)](https://todor-rusev.github.io/systematlas/)
 
-*Shapes, icons and four appearances: Classic, Soft cards, Whiteboard and Technical.*
+*Lines with rounded corners or smooth curves, top to bottom or left to right — switched from
+the toolbar. Shapes, icons and four appearances: Classic, Soft cards, Whiteboard and Technical.*
 
 ## Quick start
 
@@ -67,6 +69,11 @@ as MCP resources.
 - **Flow:** actors, steps, branches, returns, and links into subflows or Sequences.
 - **Sequence:** nested calls, parameters, return values, asynchronous calls, and phases.
 
+A node shows as much text as its step needs, so the diagram reads on its own;
+optional details open in the side panel. Both take a little markdown: `code`,
+**bold**, links, and in details also lists and code blocks.
+A Flow lays out top to bottom or left to right: the document's `layout` sets the
+default, and the toolbar switches it for viewing without changing the file.
 Linked twins let you switch between both views of the same scenario.
 Nested categories organize documents in the sidebar.
 

@@ -33,9 +33,11 @@ export interface ExternalRef {
 export interface FlowNode {
   id: string;
   type: NodeType;
-  label: string;
-                                                                                     
-  description: string[];
+                                                                                    
+                                                                 
+  text: string;
+                                                                         
+  details?: string;
                                                                                 
   shape?: NodeShape;
                                                                                 
@@ -57,14 +59,15 @@ export interface FlowEdge {
   from: string;
   to: string;
   type: EdgeType;
-  label?: string;
+                                                                               
+  text?: string;
                                                                                
   style?: EdgeStyle;
                                                                                    
                                                                                 
   id?: string;
-                                                                                           
-  description?: string[];
+                                                                         
+  details?: string;
   inputs?: IoField[];
   outputs?: IoField[];
   source?: SourceRef;
@@ -79,8 +82,11 @@ export interface FlowEdge {
 
 export type LayoutDir = "TB" | "LR";
 
+                                                                                      
+export const FLOW_VERSION = "2";
+
 export interface FlowDocument {
-  version: string;
+  version: typeof FLOW_VERSION;
   id: string;
   title: string;
   layout?: LayoutDir;

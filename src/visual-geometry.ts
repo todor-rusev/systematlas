@@ -1,6 +1,14 @@
 import type { FlowNode, NodeType } from "./core/types";
 import type { NodeShape } from "./core/visual-vocabulary";
 import { DEFAULT_PRESET, VISUAL_PRESETS, type PresetName } from "./visual-tokens";
+import { inlineRuns } from "./core/markdown";
+
+                                                                                       
+                                                      
+const CODE_WIDTH = 1.12;
+const CODE_PAD = 8;
+                                                                                        
+const LONG_TEXT_LINES = 3;
 
 export type VisualMode = "actors" | "classic";
 export interface Point {
@@ -640,13 +648,30 @@ function convexHull(points: Point[]): Point[] {
 export function nodeGeometry(
   node: Pick<
     FlowNode,
-    "type" | "shape" | "label" | "icon" | "subflow" | "sequence"
+    "type" | "shape" | "text" | "icon" | "subflow" | "sequence"
   >,
   measure: ((s: string) => number) | undefined = undefined,
   preset: PresetName = DEFAULT_PRESET,
 ): VisualGeometry {
   const label = VISUAL_PRESETS[preset].label;
-  const measureText = measure ?? ((s: string) => Array.from(s).length * label.size);
+  const measurePlain = measure ?? ((s: string) => Array.from(s).length * label.size);
+                                                                                         
+  const words: { width: number; breakBefore: boolean }[] = [];
+  let breakNext = false;
+  for (const run of inlineRuns(node.text)) {
+    run.text.split(/(\n)/).forEach((part) => {
+      if (part === "\n") {
+        breakNext = true;
+        return;
+      }
+      for (const word of part.split(/\s+/).filter(Boolean)) {
+        words.push({ width: run.code ? measurePlain(word) * CODE_WIDTH + CODE_PAD : measurePlain(word), breakBefore: breakNext });
+        breakNext = false;
+      }
+    });
+  }
+  const space = measurePlain(" ");
+  const naturalWidth = words.reduce((sum, w, i) => sum + w.width + (i ? space : 0), 0);
   const shape = node.shape ?? DEFAULT_SHAPES[node.type];
   const stacked = [
     "diam",
@@ -662,35 +687,28 @@ export function nodeGeometry(
   const picture = shape === "image" || shape === "icon";
   const iconW = node.icon && !stacked && !picture ? 38 : 0;
   const badge = (node.subflow || node.sequence) && !stacked ? 66 : 0;
-  const words = node.label.split(/\s+/);
-  const longest = Math.max(...words.map(measureText), 0);
+  const longest = Math.max(...words.map((w) => w.width), 0);
   const preferred = shape === "diam" && !node.icon && !node.subflow && !node.sequence ? 60 : stacked ? 100 : 140;
-  const textW = Math.min(
-    420,
-    Math.max(
-      preferred,
-      Math.min(measureText(node.label), stacked ? 120 : 240),
-      longest,
-    ),
-  );
+                                                                                    
+  const comfortable = stacked ? 120 : naturalWidth > LONG_TEXT_LINES * 240 ? 320 : 240;
+  const textW = Math.min(420, Math.max(preferred, Math.min(naturalWidth, comfortable), longest));
                                                                                  
-  let lines = 0;
-  for (const paragraph of node.label.split(/\r?\n/)) {
-    let paragraphLines = 1,
+  let lines = 1,
+    line = 0;
+  for (const word of words) {
+    if (word.breakBefore) {
+      lines++;
       line = 0;
-    for (const word of paragraph.split(/\s+/)) {
-      const width = measureText(word),
-        space = line ? measureText(" ") : 0;
-      if (line && line + space + width > textW) {
-        paragraphLines++;
-        line = 0;
-      }
-      if (width > textW) {
-        paragraphLines += Math.ceil(width / textW) - 1;
-        line = width % textW || textW;
-      } else line += (line ? measureText(" ") : 0) + width;
     }
-    lines += paragraphLines;
+    const gap = line ? space : 0;
+    if (line && line + gap + word.width > textW) {
+      lines++;
+      line = 0;
+    }
+    if (word.width > textW) {
+      lines += Math.ceil(word.width / textW) - 1;
+      line = word.width % textW || textW;
+    } else line += (line ? space : 0) + word.width;
   }
   const textH = stacked
     ? lines * label.lineHeight +

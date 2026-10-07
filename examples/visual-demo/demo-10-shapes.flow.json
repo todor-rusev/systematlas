@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-10-shapes",
   "title": "10 · Shapes: Comments and context",
   "layout": "TB",
@@ -43,68 +43,50 @@
     {
       "id": "brace",
       "type": "step",
-      "label": "Comment on the left",
+      "text": "Comment on the left",
       "shape": "brace",
       "owner": "customer",
-      "description": [
-        "Comment on left",
-        "Exact value: shape: \"brace\"."
-      ]
+      "details": "Comment on left\n\nExact value: `shape: \"brace\"`"
     },
     {
       "id": "brace-r",
       "type": "step",
-      "label": "Comment on the right",
+      "text": "Comment on the right",
       "shape": "brace-r",
       "owner": "shop",
-      "description": [
-        "Comment on right",
-        "Exact value: shape: \"brace-r\"."
-      ]
+      "details": "Comment on right\n\nExact value: `shape: \"brace-r\"`"
     },
     {
       "id": "braces",
       "type": "step",
-      "label": "Comment",
+      "text": "Comment",
       "shape": "braces",
       "owner": "payment",
-      "description": [
-        "Comment on both sides",
-        "Exact value: shape: \"braces\"."
-      ]
+      "details": "Comment on both sides\n\nExact value: `shape: \"braces\"`"
     },
     {
       "id": "text",
       "type": "step",
-      "label": "Free text",
+      "text": "Free text",
       "shape": "text",
       "owner": "data",
-      "description": [
-        "Text block",
-        "Exact value: shape: \"text\"."
-      ]
+      "details": "Text block\n\nExact value: `shape: \"text\"`"
     },
     {
       "id": "cloud",
       "type": "step",
-      "label": "Cloud",
+      "text": "Cloud",
       "shape": "cloud",
       "owner": "warehouse",
-      "description": [
-        "Cloud",
-        "Exact value: shape: \"cloud\"."
-      ]
+      "details": "Cloud\n\nExact value: `shape: \"cloud\"`"
     },
     {
       "id": "curv-trap",
       "type": "step",
-      "label": "Display",
+      "text": "Display",
       "shape": "curv-trap",
       "owner": "delivery",
-      "description": [
-        "Display",
-        "Exact value: shape: \"curv-trap\"."
-      ]
+      "details": "Display\n\nExact value: `shape: \"curv-trap\"`"
     }
   ],
   "edges": [
@@ -116,9 +98,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "brace-r",
@@ -128,9 +108,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "braces",
@@ -140,9 +118,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

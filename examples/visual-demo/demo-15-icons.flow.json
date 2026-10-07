@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-15-icons",
   "title": "15 · Icons 21–30",
   "layout": "TB",
@@ -43,152 +43,122 @@
     {
       "id": "download",
       "type": "step",
-      "label": "download",
+      "text": "download",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "download"
       },
-      "description": [
-        "Receive / download",
-        "icon: {kind: \"builtin\", name: \"download\"}"
-      ]
+      "details": "Receive / download\n\n`icon: {kind: \"builtin\", name: \"download\"}`"
     },
     {
       "id": "upload",
       "type": "step",
-      "label": "upload",
+      "text": "upload",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "upload"
       },
-      "description": [
-        "Publish / upload",
-        "icon: {kind: \"builtin\", name: \"upload\"}"
-      ]
+      "details": "Publish / upload\n\n`icon: {kind: \"builtin\", name: \"upload\"}`"
     },
     {
       "id": "search",
       "type": "step",
-      "label": "search",
+      "text": "search",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "search"
       },
-      "description": [
-        "Search / lookup",
-        "icon: {kind: \"builtin\", name: \"search\"}"
-      ]
+      "details": "Search / lookup\n\n`icon: {kind: \"builtin\", name: \"search\"}`"
     },
     {
       "id": "filter",
       "type": "step",
-      "label": "filter",
+      "text": "filter",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "filter"
       },
-      "description": [
-        "Filter / selection",
-        "icon: {kind: \"builtin\", name: \"filter\"}"
-      ]
+      "details": "Filter / selection\n\n`icon: {kind: \"builtin\", name: \"filter\"}`"
     },
     {
       "id": "check",
       "type": "step",
-      "label": "check",
+      "text": "check",
       "shape": "rounded",
       "owner": "warehouse",
       "icon": {
         "kind": "builtin",
         "name": "check"
       },
-      "description": [
-        "Validation / completion",
-        "icon: {kind: \"builtin\", name: \"check\"}"
-      ]
+      "details": "Validation / completion\n\n`icon: {kind: \"builtin\", name: \"check\"}`"
     },
     {
       "id": "error",
       "type": "step",
-      "label": "error",
+      "text": "error",
       "shape": "rounded",
       "owner": "delivery",
       "icon": {
         "kind": "builtin",
         "name": "error"
       },
-      "description": [
-        "Failure / rejection",
-        "icon: {kind: \"builtin\", name: \"error\"}"
-      ]
+      "details": "Failure / rejection\n\n`icon: {kind: \"builtin\", name: \"error\"}`"
     },
     {
       "id": "warning",
       "type": "step",
-      "label": "warning",
+      "text": "warning",
       "shape": "rounded",
       "owner": "customer",
       "icon": {
         "kind": "builtin",
         "name": "warning"
       },
-      "description": [
-        "Warning / attention",
-        "icon: {kind: \"builtin\", name: \"warning\"}"
-      ]
+      "details": "Warning / attention\n\n`icon: {kind: \"builtin\", name: \"warning\"}`"
     },
     {
       "id": "info",
       "type": "step",
-      "label": "info",
+      "text": "info",
       "shape": "rounded",
       "owner": "shop",
       "icon": {
         "kind": "builtin",
         "name": "info"
       },
-      "description": [
-        "Information / explanation",
-        "icon: {kind: \"builtin\", name: \"info\"}"
-      ]
+      "details": "Information / explanation\n\n`icon: {kind: \"builtin\", name: \"info\"}`"
     },
     {
       "id": "lock",
       "type": "step",
-      "label": "lock",
+      "text": "lock",
       "shape": "rounded",
       "owner": "payment",
       "icon": {
         "kind": "builtin",
         "name": "lock"
       },
-      "description": [
-        "Lock / access control",
-        "icon: {kind: \"builtin\", name: \"lock\"}"
-      ]
+      "details": "Lock / access control\n\n`icon: {kind: \"builtin\", name: \"lock\"}`"
     },
     {
       "id": "shield",
       "type": "step",
-      "label": "shield",
+      "text": "shield",
       "shape": "rounded",
       "owner": "data",
       "icon": {
         "kind": "builtin",
         "name": "shield"
       },
-      "description": [
-        "Security / policy",
-        "icon: {kind: \"builtin\", name: \"shield\"}"
-      ]
+      "details": "Security / policy\n\n`icon: {kind: \"builtin\", name: \"shield\"}`"
     }
   ],
   "edges": [
@@ -200,9 +170,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "upload",
@@ -212,9 +180,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "search",
@@ -224,9 +190,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "filter",
@@ -236,9 +200,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "check",
@@ -248,9 +210,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "error",
@@ -260,9 +220,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "warning",
@@ -272,9 +230,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

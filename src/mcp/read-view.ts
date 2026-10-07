@@ -8,14 +8,14 @@ import { selectRead, type ReadFocus, type ReadSelection } from "./read-selection
 
 export const readViewInput = {
   format: z.enum(["json", "compact", "dot"]).optional().describe("Default json returns {document,revision}; only document is editable. compact/dot are read-only views with real ids. With around, every format is a partial read-only view; patch by local ids, never write a view as a document."),
-  detail: z.enum(["full", "structure"]).optional().describe("View detail: full (default) includes descriptions; structure explicitly omits explanatory fields. Ignored for whole-document JSON. Use full when identical labels need disambiguation."),
-  around: z.string().min(1).optional().describe("Focus on this LOCAL Flow node id, with incident edges and labeled boundary nodes. Does not open drill targets. Sequence focus is not supported."),
+  detail: z.enum(["full", "structure"]).optional().describe("View detail: full (default) includes details; structure explicitly omits explanatory fields. Ignored for whole-document JSON. Use full when identical texts need disambiguation."),
+  around: z.string().min(1).optional().describe("Focus on this LOCAL Flow node id, with incident edges and boundary nodes with their text. Does not open drill targets. Sequence focus is not supported."),
   depth: z.number().int().min(0).max(5).optional().describe("Requires around. Default 1. Distance counts Flow edges in both directions; 0 selects only the center plus incident edges/boundary references."),
 };
 
                                                                                            
                                                                             
-const structural = new Set(["version", "kind", "title", "method", "layout", "twin", "type", "owner", "shared", "subflow", "sequence", "id", "label", "from", "to", "phase", "async", "shape", "style"]);
+const structural = new Set(["version", "kind", "title", "method", "layout", "twin", "type", "owner", "shared", "subflow", "sequence", "id", "label", "text", "from", "to", "phase", "async", "shape", "style"]);
 const q = (value: unknown) => JSON.stringify(value);
 
 export function readView(doc: AnyDoc, format: "json" | "compact" | "dot" = "json", detail: "full" | "structure" = "full", focus: ReadFocus = {}, storedRevision?: string): { content: { type: "text"; text: string }[]; structuredContent?: Record<string, unknown> } {
@@ -70,15 +70,15 @@ export function compactReadView(original: AnyDoc, detail: "full" | "structure" =
     return Object.keys(values).length ? ` ${q(values)}` : "";
   };
   const lines = [
-    `READ-ONLY compact view; document=${q(doc.id)}; detail=${detail}. Actual ids are edit targets; labels are not.`,
+    `READ-ONLY compact view; document=${q(doc.id)}; detail=${detail}. Actual ids are edit targets; texts are not.`,
     "Arrows are typed control flow. Drill subflow/sequence means part-of; twin means the same whole scenario at another altitude.",
     `document ${q(doc.id)} ${q(doc.title)}${metadata(doc, ["id", "title", "actors", "nodes", "edges", "calls", "phases"])}`,
   ];
   for (const actor of doc.actors) lines.push(`actor ${q(actor.id)} ${q(actor.label)}${metadata(actor, ["id", "label"])}`);
   if (docKind(doc) === "flow") {
     const flow = doc as FlowDocument;
-    for (const node of flow.nodes) lines.push(`node ${q(node.id)} ${q(node.label)}${metadata(node, ["id", "label"])}`);
-    for (const node of selection.boundaryNodes) lines.push(`boundary ${q(node.id)} ${q(node.label)}${q({ type: node.type, owner: node.owner })}`);
+    for (const node of flow.nodes) lines.push(`node ${q(node.id)} ${q(node.text)}${metadata(node, ["id", "text"])}`);
+    for (const node of selection.boundaryNodes) lines.push(`boundary ${q(node.id)} ${q(node.text)}${q({ type: node.type, owner: node.owner })}`);
     selection.edges.forEach(({ edge, index }) => lines.push(`edge[${index}] ${q(edge.from)} -> ${q(edge.to)}${metadata(edge, ["from", "to"])}`));
     lines.push("Note: edge[index] is a position in this read, not an edge id. Preserve parallel edges; use actual ids or an unambiguous supported selector when patching.");
   } else {

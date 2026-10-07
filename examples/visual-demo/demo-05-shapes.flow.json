@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/flow.schema.json",
-  "version": "1",
+  "version": "2",
   "id": "demo-05-shapes",
   "title": "05 · Shapes: Data and storage",
   "layout": "TB",
@@ -43,90 +43,66 @@
     {
       "id": "lean-r",
       "type": "step",
-      "label": "Input / output",
+      "text": "Input / output",
       "shape": "lean-r",
       "owner": "customer",
-      "description": [
-        "Data input/output",
-        "Exact value: shape: \"lean-r\"."
-      ]
+      "details": "Data input/output\n\nExact value: `shape: \"lean-r\"`"
     },
     {
       "id": "lean-l",
       "type": "step",
-      "label": "Output / input",
+      "text": "Output / input",
       "shape": "lean-l",
       "owner": "shop",
-      "description": [
-        "Data output/input",
-        "Exact value: shape: \"lean-l\"."
-      ]
+      "details": "Data output/input\n\nExact value: `shape: \"lean-l\"`"
     },
     {
       "id": "cyl",
       "type": "step",
-      "label": "Database",
+      "text": "Database",
       "shape": "cyl",
       "owner": "payment",
-      "description": [
-        "Database",
-        "Exact value: shape: \"cyl\"."
-      ]
+      "details": "Database\n\nExact value: `shape: \"cyl\"`"
     },
     {
       "id": "h-cyl",
       "type": "step",
-      "label": "Direct access",
+      "text": "Direct access",
       "shape": "h-cyl",
       "owner": "data",
-      "description": [
-        "Direct-access storage",
-        "Exact value: shape: \"h-cyl\"."
-      ]
+      "details": "Direct-access storage\n\nExact value: `shape: \"h-cyl\"`"
     },
     {
       "id": "lin-cyl",
       "type": "step",
-      "label": "Disk storage",
+      "text": "Disk storage",
       "shape": "lin-cyl",
       "owner": "warehouse",
-      "description": [
-        "Disk storage",
-        "Exact value: shape: \"lin-cyl\"."
-      ]
+      "details": "Disk storage\n\nExact value: `shape: \"lin-cyl\"`"
     },
     {
       "id": "bow-rect",
       "type": "step",
-      "label": "Stored data",
+      "text": "Stored data",
       "shape": "bow-rect",
       "owner": "delivery",
-      "description": [
-        "Stored data",
-        "Exact value: shape: \"bow-rect\"."
-      ]
+      "details": "Stored data\n\nExact value: `shape: \"bow-rect\"`"
     },
     {
       "id": "datastore",
       "type": "step",
-      "label": "Data store",
+      "text": "Data store",
       "shape": "datastore",
       "owner": "customer",
-      "description": [
-        "Data store",
-        "Exact value: shape: \"datastore\"."
-      ]
+      "details": "Data store\n\nExact value: `shape: \"datastore\"`"
     },
     {
       "id": "cache",
       "type": "step",
-      "label": "Cache",
+      "text": "Cache",
       "shape": "cache",
       "owner": "shop",
-      "description": [
-        "Cache",
-        "Exact value: shape: \"cache\"."
-      ]
+      "details": "Cache\n\nExact value: `shape: \"cache\"`"
     }
   ],
   "edges": [
@@ -138,9 +114,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "lean-l",
@@ -150,9 +124,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "cyl",
@@ -162,9 +134,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "h-cyl",
@@ -174,9 +144,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     },
     {
       "from": "lin-cyl",
@@ -186,9 +154,7 @@
         "line": "invisible",
         "end": "none"
       },
-      "description": [
-        "Only arranges the gallery; it does not describe a real process."
-      ]
+      "details": "Only arranges the gallery; it does not describe a real process."
     }
   ]
 }

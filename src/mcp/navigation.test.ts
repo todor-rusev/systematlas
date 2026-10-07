@@ -11,8 +11,8 @@ test("paged catalog and shared queries return all results without duplicates; cu
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sa-navigation-page-"));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   for (let i = 0; i < 7; i++) await fs.writeFile(path.join(root, `p${i}.flow.json`), JSON.stringify({
-    version: "1", id: `p${i}`, title: "Approval", actors: [],
-    nodes: [{ id: "approve", type: "step", label: "Approval", description: ["Sign"], shared: true }], edges: [] }));
+    version: "2", id: `p${i}`, title: "Approval", actors: [],
+    nodes: [{ id: "approve", type: "step", text: "Approval", details: "Sign", shared: true }], edges: [] }));
   const loader = new ProjectNavigation();
   const request = { query: { kind: "shared" as const, id: "approve" }, limit: 3 };
   const first = await listNavigation(root, request, loader);
@@ -39,8 +39,8 @@ test("actual response size includes escaped labels and structuredContent; every 
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "sa-navigation-bytes-"));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   for (let i = 0; i < 3; i++) await fs.writeFile(path.join(root, `p${i}.flow.json`), JSON.stringify({
-    version: "1", id: `p${i}`, title: "\\".repeat(4000), actors: [],
-    nodes: [{ id: "a", type: "step", label: "A", description: ["x"] }], edges: [] }));
+    version: "2", id: `p${i}`, title: "\\".repeat(4000), actors: [],
+    nodes: [{ id: "a", type: "step", text: "A", details: "x" }], edges: [] }));
   const loader = new ProjectNavigation();
   const ids: string[] = [];
   let cursor: string | undefined;

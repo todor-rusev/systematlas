@@ -1,7 +1,10 @@
-import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from "react";
+import { useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import type { SourceAction } from "../data/source";
 import type { Actor, ExternalRef, FlowEdge, FlowNode, IoField, SequenceCall, SourceRef } from "../model";
 import { EDGE_TYPE_LABEL, TYPE_LABEL, tokens } from "../tokens";
 import { IconCallee, IconCaller, IconChevronLeft, IconChevronRight, IconClose, IconEmptyCard, IconEnter, IconSource } from "./icons";
+import { InlineMarkdown, MarkdownBlocks } from "./Markdown";
+import { plainText } from "../core/markdown";
 
 const CALLER = "#3C6E91";
 const CALLEE = "#BE7A2A";
@@ -61,6 +64,8 @@ interface DetailPanelProps {
   onNavigateCall?: (id: string) => void;
   ownerLabel?: string;
   ownerColor?: string;
+                                                                            
+  onOpenSource?: (source: SourceRef, how: SourceAction) => Promise<"done" | "executable">;
   actor?: ActorView | null;
   open: boolean;
   onToggle: () => void;
@@ -130,12 +135,16 @@ function sourceText(s: SourceRef): string {
   return parts.join(" · ") || "—";
 }
 
-function Header({ kicker, title, onDeselect, onToggle }: { kicker: string; title: string; onDeselect: () => void; onToggle: () => void }) {
+                                                                                
+                                                                       
+const LONG_TITLE = 60;
+
+function Header({ kicker, title, long = false, onDeselect, onToggle }: { kicker: string; title: ReactNode; long?: boolean; onDeselect: () => void; onToggle: () => void }) {
   return (
     <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", padding: "18px 14px 14px 20px", gap: 10 }}>
       <div style={{ minWidth: 0 }}>
         <div style={{ ...sectionLabel, color: tokens.color.faint, marginBottom: 5 }}>{kicker}</div>
-        <h2 style={{ margin: 0, fontSize: 18, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.015em", color: tokens.color.text }}>{title}</h2>
+        <h2 style={{ margin: 0, fontSize: long ? 15 : 18, fontWeight: 700, lineHeight: long ? 1.35 : 1.2, letterSpacing: long ? "-0.005em" : "-0.015em", color: tokens.color.text }}>{title}</h2>
       </div>
       <div style={{ display: "flex", gap: 2, flex: "0 0 auto" }}>
         <button className="ft-quiet-soft" style={{ width: 30, height: 30, borderRadius: 7 }} title="Deselect" onClick={onDeselect}>
@@ -149,23 +158,32 @@ function Header({ kicker, title, onDeselect, onToggle }: { kicker: string; title
   );
 }
 
-                                                                                 
+                                                                                    
                                                                               
 function ObjectContent({
+  details,
   description,
   inputs,
   outputs,
   refs,
   source,
+  onOpenSource,
 }: {
+                                           
+  details?: string;
+                                                       
   description?: string[];
   inputs?: IoField[];
   outputs?: IoField[];
   refs?: ExternalRef[];
   source?: SourceRef;
+  onOpenSource?: (source: SourceRef, how: SourceAction) => Promise<"done" | "executable">;
 }) {
   return (
     <>
+      {details ? (
+        <MarkdownBlocks text={details} style={{ marginBottom: 20, fontSize: 13.5, lineHeight: 1.55, color: tokens.color.textSecondary }} />
+      ) : null}
       {description?.length ? (
         <ul style={{ margin: "0 0 20px", paddingLeft: 18, fontSize: 13.5, lineHeight: 1.55, color: tokens.color.textSecondary }}>
           {description.map((d, i) => (
@@ -193,15 +211,57 @@ function ObjectContent({
         </div>
       ) : null}
 
-      {source ? (
-        <div style={{ display: "flex", alignItems: "center", gap: 7, paddingTop: 14, borderTop: `1px solid ${tokens.color.borderSoft}` }}>
-          <span style={{ color: tokens.color.faint, display: "flex", opacity: 0.6 }}>
-            <IconSource />
-          </span>
-          <span style={{ fontFamily: tokens.font.mono, fontSize: 11.5, color: tokens.color.faint }}>{sourceText(source)}</span>
+      {source ? <SourceRow source={source} onOpen={onOpenSource} /> : null}
+    </>
+  );
+}
+
+                                                                                          
+                                                                                        
+                                                                      
+function SourceRow({ source, onOpen }: { source: SourceRef; onOpen?: (source: SourceRef, how: SourceAction) => Promise<"done" | "executable"> }) {
+  const [error, setError] = useState<string | null>(null);
+  const [executable, setExecutable] = useState(false);
+  const openable = !!onOpen && !!source.file;
+  const text = <span style={{ fontFamily: tokens.font.mono, fontSize: 11.5 }}>{sourceText(source)}</span>;
+  const run = (how: SourceAction) => {
+    setError(null);
+    onOpen?.(source, how)
+      .then((result) => setExecutable(result === "executable"))
+      .catch((e: unknown) => setError(e instanceof Error ? e.message : String(e)));
+  };
+  return (
+    <div style={{ paddingTop: 14, borderTop: `1px solid ${tokens.color.borderSoft}` }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+        <span style={{ color: tokens.color.faint, display: "flex", opacity: 0.6 }}>
+          <IconSource />
+        </span>
+        {openable ? (
+          <button
+            className="ft-source-link"
+            title={`Open ${source.file} with its default app`}
+            onClick={() => run("open")}
+            style={{ border: "none", background: "none", padding: 0, cursor: "pointer", color: tokens.color.violet, textAlign: "left", minWidth: 0, overflowWrap: "anywhere" }}
+          >
+            {text}
+          </button>
+        ) : (
+          <span style={{ color: tokens.color.faint }}>{text}</span>
+        )}
+      </div>
+      {executable ? (
+        <div role="status" style={{ marginTop: 6, fontSize: 11.5, color: tokens.color.textSecondary, lineHeight: 1.4 }}>
+          This file would run, not open.{" "}
+          <button
+            onClick={() => run("reveal")}
+            style={{ border: "none", background: "none", padding: 0, cursor: "pointer", color: tokens.color.violet, font: "inherit", textDecoration: "underline", textUnderlineOffset: 2 }}
+          >
+            Show in folder
+          </button>
         </div>
       ) : null}
-    </>
+      {error ? <div role="alert" style={{ marginTop: 6, fontSize: 11.5, color: "#A33A2B", lineHeight: 1.4 }}>{error}</div> : null}
+    </div>
   );
 }
 
@@ -255,7 +315,7 @@ function PanelShell({ width, onResizeStart, children }: { width: number; onResiz
   );
 }
 
-export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigateCall, ownerLabel, ownerColor, actor, open, onToggle, onDeselect, canDrill, onDrill, width = tokens.size.panel, onResizeStart }: DetailPanelProps) {
+export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigateCall, ownerLabel, ownerColor, onOpenSource, actor, open, onToggle, onDeselect, canDrill, onDrill, width = tokens.size.panel, onResizeStart }: DetailPanelProps) {
   if (!open) {
     return (
       <aside
@@ -311,10 +371,10 @@ export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigat
 
                                                              
   if (edge) {
-    const title = edge.label || `${edge.from} → ${edge.to}`;
+    const title = edge.text ? <InlineMarkdown text={edge.text} /> : `${edge.from} → ${edge.to}`;
     return (
       <PanelShell width={width} onResizeStart={onResizeStart}>
-        <Header kicker="Edge" title={title} onDeselect={onDeselect} onToggle={onToggle} />
+        <Header kicker="Edge" title={title} long={plainText(edge.text ?? "").length > LONG_TITLE} onDeselect={onDeselect} onToggle={onToggle} />
         <div style={{ flex: "1 1 auto", overflowY: "auto", padding: "0 20px 20px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 18 }}>
             <Pill bg={tokens.color.violetBg} color={tokens.color.violet} dot={tokens.color.violetDot} k="type" v={EDGE_TYPE_LABEL[edge.type] ?? edge.type} />
@@ -323,7 +383,7 @@ export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigat
           <div style={{ fontFamily: tokens.font.mono, fontSize: 12, color: tokens.color.faint, marginBottom: 18 }}>
             {edge.from} → {edge.to}
           </div>
-          <ObjectContent description={edge.description} inputs={edge.inputs} outputs={edge.outputs} refs={edge.refs} source={edge.source} />
+          <ObjectContent details={edge.details} inputs={edge.inputs} outputs={edge.outputs} refs={edge.refs} source={edge.source} onOpenSource={onOpenSource} />
         </div>
         <DrillFooter target={edge.subflow ?? edge.sequence} isSequence={!edge.subflow && !!edge.sequence} canDrill={canDrill} onDrill={onDrill} />
       </PanelShell>
@@ -351,7 +411,7 @@ export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigat
           <div style={{ fontFamily: tokens.font.mono, fontSize: 12, color: tokens.color.faint, marginBottom: 16 }}>
             {fromLabel} → {toLabel}
           </div>
-          <ObjectContent description={call.description} inputs={call.params} outputs={call.returns} refs={call.refs} source={call.source} />
+          <ObjectContent description={call.description} inputs={call.params} outputs={call.returns} refs={call.refs} source={call.source} onOpenSource={onOpenSource} />
           {call.request || call.response ? (
             <div style={{ marginTop: 4, marginBottom: 20 }}>
               <div style={{ ...sectionLabel, marginBottom: 8 }}>Wire</div>
@@ -452,7 +512,7 @@ export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigat
                            
   return (
     <PanelShell width={width} onResizeStart={onResizeStart}>
-      <Header kicker="Node" title={node.label} onDeselect={onDeselect} onToggle={onToggle} />
+      <Header kicker="Node" title={<InlineMarkdown text={node.text} />} long={plainText(node.text).length > LONG_TITLE} onDeselect={onDeselect} onToggle={onToggle} />
       <div style={{ flex: "1 1 auto", overflowY: "auto", padding: "0 20px 20px" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 18 }}>
           <Pill bg={tokens.color.violetBg} color={tokens.color.violet} dot={tokens.color.violetDot} k="type" v={TYPE_LABEL[node.type] ?? node.type} />
@@ -461,7 +521,7 @@ export function DetailPanel({ node, edge, call, callActors, callPeers, onNavigat
           ) : null}
           {node.shared ? <Pill bg="#EFEAF8" color={tokens.color.violet} dot={tokens.color.violetDot} k="" v="@shared" /> : null}
         </div>
-        <ObjectContent description={node.description} inputs={node.inputs} outputs={node.outputs} refs={node.refs} source={node.source} />
+        <ObjectContent details={node.details} inputs={node.inputs} outputs={node.outputs} refs={node.refs} source={node.source} onOpenSource={onOpenSource} />
       </div>
       <DrillFooter
         target={(node.type === "subflow" ? node.subflow : undefined) ?? node.sequence}

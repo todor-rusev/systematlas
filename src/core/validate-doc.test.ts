@@ -7,14 +7,14 @@ import type { SequenceDocument } from "./sequence-types";
                                                          
 function flow(over: Partial<FlowDocument> = {}): FlowDocument {
   return {
-    version: "1",
+    version: "2",
     id: "f",
     title: "F",
     actors: [{ id: "api", label: "API", kind: "service" }],
     nodes: [
-      { id: "start", type: "terminal", label: "Start", description: ["entry"] },
-      { id: "a", type: "step", label: "A", description: ["does A"], owner: "api" },
-      { id: "done", type: "terminal", label: "Done", description: ["exit"] },
+      { id: "start", type: "terminal", text: "Start", details: "entry" },
+      { id: "a", type: "step", text: "A", details: "does A", owner: "api" },
+      { id: "done", type: "terminal", text: "Done", details: "exit" },
     ],
     edges: [
       { from: "start", to: "a", type: "flow" },

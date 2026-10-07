@@ -7,13 +7,13 @@ import type { SequenceDocument } from "../core/sequence-types";
 import { validateDoc } from "../core/validate-doc";
 
 function fixture(): FlowDocument {
-  return { version: "1", id: "hiring", title: "Hiring", twin: "hiring-sequence",
+  return { version: "2", id: "hiring", title: "Hiring", twin: "hiring-sequence",
     actors: [{ id: "director", label: "Director", kind: "human" }, { id: "unused", label: "Other", kind: "system" }],
-    nodes: ["a", "b", "c", "d", "e"].map(id => ({ id, type: id === "c" ? "subflow" : "step", label: id === "b" ? 'Review\n"quoted" \\ path' : id,
+    nodes: ["a", "b", "c", "d", "e"].map(id => ({ id, type: id === "c" ? "subflow" : "step", text: id === "b" ? 'Review\n"quoted" \\ path' : id,
       owner: "director", description: ["Description " + id], ...(id === "c" ? { subflow: "detail" } : {}) })),
-    edges: [{ from: "a", to: "b", type: "flow" }, { id: "yes", from: "b", to: "c", type: "branch", label: "yes" },
-      { from: "b", to: "c", type: "branch", label: "no" }, { from: "c", to: "d", type: "flow" },
-      { from: "d", to: "b", type: "return", label: "retry" }, { from: "d", to: "e", type: "flow" }] };
+    edges: [{ from: "a", to: "b", type: "flow" }, { id: "yes", from: "b", to: "c", type: "branch", text: "yes" },
+      { from: "b", to: "c", type: "branch", text: "no" }, { from: "c", to: "d", type: "flow" },
+      { from: "d", to: "b", type: "return", text: "retry" }, { from: "d", to: "e", type: "flow" }] };
 }
 
 test("focus uses undirected edge distance, preserves parallel/cycle edges and labels the boundary", () => {
@@ -22,7 +22,7 @@ test("focus uses undirected edge distance, preserves parallel/cycle edges and la
   assert.deepEqual((selection.document as FlowDocument).nodes.map(node => node.id), ["b"]);
   assert.deepEqual(selection.edges.map(row => row.index), [0, 1, 2, 4]);
   assert.deepEqual(selection.boundaryNodes.map(node => node.id), ["a", "c", "d"]);
-  assert.equal(selection.boundaryNodes[1].label, "c");
+  assert.equal(selection.boundaryNodes[1].text, "c");
   assert.equal(selection.scope.omittedEdges, 2);
   assert.equal(selection.scope.distance, "undirected-flow-edges");
   const one = selectRead(doc, { around: "b" });
@@ -50,12 +50,12 @@ test("JSON and DOT focus contain the same selection, full metadata and original 
   assert.ok(text.startsWith('digraph "hiring" {'));
   assert.equal(text.split("\n").filter(line => line.includes(' -> ')).length, 4);
   assert.ok(text.includes('"hiring/b" -> "hiring/c"'));
-  assert.ok(text.includes('"label"="yes"'));
-  assert.ok(text.includes('"label"="no"'));
+  assert.ok(text.includes('"text"="yes"'));
+  assert.ok(text.includes('"text"="no"'));
   assert.ok(text.includes('"type"="return"'));
   assert.ok(text.includes('"object_kind"="boundary"'));
   assert.ok(text.includes('"edge_index"="4"'));
-  assert.ok(text.includes(JSON.stringify(doc.nodes[1].label)));
+  assert.ok(text.includes(JSON.stringify(doc.nodes[1].text)));
   assert.equal(readView(doc, "dot").structuredContent, undefined);
   assert.deepEqual(JSON.parse(readView(doc).content[0].text), doc);
   const structure = readView(doc, "json", "structure", { around: "c", depth: 0 });
@@ -71,10 +71,10 @@ test("focus refuses invalid or oversized selections explicitly rather than claim
   for (const depth of [-1, 1.5, 6]) assert.throws(() => selectRead(doc, { around: "a", depth }), /integer/);
   assert.equal(readViewInput.format.parse("dot"), "dot");
   assert.throws(() => readViewInput.depth.parse(6));
-  const big: FlowDocument = { ...doc, nodes: Array.from({ length: 502 }, (_, i) => ({ id: "n" + i, type: "step", label: "N", description: ["N"] })),
+  const big: FlowDocument = { ...doc, nodes: Array.from({ length: 502 }, (_, i) => ({ id: "n" + i, type: "step", text: "N", details: "N" })),
     edges: Array.from({ length: 501 }, (_, i) => ({ from: "n0", to: "n" + (i + 1), type: "flow" })) };
   assert.throws(() => selectRead(big, { around: "n0", depth: 1 }), /exceeds 500/);
-  doc.nodes[1].description = ["x".repeat(130_000)];
+  doc.nodes[1].details = "x".repeat(130_000);
   assert.throws(() => readView(doc, "dot", "full", { around: "b", depth: 0 }), /128 KB/);
   assert.throws(() => readView(doc, "json", "full", { around: "b", depth: 0 }), /128 KB/);
 });
@@ -98,8 +98,8 @@ test("Sequence DOT preserves distinct calls, nesting, sibling order, phases, par
 });
 
 test("multiple alternative entries are valid and focus preserves both incoming paths", () => {
-  const doc: FlowDocument = { version: "1", id: "entries", title: "Entries", actors: [],
-    nodes: ["start-a", "start-b", "done"].map(id => ({ id, type: "terminal", label: id, description: [id] })),
+  const doc: FlowDocument = { version: "2", id: "entries", title: "Entries", actors: [],
+    nodes: ["start-a", "start-b", "done"].map(id => ({ id, type: "terminal", text: id, details: id })),
     edges: [{ from: "start-a", to: "done", type: "flow" }, { from: "start-b", to: "done", type: "flow" }] };
   assert.equal(validateDoc(doc, []).ok, true);
   assert.deepEqual(selectRead(doc, { around: "done", depth: 1 }).edges.map(row => row.edge.from), ["start-a", "start-b"]);

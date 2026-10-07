@@ -73,7 +73,7 @@ function indexFlow(doc: FlowDocument): Indexed[] {
   const actors = new Map<string, Actor>(doc.actors.map((a) => [a.id, a]));
   const byId = new Map(doc.nodes.map((n) => [n.id, n]));
   const ownerOf = (n: FlowNode) => (n.owner ? { id: n.owner, name: normalizeLabel(actors.get(n.owner)?.label ?? "") } : null);
-  const sig = (id: string) => normalizeLabel(byId.get(id)?.label ?? "?");
+  const sig = (id: string) => normalizeLabel(byId.get(id)?.text ?? "?");
                                                            
   const into = new Map<string, string[]>();
   const outOf = new Map<string, string[]>();
@@ -90,23 +90,23 @@ function indexFlow(doc: FlowDocument): Indexed[] {
       return {
         flowId: doc.id,
         node,
-        label: normalizeLabel(node.label),
+        label: normalizeLabel(node.text),
         definition: sourceDefinition(node.source),
         owner: ownerOf(node),
         neighbors: new Set([...ins.map((id) => `in|${sig(id)}`), ...outs.map((id) => `out|${sig(id)}`)]),
-        shown: { owner, before: ins.map((id) => byId.get(id)?.label ?? id), after: outs.map((id) => byId.get(id)?.label ?? id) },
+        shown: { owner, before: ins.map((id) => byId.get(id)?.text ?? id), after: outs.map((id) => byId.get(id)?.text ?? id) },
       };
     });
 }
 
                                                                                 
-                                                                                      
+                                                                                 
 function portrait(x: Indexed): string {
-  const parts = [`"${x.node.label}"`];
+  const parts = [`"${x.node.text}"`];
   if (x.shown.owner) parts.push(`by ${x.shown.owner}`);
   if (x.shown.before.length) parts.push(`after ${x.shown.before.map((l) => `"${l}"`).join(", ")}`);
   if (x.shown.after.length) parts.push(`before ${x.shown.after.map((l) => `"${l}"`).join(", ")}`);
-  const said = x.node.description[0];
+  const said = x.node.details?.split(/\r?\n/).find((line) => line.trim())?.replace(/^\s*[-*]\s+/, "");
   const text = said ? `; "${said.length > 140 ? `${said.slice(0, 139)}…` : said}"` : "";
   return `${where(x)} is ${parts.join(", ")}${text}`;
 }
@@ -170,8 +170,8 @@ function ownerSimilarity(a: Indexed, b: Indexed): { value: number; signal?: stri
 function compare(a: Indexed, b: Indexed): { score: number; label: number; owner: number; signals: string[] } {
   const signals: string[] = [];
   const label = labelSimilarity(a.label, b.label);
-  if (label === 1) signals.push("same label");
-  else if (label >= SIMILAR_LABEL) signals.push(`similar label (${label.toFixed(2)})`);
+  if (label === 1) signals.push("same text");
+  else if (label >= SIMILAR_LABEL) signals.push(`similar text (${label.toFixed(2)})`);
   const owner = ownerSimilarity(a, b);
   if (owner.signal) signals.push(owner.signal);
   const topology = jaccard(a.neighbors, b.neighbors);
@@ -193,7 +193,7 @@ const linked = (a: Indexed, b: Indexed) => a.node.id === b.node.id && (a.node.sh
 const admissible = (a: Indexed, b: Indexed) => (a.node.owner ?? "-") === (b.node.owner ?? "-");
 
 const where = (x: Indexed) => `"${x.node.id}" (flow ${x.flowId})`;
-const loc = (x: Indexed): NodeLoc => ({ flowId: x.flowId, id: x.node.id, label: x.node.label });
+const loc = (x: Indexed): NodeLoc => ({ flowId: x.flowId, id: x.node.id, label: x.node.text });
 
 function suggestionFor(evidence: SplitEvidence, ok: boolean): string {
   if (evidence === "same-definition") {
